@@ -1,0 +1,796 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>7.10.3077</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95C388C8-DD59-4993-BCC3-14A0862A24D8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>NetronGraphLib</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Netron.GraphLib</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE; </DefineConstants>
+    <DocumentationFile>NetronGraphLibAPI.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>NetronLibDoc.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Main items|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Automata|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'LogoSyntax|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\Attributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\GraphMLDataAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BasicShapes\BasicNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BasicShapes\SimpleNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BasicShapes\TextLabel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\BezierHandleCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ConnectionCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ConnectorCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\EntityCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\PointFCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ShapeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\StringCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\WidgetCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ConnectionSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ConnectionSummaryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphLibConfigurationHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphObjectsLibrary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphObjectsLibraryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ShapeSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ShapeSummaryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\Summary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\TangentHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Default\DefaultPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Rectangular\RectangularPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\ConnectionEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\Delegates.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\InfoEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\PropertySpecEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\AutomataDataTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphInformation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\GraphLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\LayoutFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\RandomizerLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\SpringEmbedder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\TreeLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\VisitCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Info\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IAutomataCell.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IConnectable.cs" />
+    <Compile Include="Interfaces\IEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IEntityBundle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IGraphLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IGraphSite.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\ILayoutNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IPaintable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IReporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IShape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IWidget.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Binary\BinaryAmbiance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Binary\BinaryCapsule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Binary\BinarySerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\HTML\HTMLExporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\Collections\DataCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\Collections\FromToCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\ConnectionType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\ConnectorType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\DataType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\DefaultType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\DictionarySerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\enums\GraphEdgeDefaultType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\enums\KeyForType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\FromTo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\GraphInformationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\GraphType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\KeyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\LocatorType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\NMLSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\NMLType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\PortType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\PropertiesHashtable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\NML\ShapeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Reporting\AssemblyReporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Reporting\BinaryReport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Reporting\BinaryReportCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Reporting\BinaryReporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Reporting\ShapeReporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\SVG\SVGSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Selector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShapeTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Bundles\EntityBundle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\CategoryMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\FileNameUIEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GraphControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GraphControlDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GraphMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GraphProperties\GraphProps.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\GraphShapesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\GraphTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\GraphLayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\GraphLayerCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\GraphLayerManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\LayerEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\LayerListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\LayerUITypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Layers\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\PageSize.cs" />
+    <Compile Include="UI\PointFTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ShapesTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ShapesTabItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SizeFTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Stamper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\TextEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TextUIEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Widgets\AutomataController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ADTConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractGraph.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractHashTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractPrePostVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractSearchableContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Abstract implementations\AbstractVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Algortihms\Algorithms.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\AVLTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\BinaryHeap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\BinarySearchTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\BinaryTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\ChainedHashTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableChar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableDouble.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableInt32.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableString.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Comparables\ComparableValue.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\GraphLibAdapter\GraphAnalyzer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Graph\DigraphAsList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Graph\DigraphAsMatrix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Graph\GraphAsList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Graph\GraphAsMatrix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Helpers\Association.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Helpers\Bounds.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Helpers\Enumerable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IDiGraph.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IEdge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IGraph.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IHashTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IPartition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IPrePostVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IPriorityQueue.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IQueue.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\ISearchableContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\ISearchTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\ISet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IStack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\ITree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IVertex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Interfaces\IVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\LinkedList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\PartitionAsForest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\QueueAsLinkedList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\StackAsLinkedList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\HashCodeVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\InOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\PostOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\PreOrderVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\PrintingVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Analysis\Visitors\ToStringVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ConnectionStyleEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ConnectionTypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\FreeArrow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\FreeArrowCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Maths\Angle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Maths\ComplexNumbers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Maths\MersenneTwister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Maths\NetronVector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Maths\Noise.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\MouseCursors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertyBag.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertySpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertySpecEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertyTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ReflectedEnumStyleEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NComboBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NetronGraphControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NetronGraphControlCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NListtemCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ShapeControls\NTextBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Sorting.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="BasicShapes\Resources\BasicNode.gif" />
+    <EmbeddedResource Include="BasicShapes\Resources\SimpleNode.gif" />
+    <EmbeddedResource Include="BasicShapes\Resources\TextLabel.gif" />
+    <EmbeddedResource Include="Info\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Info\AboutSplash.jpg" />
+    <EmbeddedResource Include="Info\ChangeLog.txt" />
+    <EmbeddedResource Include="Info\NetronLicense.rtf" />
+    <EmbeddedResource Include="Info\NetronLicense.txt" />
+    <EmbeddedResource Include="Resources\Add.cur" />
+    <EmbeddedResource Include="Resources\Cross.cur" />
+    <EmbeddedResource Include="Resources\DefaultHTML.htm" />
+    <EmbeddedResource Include="Resources\Grip.cur" />
+    <EmbeddedResource Include="Resources\Move.cur" />
+    <EmbeddedResource Include="Resources\refresh.gif" />
+    <EmbeddedResource Include="Resources\Select.cur" />
+    <EmbeddedResource Include="Resources\SimpleNode.gif" />
+    <EmbeddedResource Include="Resources\start.gif" />
+    <EmbeddedResource Include="Resources\stop.gif" />
+    <EmbeddedResource Include="Resources\Stripes.gif" />
+    <EmbeddedResource Include="Resources\UnknownShape.gif" />
+    <EmbeddedResource Include="Resources\URL.gif" />
+    <EmbeddedResource Include="UI\GraphControl.bmp" />
+    <EmbeddedResource Include="UI\GraphControl.resx">
+      <DependentUpon>GraphControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\GraphLayerManager.bmp" />
+    <EmbeddedResource Include="UI\GraphProperties\GraphProps.resx">
+      <DependentUpon>GraphProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\GraphProps.bmp" />
+    <EmbeddedResource Include="UI\GraphShapesView.bmp" />
+    <EmbeddedResource Include="UI\GraphShapesView.resx">
+      <DependentUpon>GraphShapesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Layers\GraphLayerManager.resx">
+      <DependentUpon>GraphLayerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Layers\LayerEdit.resx">
+      <DependentUpon>LayerEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Stamper.bmp" />
+    <EmbeddedResource Include="UI\Stamper.resx">
+      <DependentUpon>Stamper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TextEditor.resx">
+      <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Document\GraphControl.OnMouseDown.fcd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\HorizonMove.cur" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

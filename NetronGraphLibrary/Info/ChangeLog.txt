@@ -1,0 +1,132 @@
+
+FIX2016021401:
+在GraphControl里增加Entity类型的mCaptureObj对象，使屏幕上的Entity对象能够捕捉鼠标事件
+
+FIX2016021302:
+修复DefaultPainter的Hit方法中判断点是否在斜线形成的窄矩形时，
+斜线如果是水平线，则会出现被0除的错误。
+
+FIX2016021301:
+在GraphicControl.OnMouseDown里添加代码，检查当鼠标左键单击Connector时，
+如果Connector所属的Shape实现了IConnectable接口，则用该接口生成自定义的Connection对象。
+自定义的Connection对象可以实现自己的画图方法。
+
+FIX2016021201:
+在GraphicControl.OnMouseDown，在GraphicControl.OnMouseMove，在GraphicControl.OnMouseUp
+里添加代码，当GraphicControl.Locked为真时使GraphicControl忽略鼠标消息，
+以便让用户自定义的代码完全接管鼠标事件的处理
+
+FIX2016021101:
+在GraphicControl.OnPaint里添加代码，使属性IsVisuable为false的Shape不显示。
+
+FIX2016020902:
+在GraphicControl.OnMouseDown里添加代码，调用base.OnMouseDown(e),
+使GraphicControl的MouseDown事件链里的其它事件处理函数能够被调用
+
+FIX2016020901:
+在GraphicControl.OnMouseDown里添加代码，使Shape能够处理鼠标左键双击事件。
+
+
+
+
+
+Version 2.2
+
+This changelog does not list all new features but is intended to help upgrade existing code or application written in/with an earlier version of the graph library.
+I tried meticulously to keep this log up to date but omissions are inevitable, please send me an Email if you feel lost in the new code.
+
+- GraphInformation class, attached to the GraphAbstract
+- the ConnectionKey member in NetronGraphConnectionAttribute class related to the deserialization of connections
+- multi-page printing method in the control, thanks to Fabio
+- Summary class common 
+- GetSummary(Entity e) in the GraphControl
+- ConnectionSummary and ShapeSummary refactorized and have now common Name and Key members
+- Name property of the Connector to be able to deserialize connections
+- the LoadLibraries adds the control-lib itself since the deserialization needs to find the default connection in the loaded libraries
+- Similar to the Summary, the NetronGraphConnectionAttribute and NetronGraphShapeAttribute now both inherit from a common abstract NetronGraphAttribute class
+which means the custom connection have to have a name and a unique key. This is the only way to serialize/deserailize connections.
+- FromTo and FromToCollection helper classes to deserialize the connections
+- AdjacentNodes method added to the Shape to fetched the nodes attached to the current node
+- OutputInfo became public as part of the IGraphSite interface
+- Integration of the graph-related classes of the NetronDataStuctures library under Utils\Analysis
+- GraphAnalyzer class wraps the GraphAbstract in an IGraph class for usage by the analysis algorithms
+- Expanded the Generic graph application to include access to most novel GraphLib features
+- Ctrl+L calls the current layout algorithm
+- GraphLayer class allows to layer shapes
+- property Tag moved from the Shape class to the Entity class
+- the GraphControl has a Layers property. A Shape can only get a layer via the SetLayer method, hence you need to define on the control level a layer first
+- centralized the OnShapeAdded in the GraphAbstract rather than spread over the various addition-methods
+-AddProperties moved out of the constructor to allow a wider access to the control since the Site property is not set during the instantiation. Instantiation by passing the IGraphSite is not allowed because
+the class does not derive from MarshallByRef
+- Netron.Math was merged with the GraphLib, the control requires only one assembly now
+- CanMove property was renamed to CanMove
+- OnNewConnection is renamed to OnConnectionAdded
+- Z-order property added to the Shape class, Sort-method in the ShapeCollection which allows to have a z-ordering in the Shapes
+collection independently of the layering. There is also a utility class called Sort with the quick-sort algorithm in case you need it.
+Notice that the Sort in the ShapeCollection allows you to pass any method of the class, so you can order shapes by their other properties as long as it's IComparable.
+- Various fixes in the graph analysis code thanks to Morton Mertner
+- ZNode and ZConnection classes in the Entitology library emphasize the z-order by mapping it to the alpha channel of the color.
+- TaksEvent shape added, thanks to Fabian Luque
+- The Shape class has become abstract.
+- Added the IEntity, IShape, IConnection ... interfaces
+- 'Nodes' property of the control and interface renamed to 'Shapes' to be conform with the corresponding property in the GraphAbstract
+- 'Edges' property of the control and interface renamed to 'Connections' to be conform with the corresponding property in the GraphAbstract
+- ILayoutNode is renamed to ILayoutElement
+- Concerning renaming, the term 'shape' was preferred above the term 'node' or 'vertex', the term 'connection' preferred above 'edge' or 'link' etc.
+  An exception to the rule is in the context of graph-analysis where the terms 'edge' and 'vertex' are commonly used to make access to the literature and
+  other libraries more transparent.
+- FitSize() method of the Shape class was removed, use the FitSize(bool) method instead.
+- The whole SpecialShapes library was renamed to Entitology (the study of Entity instances?) to reflect the fact that it contains both Shapes and Connections. Diverse new types of shapes were added.
+- Solved the whole issue related to the fact that an Enum type is not accessible in the propertygrid if it's defined in a reflected assembly. See the ReflectedEnumStyleEditor class and the TaskEvent custom shape to see how it works.
+- Not directly a code mod but the whole help and API documentation is now merged in one massive compiled help.
+- Complex number implementation in the Math sublibrary received some overriden operators. The ComplexNumbers class utilities have been marked as obsolete (by means of the ObseleteAttribute).
+- Implemented operator overloadins for the NetronVector class
+- BasicShapeType refer to shapes defined in the BasicShape library and the AddBasicShape makes use of the basic type, so I decided to include the basic-, simple- an text-nodes in the graphlib. It'll also simplify the 'playing' with the control,
+you don't need to import anything before being able to create some basic shapes on the canvas. 
+- In accordance with the above-mentioned change of the BasicShapes library, the AddNode method has been renamed to AddBasicShape. This constrasts the AddShape method, which is the generic way to add *any* shape to the canvas.
+- Spend a week typing everywhere C#-comments and more text to make the NDoc-help complete. I'm too good for this world ;-)
+- GetNodeByLabel renamed to GetShapeByLabel
+- Removed, due to its immense success, all NAF integration.
+- Non-working contextmenu is fixed, had to override the CloneMenu in the CategoryMenuItem. By default cloning does not keep the type, in this case GraphMenuItem and all casting results in null, which handicapted the contextmenu.
+- NListChange signature changed to conform to the MS standard (object sender, EventArgsInherited e)
+- All public constructors of abstract classes became protected.
+- All UI controls are now localizable via resource files (resX). If someone needs a cute resX-Excel bi-directional converter, I've got one.
+- BinarySerializer moved under the IO.Binary namespace, the NMLSerializer moved to IO.NML namespace
+- AutomataDataTypes renamed to AutomataDataType (FxCop CheckId CA1717)
+- Shifted/merged Math library to Netron.GraphLib.Maths
+- Added named alternatives to the operator overloadings for non-C# coders.
+- AutomataInitialStates renamed to AutomataInitialState
+- BasicShapeTypes renamed to BasicShapeType
+- CanvasBackgroundTypes renamed to CanvasBackgroundType
+- ConnectorLocations renamed to ConnectorLocation
+- ConnectionEnds renamed to ConnectionEnd
+- An uncountable amount of protected members have become private with the addition of properties; an enormous job for me but hopefully more OO than before and more clear as an API to the outside world.
+- Spent a loooot of time perfecting the ClassShape, making it collapsible and easy to use, I believe it can be used for a wide variety of information althoug is was conceived in the first place to display class information.
+- IsReset renamed to IsGuiReset
+- Hover renamed to the clear name 'IsHovered'. Have tried, in general, to use the prefix 'Is' for Boolean fields.
+- Accessing member fields is almost forbidden everywhere, use the corresponding property. Among many, the following fundamental members are inaccessible now:
+mHover
+- Dragdrop of an image-file on the canvas will create an image shape. The dragdrop of a bitmap from another application is more difficult and my attempts were unsuccessful. The copy/paste of an image from another app does work however.
+- Extracted a new IPaintable interface from IEntity to allow for non-graph elements on the canvas, not sure you'll see the result of this in this release.
+- GraphAbstract class does not inherit anymore from the Shape class but implements the IPaintable interface. The purpose is to define in a next phase the Group class and to allow shapes to be
+grouped, the Group will inherit from the Shape class and redefine the possibilities of diagrams.
+- Due the incompatibility of the internals of the graphlib with NML on the one hand and the unnecessary overhead of Graphml tags for hypergraphs and stuff on the other hand, I have renamed everything related to NML as
+	'NML' (which stands for Netron Markup Language) so as not to confuse things. It's not gonna make such a big difference and it does make things more robust from my point of view.
+- The New() method of the GraphControl class is renamed to NewDiagram() and the Clear() method was duplicating the NewDiagram() and has been removed.
+- DefaultLineEnd renamed to DefaultConnectionEnd to be consistent
+- Painting of the ShapeTracker has moved from the Shape.Paint method to the GraphAbstract; this solves the problem that the tracked is not being painted if the developer forgets about the 'base.Paint(g)' call in an actual shape implementation.
+- the RaiseShowProps method was renamed to RaiseShowProperties
+- added AllowNewConnectionsTo and AllowNewConnectionsFrom properties on the Connector level to enable/disable new connection to and from it. Accordingly, on the shape level two methods (NewConnectionsTo and NewConnectionsFrom) were added to set the property in one go on all shape connectors.
+- ShapeTracker renamed to Tracker so that both the Shape and the Connection class have the same name
+- Added IsInternal member to the NetronGraphShapeAttribute which makes it possible to have shapes accessible only via code and not via the context-menu. 
+- Added Cut, Copy, Paste functionalities which makes editing of diagrams a lot easier. These functions were developed a long time ago in a naive approach but were hidden because it really required a decent serialization. It's amazing how serialization is linked to so many functionalities.
+- ShowPropsDelegate renamed to PropertiesInfo and the second parameter became an array to allow editing multiple objects in the propertygrid. Note that when selecting multiple objects, only the shapes are collected for editing. You can easily add the connections as well but I thought it's usually the shape's properties one wanna change.
+- Serialization of Bezier connections; watch out, deep waters. See the mind-map sample.
+- Create image shape: select a subdiagram and this feature will convert the selection to an image shape. The image is a transparent gif image and is a screenshot with the side-effect that everything inside the selection rectangle will be included in the shot as well. This image shape can be saved to a template like any other shape.
+- 'Copy as image' allows you to paste a selection as an image in another application. Other formats could be of interest but the Clipboard is an horrifying thing in .Net.
+- Pasting from an image format will create an ImageShape. This feature, together with the 'Create image shape' feature should allow everyone to make shapes in a snap. If you save the image-shape to the template there is virtually no difference between a shape coming a compiled library and one from the template. In fact, the templates have the added value to save the complete state while a compiled shape is always the same. The only problem with this approach
+is that you cannot create/delete on the fly connectors. Something for the future.
+- OnOpeningDiagram renamed to OnOpeningDiagram
+- OnSavindDiagram, OnDiagramSaved, OnOpeningDiagram events were added
+-AddConnection renamed to AddConnection, see the harmonization note earlier on this.
+

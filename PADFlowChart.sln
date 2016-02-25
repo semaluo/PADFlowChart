@@ -5,16 +5,37 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PADFlowChart", "PADFlowChart\PADFlowChart.csproj", "{BC83FBFE-B714-4D9A-8392-6897B634657D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetronGraphLib", "NetronGraphLibrary\NetronGraphLib.csproj", "{95C388C8-DD59-4993-BCC3-14A0862A24D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Automata|Any CPU = Automata|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		LogoSyntax|Any CPU = LogoSyntax|Any CPU
+		Main items|Any CPU = Main items|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Automata|Any CPU.ActiveCfg = Release|Any CPU
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Automata|Any CPU.Build.0 = Release|Any CPU
 		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.LogoSyntax|Any CPU.ActiveCfg = Release|Any CPU
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.LogoSyntax|Any CPU.Build.0 = Release|Any CPU
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Main items|Any CPU.ActiveCfg = Release|Any CPU
+		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Main items|Any CPU.Build.0 = Release|Any CPU
 		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC83FBFE-B714-4D9A-8392-6897B634657D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Automata|Any CPU.ActiveCfg = Automata|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Automata|Any CPU.Build.0 = Automata|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.LogoSyntax|Any CPU.ActiveCfg = LogoSyntax|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.LogoSyntax|Any CPU.Build.0 = LogoSyntax|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Main items|Any CPU.ActiveCfg = Main items|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Main items|Any CPU.Build.0 = Main items|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
