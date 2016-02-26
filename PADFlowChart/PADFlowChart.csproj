@@ -73,6 +73,12 @@
     <Compile Include="Tool\TextEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WinForm\FlowChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\FlowChart.Designer.cs">
+      <DependentUpon>FlowChart.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialog\LayerDialog.resx">
       <DependentUpon>LayerDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +94,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Resource\BitmapResources.resx" />
+    <EmbeddedResource Include="WinForm\FlowChart.resx">
+      <DependentUpon>FlowChart.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,9 +116,13 @@
     <Content Include="Resource\btn_arrow.bmp" />
     <Content Include="Resource\btn_if.bmp" />
     <Content Include="Resource\btn_loop.bmp" />
+    <Content Include="Resource\btn_end.bmp" />
+    <Content Include="Resource\btn_start.bmp" />
     <Content Include="Resource\btn_sequence.bmp" />
     <Content Include="Resource\btn_switch.bmp" />
     <Content Include="Resource\cursor_arrow.png" />
+    <Content Include="Resource\Save.png" />
+    <Content Include="Resource\SaveAll.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TechDoc\" />
