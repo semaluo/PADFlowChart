@@ -73,11 +73,11 @@
     <Compile Include="Tool\TextEditor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WinForm\FlowChart.cs">
+    <Compile Include="WinForm\FlowChartForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForm\FlowChart.Designer.cs">
-      <DependentUpon>FlowChart.cs</DependentUpon>
+    <Compile Include="WinForm\FlowChartForm.Designer.cs">
+      <DependentUpon>FlowChartForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Dialog\LayerDialog.resx">
       <DependentUpon>LayerDialog.cs</DependentUpon>
@@ -95,8 +95,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resource\BitmapResources.resx" />
-    <EmbeddedResource Include="WinForm\FlowChart.resx">
-      <DependentUpon>FlowChart.cs</DependentUpon>
+    <EmbeddedResource Include="WinForm\FlowChartForm.resx">
+      <DependentUpon>FlowChartForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -113,6 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\WeifenLuo.WinFormsUI.Docking.dll" />
+    <Content Include="Resource\copy.png" />
+    <Content Include="Resource\paste.png" />
+    <Content Include="Resource\new.png" />
     <Content Include="Resource\btn_arrow.bmp" />
     <Content Include="Resource\btn_if.bmp" />
     <Content Include="Resource\btn_loop.bmp" />

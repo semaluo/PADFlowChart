@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Netron.GraphLib;
 using Netron.GraphLib.UI;
 
@@ -11,6 +12,7 @@ namespace PADFlowChart
 {
     public static class ShapeDrawTool
     {
+        private static Type m_shapeType;
         private static Shape m_shape = null;
         private static GraphControl m_graphControl = null;
 
@@ -18,29 +20,39 @@ namespace PADFlowChart
         private static PointF m_startPoint = new PointF(0,0);
 
         private static readonly float m_defaultWidth = 150;
-        public static float m_defaultHeight = 50;
+        private static float m_defaultHeight = 50;
 
 
-        public static void DrawShape(Shape shape, GraphControl graphicControl)
+        //public static Type ShapeType
+        //{
+        //    get { return m_shapeType; }
+        //    set { m_shapeType = value; }
+        //}
+
+        public static void DrawShape(Type shapeType, GraphControl graphicControl)
         {
-
-            if (graphicControl == null || shape == null)
+            if (shapeType == null || !(shapeType.IsSubclassOf(typeof(Shape))))
             {
                 return;
             }
 
-            m_shape = shape;
+            if (graphicControl == null)
+            {
+                return;
+            }
+
+            m_shapeType = shapeType;
             m_graphControl = graphicControl;
 
             m_graphControl.Cursor = MouseCursors.Cross; 
 
             m_startDraw = true;
             m_graphControl.Locked = true;
-            m_shape.IsVisible = false;
-            if (!m_graphControl.Shapes.Contains(shape))
-            {
-                m_graphControl.AddShape(m_shape);
-            }
+            //m_shape.IsVisible = false;
+            //if (!m_graphControl.Shapes.Contains(shape))
+            //{
+            //    m_graphControl.AddShape(m_shape);
+            //}
 
             m_graphControl.MouseDown -= OnMouseDown;
             m_graphControl.MouseMove -= OnMouseMove;
@@ -57,11 +69,21 @@ namespace PADFlowChart
 
         private static void OnMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (m_graphControl == null || m_shapeType == null) return;
+
+            if ( e.Button == MouseButtons.Right)
+            {
+                CompleteClear();
+            }
+
             if (m_startDraw)
             {
                 //m_startPoint = new PointF(e.Location.X, e.Location.Y);
                 m_startPoint = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
+                m_shape = (Shape)Activator.CreateInstance(m_shapeType);
+                m_shape.Rectangle = new RectangleF(m_startPoint,new Size(0,0));
                 m_shape.IsVisible = true;
+                m_graphControl.AddShape(m_shape);
             }
             /*
             this.formStatusLabel.Text = string.Format("MouseDown : X = {0},Y = {1}", e.Location.X, e.Location.Y);
@@ -77,9 +99,11 @@ namespace PADFlowChart
         }
 
 
+
+
         private static void OnMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (m_startDraw)
+            if (m_startDraw && m_graphControl !=null && m_shape != null)
             {
                 m_shape.Invalidate();
                 PointF t_point = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
@@ -110,7 +134,7 @@ namespace PADFlowChart
 
         private static void OnMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (m_startDraw)
+            if (m_startDraw && m_graphControl != null && m_shape != null)
             {
                 m_graphControl.Cursor = System.Windows.Forms.Cursors.Default;
 
@@ -132,13 +156,7 @@ namespace PADFlowChart
                 m_shape.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
                 m_shape.Invalidate();
 
-                m_startDraw = false;
-                m_shape = null;
-                m_graphControl.Locked = false;
-
-                m_graphControl.MouseDown -= OnMouseDown;
-                m_graphControl.MouseMove -= OnMouseMove;
-                m_graphControl.MouseUp -= OnMouseUp;
+                CompleteClear();
 
             }
             /*
@@ -160,6 +178,21 @@ namespace PADFlowChart
 
     */
 
+
+        }
+
+        public static void CompleteClear()
+        {
+            m_shape = null;
+            m_shapeType = null;
+            m_startDraw = false;
+            if (m_graphControl != null)
+            {
+                m_graphControl.Locked = false;
+                m_graphControl.MouseDown -= OnMouseDown;
+                m_graphControl.MouseMove -= OnMouseMove;
+                m_graphControl.MouseUp -= OnMouseUp; 
+            }
 
         }
 

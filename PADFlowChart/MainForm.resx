@@ -120,10 +120,15 @@
   <metadata name="menuStrip_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>165, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolbar_new.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACDSURBVDhPlY4xDoAgDEU9lIMzh2PwEh5RHWDFfEJNgVJK
+        kxdIy39lo4oxJk5p2wuh49wzSwK+lQs0QghXidebWzBzzlV472vJTPDc748owYXgQUIScEn+BaoV8IAk
+        AJ2AQ6ERnYAKTQzpkYRZoGES4JQwCzRMApwtSwKNqcDCUGAnpg88dknT5tsdZwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="toolbar_open.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -155,13 +160,16 @@
   <data name="toolbar_saveAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFwSURBVDhPjZA9a8JgFIUj/oJ07BinDgEhsTjo4pLVpXO7
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFwSURBVDhPjZA9a8JgFIUj/oJ07BinQgYhsTjo4pLVpXO7
         tAqmRMEIDiIFp/4ToQZapBZqQSwquAfnDjoWodg62NzeE0LJl5ALD8h77j2RR4ibVCp1xzxcdLs3x0CO
         Pe8kOBxYvV6PHCL6dZwIeEeOPe8kOBw8djod+jkc6Gu/j4B35NjzToLDwbDdbtMnL2+22wh4R4497yQ4
         HLyYpklL26bNbhcB78ixFyvsrFBYXbdadNVouGQyGVJVlSqVyj/1eh0F48TCRFEkRVHcolwuR81mEwWT
         xMKKxSLN5wvK5/Pub8MwUDBLLExVz2k0enOPNU2jWq2GgmViYdmsSoPBK5VKJSqXy1StVol92ygYQ4hf
         UBhP2Ec6nb7no7WPJxRMdF135UCSn5CwBR+chjhBwQxfgRxImk7fXWKFxQ0HSxRgEZIkSSLLGsYLOzKX
-        jC3L8jck4a/3+8/xwgRBxEF4FOaWWUOSH7z5GDES4xtB+ANo0dGIu/+V5gAAAABJRU5ErkJggg==
+        jC3L8jck4a/3+8/xwgRBxEF4FOaWWUOSH7z5GDES4xtB+ANnadGFbvFznwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>165, 17</value>
+  </metadata>
 </root>
