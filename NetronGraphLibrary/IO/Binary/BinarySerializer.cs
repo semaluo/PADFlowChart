@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using Netron.GraphLib.UI;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -214,12 +215,19 @@ namespace Netron.GraphLib.IO.Binary
 			}
 			//donnot open anything if filestream is not there
 			if (fs==null) return;
-			try
-			{
-				
-				BinaryFormatter f = new BinaryFormatter();
+            try
+            {
 
-				BinaryCapsule capsule = (BinaryCapsule) f.Deserialize(fs); //so simple, so powerful
+                BinaryFormatter f = new BinaryFormatter();
+
+                //this added for temporarily solving the open file issue 
+                //of different namespace of customed shapes: SequenceShape, IfShape etc.
+                //if save flowchart data file using one version, open with another version,
+                //exception raised: "无法找到程序集..."
+                //TODO: remove below statement for release version
+                f.Binder = new UBinder();
+
+                BinaryCapsule capsule = (BinaryCapsule) f.Deserialize(fs); //so simple, so powerful
 				
 				GraphAbstract tmp = capsule.Abstract;
 
@@ -237,29 +245,29 @@ namespace Netron.GraphLib.IO.Binary
 
 
 				UnwrapBundle(tmp, site);
-			}
-			catch(SerializationException exc)			
-			{
-				System.Windows.Forms.MessageBox.Show(exc.Message);
-			}
-			catch(System.Reflection.TargetInvocationException exc)
-			{
-				site.OutputInfo(exc.Message, "BinarySerializer.Open", OutputInfoLevels.Exception);
-			}
-			catch(Exception exc)
-			{
-				site.OutputInfo(exc.Message, "BinarySerializer.Open", OutputInfoLevels.Exception);
-			}
-			catch
-			{
-				site.OutputInfo("Non-CLS exception caught.", "BinarySerializer.Open", OutputInfoLevels.Exception);
-			}
-			finally
-			{
-				if(fs!=null)
-					fs.Close();				
-			}
-		}
+            }
+            catch (SerializationException exc)
+            {
+                System.Windows.Forms.MessageBox.Show(exc.Message);
+            }
+            catch (System.Reflection.TargetInvocationException exc)
+            {
+                site.OutputInfo(exc.Message, "BinarySerializer.Open", OutputInfoLevels.Exception);
+            }
+            catch (Exception exc)
+            {
+                site.OutputInfo(exc.Message, "BinarySerializer.Open", OutputInfoLevels.Exception);
+            }
+            catch
+            {
+                site.OutputInfo("Non-CLS exception caught.", "BinarySerializer.Open", OutputInfoLevels.Exception);
+            }
+            finally
+            {
+                if (fs!=null)
+					fs.Close();
+            }
+        }
 
 		/// <summary>
 		/// Unwraps the IEntityBundle to the given site
@@ -347,6 +355,42 @@ namespace Netron.GraphLib.IO.Binary
 				Trace.WriteLine(array[k].Name + "   [" + array[k].ToString() + "]");
 			}
 		}
-		#endregion
-	}
+
+        private class UBinder : SerializationBinder
+        {
+            public override Type BindToType(string assemblyName, string typeName)
+            {
+                Assembly ass = Assembly.GetExecutingAssembly();
+
+                Type t_type = null;
+                try
+                {
+                    t_type = ass.GetType(typeName);
+                }
+                catch (Exception)
+                {
+                    t_type = null;
+                }
+
+                if (t_type == null)
+                {
+                    int t_pos = typeName.LastIndexOf(".");
+                    string t_shortName = typeName.Substring(t_pos + 1);
+
+                    ass = Assembly.GetEntryAssembly();
+                    Type[] types = ass.GetExportedTypes();
+                    foreach (Type type in ass.GetExportedTypes())
+                    {
+                       if (type.Name == t_shortName)
+                        {
+                            return type;
+                        }
+                    }
+                }
+
+                return t_type;
+            }
+        }
+        #endregion
+    }
 }

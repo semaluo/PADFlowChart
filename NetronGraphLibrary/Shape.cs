@@ -733,6 +733,7 @@ namespace Netron.GraphLib
 		{			
 			Site.Abstract.Shapes.Add(this);
 			Invalidate();
+            Site.Abstract.IsDirty = true;
 		}
 		/// <summary>
 		/// Removes itself from an GraphAbstract. The mConnectors are deleted as part of this deletion process.
@@ -742,28 +743,31 @@ namespace Netron.GraphLib
 			Invalidate();
     	
 			// throw the connections away
-			 ArrayList toDelete = new ArrayList();
+            ArrayList toDelete = new ArrayList();
 
-			 // throw the connections away. 
-			 // Action is done in two steps because calling Delete() of a connection manipulates the connector
-			 // collections. To Prevent an exception the connections are iterated and moved to a deletion list first.   
-			 foreach (Connector c in Connectors)
-			 {
-				 foreach (Connection cn in c.Connections)
-				 {
-					 toDelete.Add(cn);
-				 }
-			 }
+            // throw the connections away. 
+            // Action is done in two steps because calling Delete() of a connection manipulates the connector
+            // collections. To Prevent an exception the connections are iterated and moved to a deletion list first.   
+            foreach (Connector c in Connectors)
+            {
+	            foreach (Connection cn in c.Connections)
+	            {
+		            toDelete.Add(cn);
+	            }
+            }
 
-			 foreach( Connection cn in toDelete )
-			 {
-				 cn.Delete();
-			 }
-			if (Site.Abstract.Shapes.Contains(this))
-				Site.Abstract.Shapes.Remove(this);
-			
-			
-			Invalidate();
+            foreach( Connection cn in toDelete )
+            {
+	            cn.Delete();
+            }
+
+            if (Site.Abstract.Shapes.Contains(this))
+            {
+                Site.Abstract.Shapes.Remove(this);
+                Site.Abstract.IsDirty = true;
+            }
+
+		    Invalidate();
 		}
 		/// <summary>
 		/// Returns true if the given mRectangle contains the shape (this)

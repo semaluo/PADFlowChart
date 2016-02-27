@@ -33,11 +33,20 @@ namespace Netron.GraphLib
 	/// </summary>
 	[Serializable] public class GraphAbstract : IPaintable, IAutomataCell, ISerializable, IEntityBundle, IDeserializationCallback
 	{
-		#region Fields	
-		/// <summary>
-		/// the default and static background layer
-		/// </summary>
-		//protected static GraphLayer mDefaultLayer;
+
+        #region Delegates and events
+        /// <summary>
+        /// raised when IsDirty property changed
+        /// </summary>
+        public event DirtyChanged OnDirtyChanged;
+
+        #endregion
+
+        #region Fields	
+        /// <summary>
+        /// the default and static background layer
+        /// </summary>
+        //protected static GraphLayer mDefaultLayer;
 
         /// <summary>
         /// Current active layer
@@ -70,6 +79,7 @@ namespace Netron.GraphLib
 		/// </summary>
 		internal EntityCollection paintables = new EntityCollection();
 
+        private bool mIsDirty = false;
         #endregion
 
         #region Properties
@@ -194,14 +204,29 @@ namespace Netron.GraphLib
 			set{mGraphInformation = value;}
 		}
 
-		#endregion
+        public bool IsDirty
+        {
+            get { return mIsDirty; }
+            set
+            {
+                if (mIsDirty != value)
+                {
+                    mIsDirty = value;
+                    if (OnDirtyChanged != null)
+                    {
+                        OnDirtyChanged(this, mIsDirty);
+                    }
+                }
+            }
+        }
+        #endregion
 
-		#region Constructors
-		
-		/// <summary>
-		/// Default ctor
-		/// </summary>
-		public GraphAbstract()
+        #region Constructors
+
+        /// <summary>
+        /// Default ctor
+        /// </summary>
+        public GraphAbstract()
 		{		 
 			mGraphInformation = new GraphInformation();
 
@@ -221,22 +246,22 @@ namespace Netron.GraphLib
         public GraphAbstract(SerializationInfo info, StreamingContext context)
 		{
 
-			#region Version test
-			//test the version, warn if the build or major is different
-			Version currentversion = Assembly.GetExecutingAssembly().GetName().Version;
-			Version fileversion = new Version(info.GetString("NetronGraphLibVersion"));
-			int diff = currentversion.CompareTo(fileversion);
+            #region Version test
+            //test the version, warn if the build or major is different
+            Version currentversion = Assembly.GetExecutingAssembly().GetName().Version;
+            Version fileversion = new Version(info.GetString("NetronGraphLibVersion"));
+            int diff = currentversion.CompareTo(fileversion);
 
-			if(fileversion.Minor!=currentversion.Minor || fileversion.Major !=currentversion.Major)
-			{
-				DialogResult res = MessageBox.Show("The graph was saved in version " + fileversion.ToString() + " while the current graph library has version " + currentversion.ToString() + ". It is not guaranteed that the graph will appeare as it was when saved. Are you sure you want to open the graph?","Different version",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-				if(res==DialogResult.No) return;					
-			}
-			#endregion
-			
-//			Init();
+            if (fileversion.Minor != currentversion.Minor || fileversion.Major != currentversion.Major)
+            {
+                DialogResult res = MessageBox.Show("The graph was saved in version " + fileversion.ToString() + " while the current graph library has version " + currentversion.ToString() + ". It is not guaranteed that the graph will appeare as it was when saved. Are you sure you want to open the graph?", "Different version", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (res == DialogResult.No) return;
+            }
+            #endregion
 
-			this.mShapes = info.GetValue("mShapes", typeof(ShapeCollection)) as ShapeCollection;
+            //			Init();
+
+            this.mShapes = info.GetValue("mShapes", typeof(ShapeCollection)) as ShapeCollection;
 			this.mConnections = info.GetValue("mConnections", typeof(ConnectionCollection)) as ConnectionCollection;
 			
 
@@ -535,6 +560,8 @@ namespace Netron.GraphLib
 			
 			Site.RaiseOnShapeAdded(so);
 
+            IsDirty = true;
+
 		}
 
 		/// <summary>
@@ -546,6 +573,7 @@ namespace Netron.GraphLib
 			mConnections.Add(con);			
 			con.AddProperties();
 		    con.SetLayer(CurrentLayer.Name);
+            IsDirty = true;
 		    //Site.RaiseOnConnectionAdded(con,manual);
 		}
 
@@ -566,6 +594,11 @@ namespace Netron.GraphLib
 			foreach (Connection conn in Connections)
 					if (conn.IsSelected && conn.From.BelongsTo != null && conn.To.BelongsTo!=null)
 						list.Add(conn);
+
+		    if (list.Count > 0)
+		    {
+                IsDirty = true;
+		    }
 
 			foreach(Entity item in list)
 				item.Delete(); //connections attached to the shape will be delete in the Delete() method of the shape
@@ -630,9 +663,10 @@ namespace Netron.GraphLib
 			}
 		}
 
-		
 
-		/// <summary>
+
+
+	    /// <summary>
 		/// IPaintable.Invalidate implementation
 		/// </summary>
 		public void Invalidate(){}
@@ -668,13 +702,13 @@ namespace Netron.GraphLib
 		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			//keep the version in the serialized graph to warn users
-			//we forget about the minor version-number though
-			Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            //keep the version in the serialized graph to warn users
+            //we forget about the minor version-number though
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
-			info.AddValue("NetronGraphLibVersion",version.ToString());
-			
-			info.AddValue("mConnections",this.mConnections);			
+            info.AddValue("NetronGraphLibVersion", version.ToString());
+
+            info.AddValue("mConnections",this.mConnections);			
 
 			info.AddValue("mShapes",this.mShapes);			
 

@@ -152,17 +152,37 @@ namespace Netron.GraphLib.UI
 		/// </summary>
 		[Category("Graph"), Description(" Occurs when a file was opened."), Browsable(true)]
 		public event Netron.GraphLib.FileInfo OnDiagramOpened;
-		#endregion
 
-		#endregion
+        /// <summary>
+        /// Occurs when the data changed and save is needed
+        /// </summary>
+        [Category("Graph"), Description(" Occurs when data changed and save is needed"), Browsable(true)]
+        public event Netron.GraphLib.DirtyChanged OnDirtyChanged
+        {
+            add
+            {
+                if (extract == null) return;
+                extract.OnDirtyChanged += value;
+            }
 
-		#region Fields
+            remove
+            {
+                if (extract == null) return;
+                extract.OnDirtyChanged -= value;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Fields
 
 
-		/// <summary>
-		/// whether the diagram is locked
-		/// </summary>
-		private bool mLocked;
+        /// <summary>
+        /// whether the diagram is locked
+        /// </summary>
+        private bool mLocked;
 
         #region FIX2016021401
         /// <summary>
@@ -238,7 +258,7 @@ namespace Netron.GraphLib.UI
 		/// <summary>
 		/// shortcut
 		/// </summary>
-		protected bool AltKey = false;		
+		protected bool AltShiftKey = false;		
 	
 		/// <summary>
 		/// the default path style of the new connections
@@ -1004,12 +1024,30 @@ namespace Netron.GraphLib.UI
 				return extract.Connections;
 			}
 		}
-		
-		/// <summary>
-		/// Removes the edge from the diagram with the given UID
-		/// </summary>
-		/// <param name="uid"></param>
-		public void RemoveEdge(System.Guid uid)
+
+        /// <summary>
+        /// if shapes changed, return true. It means save is needed.
+        /// </summary>
+	    public bool IsDirty
+	    {
+	        get
+            {
+                if (Abstract == null) return false;
+                return Abstract.IsDirty;
+	        }
+            set
+            {
+                if (Abstract == null) return;
+                Abstract.IsDirty = value;
+            }
+
+        }
+
+        /// <summary>
+        /// Removes the edge from the diagram with the given UID
+        /// </summary>
+        /// <param name="uid"></param>
+        public void RemoveEdge(System.Guid uid)
 		{
 			foreach(Shape so in extract.Shapes)
 				foreach(Connector co in so.Connectors)
@@ -1483,7 +1521,7 @@ namespace Netron.GraphLib.UI
 				#endregion
 
 				#region Alt+Shift Click for dragdrop
-				if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (AltKey))
+				if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (AltShiftKey))
 				{
 					Shape sh = null;
 					if(this.SelectedShapes.Count>0)
@@ -1492,7 +1530,7 @@ namespace Netron.GraphLib.UI
 						this.DoDragDrop(sh as IShape, DragDropEffects.Copy);
 					}
 
-					AltKey = false;
+					AltShiftKey = false;
 					this.ContextMenu = null;
 					return;
 				}
@@ -1816,8 +1854,11 @@ namespace Netron.GraphLib.UI
 							//check if the connector can have an extra connection					
 							if(((Connector) Hover).AllowMultipleConnections || ((Connector) Hover).Connections.Count==0) 
 							{
-			
-			
+
+                                //Connection.Insert() will change IsDirty, 
+                                //so remember it before change
+                                bool t_prevState = IsDirty;
+
 								connection.Insert(connection.From,(Connector) Hover);
 								connection.LinePath = this.connectionPath; //set the default path/shape style
 								connection.LineEnd = this.connectionEnd; //the default end
@@ -1826,6 +1867,8 @@ namespace Netron.GraphLib.UI
 									if(!OnConnectionAdded(this,new ConnectionEventArgs(connection,true)))
 									{
 										connection.Delete(); //if the (external) handler tells it's not OK we delete the connection again
+                                        //restore IsDirty since connection add is cancelled
+									    IsDirty = t_prevState;
 									}
 								}
 			
@@ -1929,7 +1972,7 @@ namespace Netron.GraphLib.UI
 		        return;
 		    }
             #endregion
-
+            
 
 			try
 			{
@@ -1996,6 +2039,8 @@ namespace Netron.GraphLib.UI
 									cn.Invalidate();
 								}
 							}
+
+                            IsDirty = true;
 
                             #region FIX2016021501
                             //Pass mouse move event to all selected shape while tracking
@@ -2309,7 +2354,7 @@ namespace Netron.GraphLib.UI
 		protected override void OnDragDrop(DragEventArgs drgevent)
 		{
 			if(!mAllowAddShape || mLocked) return;
-			if(AltKey) return;
+			if(AltShiftKey) return;
 			Shape sob = null;
 			ShapeSummary summary = null;
 			base.OnDragDrop (drgevent);
@@ -2407,7 +2452,7 @@ namespace Netron.GraphLib.UI
 		protected override void OnDragEnter(DragEventArgs drgevent)
 		{
 			base.OnDragEnter (drgevent);
-			if(AltKey) drgevent.Effect = DragDropEffects.None;
+			if(AltShiftKey) drgevent.Effect = DragDropEffects.None;
 			if ((drgevent.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move && (drgevent.KeyState & ctrlKey) != ctrlKey)
 			{
 				// Show the standard Move icon.
@@ -3230,6 +3275,7 @@ namespace Netron.GraphLib.UI
 			{
 				OutputInfo("The diagram was saved in binary format to '" + mFileName + "'" ,OutputInfoLevels.Info);
 				RaiseOnDiagramSaved(mFileName);
+                IsDirty = false;
 			}
 			else
 				OutputInfo("The diagram was not saved.",OutputInfoLevels.Info);
@@ -3248,7 +3294,8 @@ namespace Netron.GraphLib.UI
 			RaiseOnDiagramOpened(mFileName);
 			//notify the outside world
 			OutputInfo("The binary file '" + mFileName + "' was opened.", OutputInfoLevels.Info);
-			
+
+		    IsDirty = false;
 		}
 
 		
@@ -3450,7 +3497,7 @@ namespace Netron.GraphLib.UI
 			//ALT
 			if(e.KeyCode==Keys.ShiftKey && e.Alt)
 			{
-				AltKey = true;
+				AltShiftKey = true;
 			}
 
 			#endregion
@@ -3474,10 +3521,16 @@ namespace Netron.GraphLib.UI
 			}
             #endregion
 
-            #region Copy & Paste
+            #region Copy & Cut & Paste
             if (e.KeyCode == Keys.C && e.Control)
             {
                 this.Copy();
+                return;
+            }
+
+            if (e.KeyCode == Keys.X && e.Control)
+            {
+                this.Cut();
                 return;
             }
 

@@ -32,15 +32,12 @@ namespace PADFlowChart
             }
         }
 
-        //public BlockShape() : base()
-        //{
-        //    Init();
-        //    m_linkedLayer = new GraphLayer(UID.ToString());
-        //    m_linkedLayer.Visible = false;
-        //    m_linkedLayer.UseColor = false;
-            
-        //    BindingEventHandler();
-        //}
+        public BlockShape() : base()
+        {
+            Init();
+
+            BindingEventHandler();
+        }
 
         public BlockShape(IGraphSite site): base(site)
         {

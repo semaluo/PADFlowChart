@@ -113,7 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\WeifenLuo.WinFormsUI.Docking.dll" />
+    <Content Include="Resource\btn_block.bmp" />
     <Content Include="Resource\copy.png" />
+    <Content Include="Resource\ArrowDown.png" />
+    <Content Include="Resource\ArrowUp.png" />
     <Content Include="Resource\paste.png" />
     <Content Include="Resource\new.png" />
     <Content Include="Resource\btn_arrow.bmp" />

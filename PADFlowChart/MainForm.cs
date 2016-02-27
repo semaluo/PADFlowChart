@@ -15,11 +15,12 @@ namespace PADFlowChart
     public partial class MainForm : Form
     {
         //private FlowChartForm[] chartForms 
-        private FlowChartForm chartForm = new FlowChartForm();    
+        private int m_fileCount = 1;
+        //private FlowChartForm chartForm = new FlowChartForm();    
         public MainForm()
         {
             InitializeComponent();
-            chartForm.Show(dockPanel);
+            NewFlowChartDiagram();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -48,7 +49,34 @@ namespace PADFlowChart
 
         private void menu_file_open_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    FlowChartForm form = new FlowChartForm();
+                    form.OpenFile(ofd.FileName);
+                    form.Show(dockPanel);
+                }
+            }
+        }
 
+        public string GenerateFileName()
+        {
+            string t_fileName = "FlowChart" + m_fileCount.ToString() + ".pfc";
+            m_fileCount++;
+            return t_fileName;
+        }
+
+        public void NewFlowChartDiagram()
+        {
+            FlowChartForm form = new FlowChartForm();
+            form.Text = GenerateFileName();
+            form.Show(dockPanel);
+        }
+
+        private void menu_file_new_Click(object sender, EventArgs e)
+        {
+            NewFlowChartDiagram();
         }
     }
 
@@ -59,4 +87,6 @@ namespace PADFlowChart
             get;
         }
     }
+
+    
 }

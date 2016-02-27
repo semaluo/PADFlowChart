@@ -31,6 +31,13 @@ namespace Netron.GraphLib
 	/// </summary>
 	public delegate void FileInfo(object sender, System.IO.FileInfo info);
 
+    /// <summary>
+    /// When the GraphAbstract.IsDirty changed, inform the listeners
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="isDirty"></param>
+    public delegate void DirtyChanged(object sender, bool isDirty);
+
 
 
 }
