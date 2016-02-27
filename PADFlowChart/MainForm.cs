@@ -57,6 +57,8 @@ namespace PADFlowChart
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
+                ofd.DefaultExt = "*.pfc";
+                ofd.Filter = "PAD Flow Chart(*.pfc)|*.pfc";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     FlowChartForm form = new FlowChartForm();
@@ -86,6 +88,34 @@ namespace PADFlowChart
         private void menu_file_new_Click(object sender, EventArgs e)
         {
             NewFlowChartDiagram();
+        }
+
+        private void menu_file_save_Click(object sender, EventArgs e)
+        {
+            if (ActiveMdiChild is FlowChartForm)
+            {
+                (ActiveMdiChild as FlowChartForm).Save();
+            }
+        }
+
+        private void menu_file_saveAll_Click(object sender, EventArgs e)
+        {
+            foreach (DockContent form in dockPanel.Contents)
+            {
+                if (form is FlowChartForm)
+                {
+                    (form as FlowChartForm).SaveIfDirty();
+                }
+            }
+        }
+
+        private void menu_file_saveAs_Click(object sender, EventArgs e)
+        {
+            if (ActiveMdiChild is FlowChartForm)
+            {
+                (ActiveMdiChild as FlowChartForm).FullFileName = string.Empty;
+                (ActiveMdiChild as FlowChartForm).Save();
+            }
         }
     }
 

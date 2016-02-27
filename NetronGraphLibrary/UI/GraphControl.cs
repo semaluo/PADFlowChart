@@ -2981,18 +2981,22 @@ namespace Netron.GraphLib.UI
 		{
 			//not a simple thing to do, seemingly you need interop to do it....
 			Graphics g1 = this.CreateGraphics();
-			Bitmap bm=new Bitmap(this.Width,this.Height,g1);
-			
-			Bitmap backBM=new Bitmap(this.Width,this.Height);
-			Graphics g2 = Graphics.FromImage(backBM);
+            Bitmap bm = new Bitmap(this.Width, this.Height, g1);
+
+            Bitmap backBM = new Bitmap(this.Width, this.Height);
+            //Bitmap bm = new Bitmap((int)Abstract.Rectangle.Width, (int)Abstract.Rectangle.Height, g1);
+
+            //Bitmap backBM = new Bitmap((int)Abstract.Rectangle.Width, (int)Abstract.Rectangle.Height);
+            Graphics g2 = Graphics.FromImage(backBM);
 
 			System.IntPtr dc1=g1.GetHdc();
 
 			System.IntPtr dc2=g2.GetHdc();
 
-			BitBlt(dc2,0,0,this.Size.Width,this.Size.Height,dc1,0,0,0x00CC0020);
+//            BitBlt(dc2, 0, 0, (int)Abstract.Rectangle.Width, (int)Abstract.Rectangle.Height, dc1, 0, 0, 0x00CC0020);
+            BitBlt(dc2, 0, 0, Size.Width, Size.Height, dc1, 0, 0, 0x00CC0020);
 
-			g1.ReleaseHdc(dc1);
+            g1.ReleaseHdc(dc1);
 
 			g2.ReleaseHdc(dc2);
 
@@ -3010,14 +3014,15 @@ namespace Netron.GraphLib.UI
 		///<param name="drawBackground">wether the background should be painted as well</param>
 		public void SaveImage(string path, bool drawBackground)
 		{
-			Bitmap bmp=new Bitmap(this.AutoScrollMinSize.Width+20,this.AutoScrollMinSize.Height+20,this.CreateGraphics());
-			using(Graphics g = Graphics.FromImage(bmp))
+            //Bitmap bmp = new Bitmap(this.AutoScrollMinSize.Width + 20, this.AutoScrollMinSize.Height + 20, this.CreateGraphics());
+            Bitmap bmp = new Bitmap((int)Abstract.Rectangle.Width, (int)Abstract.Rectangle.Height, this.CreateGraphics());
+            using (Graphics g = Graphics.FromImage(bmp))
 			{
 				g.SmoothingMode = SmoothingMode.AntiAlias;				
 				
 				//g.FillRectangle(new SolidBrush(this.BackgroundColor), 0, 0, this.AutoScrollMinSize.Width+20,this.AutoScrollMinSize.Height+20);
 				if(drawBackground)
-					PaintBackground(g, new Rectangle(0,0,this.AutoScrollMinSize.Width+20,this.AutoScrollMinSize.Height+20));
+					PaintBackground(g, new Rectangle(0,0, (int)Abstract.Rectangle.Width, (int)Abstract.Rectangle.Height));
 				extract.PaintExternal(g);
 			}
 
@@ -3029,6 +3034,13 @@ namespace Netron.GraphLib.UI
 			bmp.Save(path, ici, eps);		
 			return;
 		}
+
+	    public void SaveImage3(string path)
+	    {
+	        Image bmp = GetDiagramImage();
+	        bmp.Save(path);
+
+	    }
 	
 		/// <summary>
 		/// Returns a thumbnail of the diagram
