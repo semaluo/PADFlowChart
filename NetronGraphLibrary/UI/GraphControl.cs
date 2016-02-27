@@ -63,14 +63,15 @@ namespace Netron.GraphLib.UI
 		#region Constants
 		private const int WM_VSCROLL = 0x0115;
 		private const int WM_HSCROLL = 0x0114;
+	    private const int WM_KEYDOWN = 0x0100;
 
-		#endregion
+        #endregion
 
-		#region Delegates and events
-		/// <summary>
-		/// raised when a properties request is issued
-		/// </summary>
-		[Category("Graph"), Description("Occurs on double-clicking the entity or via the context menu."), Browsable(true)]
+        #region Delegates and events
+        /// <summary>
+        /// raised when a properties request is issued
+        /// </summary>
+        [Category("Graph"), Description("Occurs on double-clicking the entity or via the context menu."), Browsable(true)]
 		public event PropertiesInfo OnShowProperties;
 		/// <summary>
 		/// The OnInfo allows to output general purpose info from the canvas to the form. 
@@ -642,6 +643,11 @@ namespace Netron.GraphLib.UI
 			set
 			{
 				mRestrictToCanvas = value;
+			    if (mRestrictToCanvas)
+			    {
+			        AutoScrollMinSize = Size;
+			        //AutoScroll = false;
+			    }
 			}
 		}
 		/// <summary>
@@ -1496,7 +1502,21 @@ namespace Netron.GraphLib.UI
 
 			//pass the event to the hit entity
 			HitHover(p);
-			if(!mLocked)
+
+            if ((Hover != null) && (Hover is Entity))
+            {
+                this.RaiseShowProperties(((Entity) Hover).Properties);
+//                Update();
+            }
+            else
+            {
+                RaiseShowProperties(Properties);
+            }
+
+            Update();
+
+
+            if (!mLocked)
 			{
 				#region Ctrl+Shift left
 				if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (CtrlShift))
@@ -1919,7 +1939,11 @@ namespace Netron.GraphLib.UI
 					{
 						objs[k] = selected[k];
 					}
-					RaiseShowProperties( objs);
+
+				    if (objs.Length > 0)
+				    {
+					    RaiseShowProperties( objs);
+				    }
 				}
 				#endregion
 
@@ -2164,8 +2188,16 @@ namespace Netron.GraphLib.UI
 			Rectangle b = ZoomRectangle(Rectangle.Round(extract.Rectangle));
 
             //TODO: Calculate size for MSWord A4 
-            AutoScrollMinSize = ExpandWithMSWordPageSize(b.Size, g);
-            
+		    if (!RestrictToCanvas)
+		    {
+                AutoScrollMinSize = ExpandWithMSWordPageSize(b.Size, g);
+		    }
+		    else
+		    {
+                AutoScrollMinSize = Size;
+
+            }
+
 
             //prepend transformations for zooming
 
@@ -3479,12 +3511,115 @@ namespace Netron.GraphLib.UI
 				extract.Shapes[k].OnKeyPress(e);
 			}
 		}
-		/// <summary>
-		/// This is the general event handler for key events
-		/// </summary>
-		/// <param name="e">A KeyEventArgs object</param>
-		/// <param name="sender">the sender of the event</param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+
+        /// <summary>
+        /// Capture arrow-up, arrow-down, arrow-left, arrow-right 
+        /// since OnKeyDown cannot capture above special keys.
+        /// </summary>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (mLocked) return base.ProcessDialogKey(keyData);
+
+            switch (keyData)
+            {
+                #region Arrows keys
+                case Keys.Left:
+                    foreach (Shape o in extract.Shapes)
+                    {
+                        if (!o.IsSelected || !o.CanMove || !o.IsVisible || !o.Layer.Visible) continue;
+                        o.Invalidate();
+                        if (mSnap)
+                        {
+                            o.X -= mGridSize;
+                            o.X = o.X - o.X % mGridSize;
+                        }
+                        else
+                        {
+                            o.X -= 1;
+                        }
+                        if (this.mRestrictToCanvas) o.X = Math.Max(o.X, 2);
+                        o.Tracker.Rectangle = o.Rectangle;
+                        o.Invalidate();
+                    }
+                    this.Invalidate(true);
+                    break;
+
+                case Keys.Right:
+                    foreach (Shape o in extract.Shapes)
+                    {
+                        if (!o.IsSelected || !o.CanMove || !o.IsVisible || !o.Layer.Visible) continue;
+                        o.Invalidate();
+                        if (mSnap)
+                        {
+                            o.X += mGridSize;
+                            o.X = o.X - o.X % mGridSize;
+                        }
+                        else
+                        {
+                            o.X += 1;
+                        }
+                        if (mRestrictToCanvas) o.X = Math.Min(o.X, this.Width - o.Width - 2);
+                        o.Tracker.Rectangle = o.Rectangle;
+                        o.Invalidate();
+                    }
+                    this.Invalidate(true);
+                    break;
+
+                case Keys.Up:
+                    foreach (Shape o in extract.Shapes)
+                    {
+                        if (!o.IsSelected || !o.CanMove || !o.IsVisible || !o.Layer.Visible) continue;
+                        o.Invalidate();
+                        if (mSnap)
+                        {
+                            o.Y -= mGridSize;
+                            o.Y = o.Y - o.Y % mGridSize;
+                        }
+                        else
+                        {
+                            o.Y -= 1;
+                        }
+                        if (mRestrictToCanvas) o.Y = Math.Max(o.Y, 2);
+                        o.Tracker.Rectangle = o.Rectangle;
+                        o.Invalidate();
+                    }
+                    this.Invalidate(true);
+                    break;
+
+                case Keys.Down:
+                    foreach (Shape o in extract.Shapes)
+                    {
+                        if (!o.IsSelected || !o.CanMove || !o.IsVisible || !o.Layer.Visible) continue;
+                        o.Invalidate();
+                        if (mSnap)
+                        {
+                            o.Y += mGridSize;
+                            o.Y = o.Y - o.Y % mGridSize;
+                        }
+                        else
+                        {
+                            o.Y += 1;
+                        }
+                        if (mRestrictToCanvas) o.Y = Math.Min(o.Y, this.Height - o.Height - 2);
+                        o.Tracker.Rectangle = o.Rectangle;
+                        o.Invalidate();
+                    }
+                    this.Invalidate(true);
+                    break;
+                    #endregion
+            }
+
+            return base.ProcessDialogKey(keyData);
+        }
+
+        /// <summary>
+        /// This is the general event handler for key events
+        /// </summary>
+        /// <param name="e">A KeyEventArgs object</param>
+        /// <param name="sender">the sender of the event</param>
+        private void OnKeyDown(object sender, KeyEventArgs e)
 		{
 			if(mLocked) return;
 
@@ -3494,7 +3629,7 @@ namespace Netron.GraphLib.UI
 			{
 				CtrlShift = true;
 			}
-			//ALT
+			//ALT-SHIFT
 			if(e.KeyCode==Keys.ShiftKey && e.Alt)
 			{
 				AltShiftKey = true;
@@ -3573,111 +3708,9 @@ namespace Netron.GraphLib.UI
 				this.OnDelete(this,EventArgs.Empty);
 				return;
 			}
-			#endregion
-			
-			#region Arrows keys
+            #endregion
 
-			#region LEFT
-			if(e.KeyCode==Keys.Left && e.Control) 
-			{
-				foreach (Shape o in extract.Shapes)
-				{
-					if(!o.IsSelected || !o.CanMove) continue;
-					o.Invalidate();					
-					if(mSnap)
-					{
-						o.X-=mGridSize;
-						o.X=o.X-o.X%mGridSize;						
-					}
-					else
-					{
-						o.X-=1;
-					}
-					if(this.mRestrictToCanvas)	o.X = Math.Max(o.X,2);
-					o.Tracker.Rectangle=o.Rectangle;
-					o.Invalidate();
-				}
-				this.Invalidate(true);
-				return;
-			}
-			#endregion
 
-			#region RIGHT
-			if(e.KeyCode==Keys.Right && e.Control) 
-			{
-				foreach (Shape o in extract.Shapes)
-				{
-					if(!o.IsSelected || !o.CanMove) continue;
-					o.Invalidate();
-					if(mSnap)
-					{
-						o.X+= mGridSize;						
-						o.X=o.X-o.X%mGridSize;
-					}
-					else
-					{
-						o.X+=1;					
-					}
-					if(mRestrictToCanvas) o.X = Math.Min(o.X, this.Width-o.Width-2);
-					o.Tracker.Rectangle=o.Rectangle;
-					o.Invalidate();
-				}
-				this.Invalidate(true);
-				return;
-			}
-			#endregion
-
-			#region UP
-			if(e.KeyCode==Keys.Up && e.Control) 
-			{
-				foreach (Shape o in extract.Shapes)
-				{
-					if(!o.IsSelected || !o.CanMove) continue;
-					o.Invalidate();
-					if(mSnap)
-					{
-						o.Y-=mGridSize;						
-						o.Y=o.Y-o.Y%mGridSize;
-					}
-					else
-					{						
-						o.Y-=1;						
-					}
-					if(mRestrictToCanvas) o.Y = Math.Max(o.Y, 2);
-					o.Tracker.Rectangle=o.Rectangle;
-					o.Invalidate();
-				}
-				this.Invalidate(true);
-				return;
-			}
-			#endregion
-
-			#region DOWN
-			if(e.KeyCode==Keys.Down && e.Control) 
-			{
-				foreach (Shape o in extract.Shapes)
-				{
-					if(!o.IsSelected || !o.CanMove) continue;
-					o.Invalidate();
-					if(mSnap)
-					{
-						o.Y+=mGridSize;
-						o.Y=o.Y-o.Y%mGridSize;
-					}
-					else
-					{
-						o.Y+=1;
-					}
-					if(mRestrictToCanvas) o.Y = Math.Min(o.Y, this.Height-o.Height-2);
-					o.Tracker.Rectangle=o.Rectangle;
-					o.Invalidate();
-				}
-				this.Invalidate(true);
-				return;
-			}
-			#endregion
-
-			#endregion
 
 			//the rest of the key handlers will require the pouse-position
 			PointF p =this.PointToClient(MousePosition);
@@ -4416,6 +4449,11 @@ namespace Netron.GraphLib.UI
 			{
 				this.Invalidate();
 			}
+
+		    //if (m.Msg == WM_KEYDOWN)
+		    //{
+		    //    int a = 0;
+		    //}
 			base.WndProc (ref m);
 		}
 

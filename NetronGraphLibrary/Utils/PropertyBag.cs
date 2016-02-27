@@ -399,7 +399,7 @@ namespace Netron.GraphLib
 			{
 				object val = this.GetValue(component);
 
-				if(item.DefaultValue == null && val == null)
+				if(item.DefaultValue == null || val == null)
 					return false;
 				else
 					return !val.Equals(item.DefaultValue);

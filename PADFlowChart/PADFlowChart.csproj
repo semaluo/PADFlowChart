@@ -79,6 +79,12 @@
     <Compile Include="WinForm\FlowChartForm.Designer.cs">
       <DependentUpon>FlowChartForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForm\PropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\PropertyForm.Designer.cs">
+      <DependentUpon>PropertyForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialog\LayerDialog.resx">
       <DependentUpon>LayerDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,6 +103,9 @@
     <EmbeddedResource Include="Resource\BitmapResources.resx" />
     <EmbeddedResource Include="WinForm\FlowChartForm.resx">
       <DependentUpon>FlowChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\PropertyForm.resx">
+      <DependentUpon>PropertyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

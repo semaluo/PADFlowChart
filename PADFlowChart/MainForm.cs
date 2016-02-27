@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace PADFlowChart
 {
@@ -16,10 +17,15 @@ namespace PADFlowChart
     {
         //private FlowChartForm[] chartForms 
         private int m_fileCount = 1;
-        //private FlowChartForm chartForm = new FlowChartForm();    
+
+        //private FlowChartForm chartForm = new FlowChartForm();
+        private PropertyForm m_propertyForm = new PropertyForm();
+        
+          
         public MainForm()
         {
             InitializeComponent();
+            m_propertyForm.Show(dockPanel, DockState.DockRight);
             NewFlowChartDiagram();
         }
 
@@ -56,6 +62,8 @@ namespace PADFlowChart
                     FlowChartForm form = new FlowChartForm();
                     form.OpenFile(ofd.FileName);
                     form.Show(dockPanel);
+                    form.OnShowProperties += m_propertyForm.ShowProperty;
+
                 }
             }
         }
@@ -72,6 +80,7 @@ namespace PADFlowChart
             FlowChartForm form = new FlowChartForm();
             form.Text = GenerateFileName();
             form.Show(dockPanel);
+            form.OnShowProperties += m_propertyForm.ShowProperty;
         }
 
         private void menu_file_new_Click(object sender, EventArgs e)
