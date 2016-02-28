@@ -29,30 +29,40 @@ namespace PADFlowChart
         //    set { m_shapeType = value; }
         //}
 
-        public static void DrawShape(Type shapeType, GraphControl graphicControl)
+        public static void DrawShape(Shape shape, GraphControl graphControl)
+        {
+            if (shape == null || graphControl == null) return;
+
+            m_shape = shape;
+            PrepareDraw(graphControl);
+
+
+        }
+
+        public static void DrawShape(Type shapeType, GraphControl graphControl)
         {
             if (shapeType == null || !(shapeType.IsSubclassOf(typeof(Shape))))
             {
                 return;
             }
 
-            if (graphicControl == null)
+            if (graphControl == null)
             {
                 return;
             }
 
             m_shapeType = shapeType;
-            m_graphControl = graphicControl;
+            PrepareDraw(graphControl);
+        }
 
-            m_graphControl.Cursor = MouseCursors.Cross; 
+        private static void PrepareDraw(GraphControl graphControl)
+        {
+            m_graphControl = graphControl;
+
+            m_graphControl.Cursor = MouseCursors.Cross;
 
             m_startDraw = true;
             m_graphControl.Locked = true;
-            //m_shape.IsVisible = false;
-            //if (!m_graphControl.Shapes.Contains(shape))
-            //{
-            //    m_graphControl.AddShape(m_shape);
-            //}
 
             m_graphControl.MouseDown -= OnMouseDown;
             m_graphControl.MouseMove -= OnMouseMove;
@@ -62,14 +72,11 @@ namespace PADFlowChart
             m_graphControl.MouseDown += OnMouseDown;
             m_graphControl.MouseMove += OnMouseMove;
             m_graphControl.MouseUp += OnMouseUp;
-
-
-
         }
 
         private static void OnMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (m_graphControl == null || m_shapeType == null) return;
+            if (m_graphControl == null || (m_shapeType == null && m_shape == null)) return;
 
             if ( e.Button == MouseButtons.Right)
             {
@@ -78,24 +85,16 @@ namespace PADFlowChart
 
             if (m_startDraw)
             {
-                //m_startPoint = new PointF(e.Location.X, e.Location.Y);
                 m_startPoint = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
-                m_shape = (Shape)Activator.CreateInstance(m_shapeType);
+                if (m_shape == null)
+                {
+                    m_shape = (Shape)Activator.CreateInstance(m_shapeType);
+                }
+
                 m_shape.Rectangle = new RectangleF(m_startPoint,new Size(0,0));
                 m_shape.IsVisible = true;
                 m_graphControl.AddShape(m_shape);
             }
-            /*
-            this.formStatusLabel.Text = string.Format("MouseDown : X = {0},Y = {1}", e.Location.X, e.Location.Y);
-            m_startPoint = new PointF(e.Location.X, e.Location.Y);
-            if (_mDrawShape)
-            {
-
-                _mShape = new SequenceShape();
-                _mShape.Rectangle = new System.Drawing.RectangleF(e.Location, new SizeF(1, 1));
-                graphControl.AddShape(_mShape);
-            }
-            */
         }
 
 
@@ -159,25 +158,6 @@ namespace PADFlowChart
                 CompleteClear();
 
             }
-            /*
-            if (_mDrawShape)
-            {
-                graphControl.Locked = false;
-                float t_left = (m_startPoint.X < e.Location.X ? m_startPoint.X : e.Location.X);
-                float t_right = (m_startPoint.X >= e.Location.X ? m_startPoint.X : e.Location.X);
-                float t_top = (m_startPoint.Y < e.Location.Y ? m_startPoint.Y : e.Location.Y);
-                float t_bottom = (m_startPoint.Y >= e.Location.Y ? m_startPoint.Y : e.Location.Y);
-
-                _mShape.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
-                _mShape.Invalidate();
-
-                _mDrawShape = false;
-                _mShape = null;
-
-            }
-
-    */
-
 
         }
 

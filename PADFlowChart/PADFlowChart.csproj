@@ -65,6 +65,8 @@
     <Compile Include="Shape\BlockShape.cs" />
     <Compile Include="Shape\EndShape.cs" />
     <Compile Include="Shape\FlowChartConnection.cs" />
+    <Compile Include="Shape\SwitchConnection.cs" />
+    <Compile Include="Shape\SwitchShape.cs" />
     <Compile Include="Shape\IfShape.cs" />
     <Compile Include="Shape\LoopShape.cs" />
     <Compile Include="Shape\SequenceShape.cs" />
@@ -78,6 +80,12 @@
     </Compile>
     <Compile Include="WinForm\FlowChartForm.Designer.cs">
       <DependentUpon>FlowChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForm\PropertyForm.cs">
       <SubType>Form</SubType>
@@ -104,6 +112,9 @@
     <EmbeddedResource Include="WinForm\FlowChartForm.resx">
       <DependentUpon>FlowChartForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForm\PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +137,8 @@
     <Content Include="Resource\copy.png" />
     <Content Include="Resource\ArrowDown.png" />
     <Content Include="Resource\ArrowUp.png" />
+    <Content Include="Resource\Cancel.png" />
+    <Content Include="Resource\OK.png" />
     <Content Include="Resource\paste.png" />
     <Content Include="Resource\new.png" />
     <Content Include="Resource\btn_arrow.bmp" />
