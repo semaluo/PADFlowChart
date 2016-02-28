@@ -86,6 +86,7 @@ namespace PADFlowChart
             if (m_startDraw)
             {
                 m_startPoint = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
+                m_startPoint = m_graphControl.UnzoomPoint(m_startPoint);
                 if (m_shape == null)
                 {
                     m_shape = (Shape)Activator.CreateInstance(m_shapeType);
@@ -104,14 +105,18 @@ namespace PADFlowChart
         {
             if (m_startDraw && m_graphControl !=null && m_shape != null)
             {
-                m_shape.Invalidate();
+                m_graphControl.Invalidate();
+
                 PointF t_point = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
+                t_point = m_graphControl.UnzoomPoint(t_point);
+
                 float t_left = (m_startPoint.X < t_point.X ? m_startPoint.X : t_point.X);
                 float t_right = (m_startPoint.X >= t_point.X ? m_startPoint.X : t_point.X);
                 float t_top = (m_startPoint.Y < t_point.Y ? m_startPoint.Y : t_point.Y);
                 float t_bottom = (m_startPoint.Y >= t_point.Y ? m_startPoint.Y : t_point.Y);
                 m_shape.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
-                m_shape.Invalidate();
+
+                m_graphControl.Invalidate();
             }
 
             /*
@@ -138,6 +143,8 @@ namespace PADFlowChart
                 m_graphControl.Cursor = System.Windows.Forms.Cursors.Default;
 
                 PointF t_point = new PointF(e.X - m_graphControl.AutoScrollPosition.X, e.Y - m_graphControl.AutoScrollPosition.Y);
+                t_point = m_graphControl.UnzoomPoint(t_point);
+
                 float t_left = (m_startPoint.X < t_point.X ? m_startPoint.X : t_point.X);
                 float t_right = (m_startPoint.X >= t_point.X ? m_startPoint.X : t_point.X);
                 float t_top = (m_startPoint.Y < t_point.Y ? m_startPoint.Y : t_point.Y);
@@ -153,7 +160,8 @@ namespace PADFlowChart
                     t_bottom = t_top + m_defaultHeight;
                 }
                 m_shape.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
-                m_shape.Invalidate();
+
+                m_graphControl.Invalidate();
 
                 CompleteClear();
 

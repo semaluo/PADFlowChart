@@ -106,12 +106,12 @@ namespace Netron.GraphLib
 		        }
 
 		        GraphLayer layer = mLayers["Default"];
-                if (layer == null)
-                {
-                    layer = new GraphLayer("Default", Color.WhiteSmoke, 100);
-                    layer.UseColor = false; //use colors only for upper layers
-                    mLayers.Add(layer);
-                }
+                //if (layer == null)
+                //{
+                //    layer = new GraphLayer("Default", Color.WhiteSmoke, 100);
+                //    layer.UseColor = false; //use colors only for upper layers
+                //    mLayers.Add(layer);
+                //}
 
                 return layer;
             }
@@ -259,8 +259,6 @@ namespace Netron.GraphLib
             }
             #endregion
 
-            //			Init();
-
             this.mShapes = info.GetValue("mShapes", typeof(ShapeCollection)) as ShapeCollection;
 			this.mConnections = info.GetValue("mConnections", typeof(ConnectionCollection)) as ConnectionCollection;
 			
@@ -280,8 +278,6 @@ namespace Netron.GraphLib
                 }
 
                 mCurrentLayer = DefaultLayer;
-		        System.Diagnostics.Trace.Write("CurrentLaye == DefaultLayer:");
-                System.Diagnostics.Trace.WriteLine(mCurrentLayer == mLayers["Default"]);
 
                 if (mCurrentLayer != null) mCurrentLayer.Visible = true;
                 mLayers.ClearComplete += new EventHandler(Layers_ClearComplete);
@@ -294,13 +290,13 @@ namespace Netron.GraphLib
         private void Init()
 		{
 			//the shape layers
-			//GraphLayer layer = new GraphLayer("Default",Color.WhiteSmoke,100);
-   //         layer.UseColor = false; //use colors only for upper layers
+			GraphLayer layer = new GraphLayer("Default",Color.WhiteSmoke,100);
+            layer.UseColor = false; //use colors only for upper layers
 
 			mLayers = new GraphLayerCollection();
+            mLayers.Add(layer);
 			mLayers.ClearComplete+=new EventHandler(Layers_ClearComplete);
 			//the default layer
-//            mLayers.Add(layer);
 			
 			BindEntityCollectionEvents();
 

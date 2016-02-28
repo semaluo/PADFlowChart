@@ -57,12 +57,13 @@ namespace PADFlowChart
             }
 
             editor.Shape = shape;
-            editor.Location = Point.Round(editor.Shape.Rectangle.Location + new SizeF(shape.Site.AutoScrollPosition.X, shape.Site.AutoScrollPosition.Y));
-//            editor.Location = Point.Round(editor.Shape.Rectangle.Location);
+            editor.Location = Point.Round(shape.Site.ZoomPoint(editor.Shape.Rectangle.Location) + new SizeF(shape.Site.AutoScrollPosition.X, shape.Site.AutoScrollPosition.Y));
             editor.Width = (int)editor.Shape.Rectangle.Width;
             editor.Height = (int)editor.Shape.Rectangle.Height;
+            Point t_size = new Point(editor.Width, editor.Height);
+            editor.Size = (Size)shape.Site.ZoomPoint(t_size);
             editor.Font = new Font("Tahoma", 8.5F); 
-            editor.BackColor = shape.ShapeColor;//            currentShape.ShapeColor;
+            editor.BackColor = shape.ShapeColor;
             editor.Visible = false;
             return editor;
         }

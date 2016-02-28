@@ -139,6 +139,7 @@
     <Content Include="Resource\ArrowUp.png" />
     <Content Include="Resource\Cancel.png" />
     <Content Include="Resource\OK.png" />
+    <Content Include="Resource\ParallelStacks.ZoomControl.png" />
     <Content Include="Resource\paste.png" />
     <Content Include="Resource\new.png" />
     <Content Include="Resource\btn_arrow.bmp" />
@@ -151,6 +152,8 @@
     <Content Include="Resource\cursor_arrow.png" />
     <Content Include="Resource\Save.png" />
     <Content Include="Resource\SaveAll.png" />
+    <Content Include="Resource\ZoomIn.png" />
+    <Content Include="Resource\ZoomOut.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TechDoc\" />

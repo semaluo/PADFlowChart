@@ -1294,14 +1294,15 @@ namespace Netron.GraphLib.UI
 
 			foreach (Shape o in extract.Shapes)
 			{
-				if(!o.Layer.Visible) continue;
-				foreach (Connector c in o.Connectors)
-					if (c.Hit(r))
-					{
-						//String s = "\"" + c.Description + "\" connector of \"" + c.Shape.GetType().FullName + "\" object.";
-						//Trace.WriteLine("The mouse hit the connector " +c.Description);
-						return c;
-					}
+				if(!o.Layer.Visible || !o.IsVisible) continue;
+			    foreach (Connector c in o.Connectors)
+			    {
+                    if (c.Hit(r))
+                    {
+                        return c;
+                    }
+                }
+
 			}
 
 			EntityCollection ec = extract.paintables;
@@ -1312,54 +1313,7 @@ namespace Netron.GraphLib.UI
 				if(!ec[k].Layer.Visible) continue;
 				if(ec[k].Hit(r)) return ec[k];
 			}
-			/*
-			#region ------------------ test connector hits
-			foreach (Shape o in extract.Shapes)
-			{
-				if(!o.Layer.Visible) continue;
-				foreach (Connector c in o.Connectors)
-					if (c.Hit(r))
-					{
-						//String s = "\"" + c.Description + "\" connector of \"" + c.Shape.GetType().FullName + "\" object.";
-						//Trace.WriteLine("The mouse hit the connector " +c.Description);
-						return c;
-					}
-			}
-			#endregion
-			#region------------------ test shape hits
 
-			ShapeCollection col = new ShapeCollection();
-
-			foreach (Shape o in extract.Shapes)
-			{
-				if(!o.Layer.Visible) continue;
-				if (o.Hit(r))
-				{
-					col.Add(o);
-				}
-			}
-			if(col.Count==1)
-				return col[0];
-			else if(col.Count>1)
-			{
-				col.Sort("ZOrder",SortDirection.Ascending); 
-				return col[0];
-			}
-
-			#endregion
-			#region ---------------- test connection hits
-			foreach (Shape o in extract.Shapes)
-				foreach (Connector c in o.Connectors)
-					foreach (Connection n in c.Connections)
-					{
-						if(n.From.BelongsTo.Layer.Visible && n.To.BelongsTo.Layer.Visible) 
-						{
-							if (n.Hit(r))	return n;
-						}
-					}
-			#endregion
-			//--------------- nothing was hit at all...
-			*/
 			return null;
 		}
 
@@ -1470,43 +1424,50 @@ namespace Netron.GraphLib.UI
 
         protected override void OnMouseDown(MouseEventArgs e)
 		{
-            #region FIX2016020902
-                base.OnMouseDown(e);
-            #endregion
+            base.OnMouseDown(e);
 
 			//make sure the canvas has the focus			
 			this.Focus();
 
-            #region FIX2016021401
             if (mCaptureObj != null)
             {
                 mCaptureObj.RaiseMouseDown(e);
                 return;
             }
-            #endregion
 
-            #region FIX2016021201
-            if (mLocked)
-            {
-                return;
-            }
-            #endregion
+            PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
 
             // Get a point adjusted by the current scroll position and zoom factor
-            PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
-			//give priority to the widgets, if visible
-			if(mShowAutomataController && automataController.Hit(new Rectangle(e.X,e.Y,2,2)))
-				automataController.OnMouseDown(p);
+            //give priority to the widgets, if visible
+            if (mShowAutomataController && automataController.Hit(new Rectangle(e.X, e.Y, 2, 2)))
+                automataController.OnMouseDown(p);
 
-			p = UnzoomPoint(Point.Round(p));
+            p = UnzoomPoint(Point.Round(p));
+
+            //            HitHover(p);
+            Hover = TestHover(p);
+            if (mLocked)
+            {
+                if ((e.Button == MouseButtons.Left))
+                {
+                    if (Hover is Entity)
+                    {
+                        (Hover as Entity).RaiseMouseDown(e);
+                    }
+                    SetCursor(p);
+                }
+                return;
+            }
+
+
+
 
 			//pass the event to the hit entity
-			HitHover(p);
+//			HitHover(p);
 
-            if ((Hover != null) && (Hover is Entity))
+            if (Hover is Entity)
             {
                 this.RaiseShowProperties(((Entity) Hover).Properties);
-//                Update();
             }
             else
             {
@@ -1516,291 +1477,263 @@ namespace Netron.GraphLib.UI
             Update();
 
 
-            if (!mLocked)
+			#region Ctrl+Shift left
+			if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (CtrlShift))
 			{
-				#region Ctrl+Shift left
-				if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (CtrlShift))
-				{
-					this.Zoom +=0.1F;
-					CtrlShift = false;
-					return;
-				}
-				#endregion
+				this.Zoom +=0.1F;
+				CtrlShift = false;
+				return;
+			}
+			#endregion
 
-				#region Ctrl+Shift right
-				if((e.Button==MouseButtons.Right) && (e.Clicks==1) && (CtrlShift))
-				{
-					this.Zoom -=0.1F;
-					CtrlShift = false;
-					this.ContextMenu = null;
-					return;
-				}
+			#region Ctrl+Shift right
+			if((e.Button==MouseButtons.Right) && (e.Clicks==1) && (CtrlShift))
+			{
+				this.Zoom -=0.1F;
+				CtrlShift = false;
+				this.ContextMenu = null;
+				return;
+			}
 
 		
 
-				#endregion
+			#endregion
 
-				#region Alt+Shift Click for dragdrop
-				if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (AltShiftKey))
+			#region Alt+Shift Click for dragdrop
+			if((e.Button==MouseButtons.Left) && (e.Clicks==1) && (AltShiftKey))
+			{
+				Shape sh = null;
+				if(this.SelectedShapes.Count>0)
 				{
-					Shape sh = null;
-					if(this.SelectedShapes.Count>0)
+					sh = this.SelectedShapes[0];					
+					this.DoDragDrop(sh as IShape, DragDropEffects.Copy);
+				}
+
+				AltShiftKey = false;
+				this.ContextMenu = null;
+				return;
+			}
+
+			#endregion
+
+			#region Double click left
+			//shows the properties of the underlying object
+			if ((e.Button == MouseButtons.Left) && (e.Clicks == 2))
+			{	
+				//do we hit something under the cursor?
+				HitHover(p);
+
+				if (Hover is Entity)
+				{					
+					this.RaiseShowProperties(((Entity) Hover).Properties);
+					Update();
+
+                    #region FIX2016020901
+                    (Hover as Entity).RaiseMouseDown(e);
+                    #endregion
+
+                    return;
+				}
+			}
+			#endregion
+
+			#region SINGLE click right
+			if (e.Button == MouseButtons.Right)
+			{
+				if (Hover != null)
+				{
+					if (!Hover.IsSelected)
 					{
-						sh = this.SelectedShapes[0];					
-						this.DoDragDrop(sh as IShape, DragDropEffects.Copy);
+						//Select s = new Select();
+						Deselect();
+						//s.Add(Hover, true);
+						//extract.History.Do(s);
+						Hover.IsSelected=true;
+						Update();
+					}
+				}
+
+				if(this.mEnableContextMenu )
+				{
+					if(OnContextMenu !=null) OnContextMenu(this, e);
+
+					this.ContextMenu=new ContextMenu();
+
+					ResetToBaseMenu();
+					
+					if(Hover is Shape)
+					{
+						//MenuItem[] tmp = new MenuItem[mContextMenu.MenuItems.Count];
+						//mContextMenu.MenuItems.CopyTo(tmp,0);	
+						
+						MenuItem[] additionals = (Hover as Shape).ShapeMenu();
+						if(additionals != null)	
+						{
+							this.ContextMenu.MenuItems.Add("-");
+							this.ContextMenu.MenuItems.AddRange(additionals);
+						}
+						
+					}
+					else if(Hover is Connection)
+					{
+						if((Hover as Connection).LinePath== "Rectangular") return;
+						this.insertionPoint = p;
+						this.ContextMenu.MenuItems.Add("-");
+						MenuItem[] subconnection = new MenuItem[2]{
+																		new MenuItem("Add point",new EventHandler(AddConnectionPoint)),
+																		new MenuItem("Delete point",new EventHandler(RemoveConnectionPoint))
+																	};
+						this.ContextMenu.MenuItems.Add(new MenuItem("Connection",subconnection));
+
+						
+					
+					}
+				}
+				
+			}
+			#endregion
+
+			#region SINGLE click left
+
+			if ((e.Button == MouseButtons.Left) && (e.Clicks == 1))
+			{
+				// Alt+Click allows fast creation of elements
+				if ((shapeObject == null) && (ModifierKeys == Keys.Alt))
+				{
+					if(!this.mLocked)
+						shapeObject = this.GetShapeInstance(lastAddedShapeKey);
+
+				}
+				if (shapeObject != null)
+				{
+					shapeObject.Invalidate();
+					RectangleF r = shapeObject.Rectangle;
+					shapeObject.Rectangle = new RectangleF(p.X, p.Y, r.Width, r.Height);
+					shapeObject.Invalidate();					
+					extract.Insert(shapeObject);
+					shapeObject = null;
+					return;
+				}
+				//reset the selector marquee
+				selector = null;
+				//see if something under the cursor
+				HitHover(p); 
+					
+				if (Hover != null)//the click resulted in an object; shape or connection
+				{
+					if (Hover is Connector)  
+					{
+						//more than one connection allowed?
+						if(!((Connector) Hover).AllowMultipleConnections && ((Connector) Hover).Connections.Count>0) return;
+						//allowed new connections from the connector?
+						if(!((Connector) Hover).AllowNewConnectionsFrom) return;
+						//allow connections on the control level?
+						if(!mAllowAddConnection) return;
+
+                        #region FIX2016021301
+						if (((Connector) Hover).BelongsTo is IConnectable)
+						{
+						    connection = ((IConnectable) ((Connector) Hover).BelongsTo).CreateConnection((Connector) Hover);
+						}
+						else
+						{
+                            connection = new Connection(this);
+						}
+                        //FIX2016021301 DEL //connection = new Connection(this);
+                        #endregion
+
+                        connection.Site=this;
+						connection.From = (Connector) Hover;
+						connection.ToPoint = p; //we use the mouse as To as long as we haven't a real connector, which will occur in the OnMouseUp
+						Hover.Invalidate();
+						Capture = true;
+						Update();
+						return;
 					}
 
-					AltShiftKey = false;
-					this.ContextMenu = null;
+					// select object or add to the list of selected objects
+					if (!Hover.IsSelected)
+					{
+						if (ModifierKeys != Keys.Shift) Deselect(); //s is empty only if shift is pushed
+						//shift-click adds only ONE item while a normal click can change a set of shapes to
+						//another state.
+						Hover.IsSelected=true;
+						Update();
+					}
+					//fix the node if the layout is manipulating the position
+					//					if (typeof(Shape).IsInstanceOfType(Hover))
+					//					{
+					//						foreach(Shape sho in extract.Shapes) sho.IsFixed=false;
+					//						((Shape) Hover).IsFixed=true;
+					//					}
+
+					// search tracking handle
+					Point h = new Point(0, 0);
+					if (extract.Shapes.Contains(Hover))
+					{
+						Shape o = (Shape) Hover;
+						h = o.Tracker.Hit(p);
+					}
+
+					foreach (Shape j in extract.Shapes)
+					{
+						if (j.Tracker != null) //will only be one tracker per hit
+						{
+							j.Tracker.Start(p, h);
+							foreach(Connector c in j.Connectors)
+							{
+								foreach(Connection cn in c.Connections)
+									if( cn.Tracker != null )
+										cn.Tracker.Start(p,Point.Empty);
+							}
+									
+						}
+
+					}
+
+					
+					// Search tracker handle of connection and start tracking
+					if( Hover is Connection )
+					{
+						connection = Hover as Connection;
+						h = connection.Tracker.Hit(p);
+						connection.Tracker.Start(p,h);
+					}
+
+					mDoTrack = true;
+                    Capture = true;
+
+					if ((Hover != null) && (Hover is Entity))
+					{
+						(Hover as Entity).RaiseMouseDown(e);
+					}
+
+					SetCursor(p);
 					return;
 				}
 
-				#endregion
+				//p=new PointF(e.X,e.Y);
+				selector = new Selector(p, this);
 
-				#region Double click left
-				//shows the properties of the underlying object
-				if ((e.Button == MouseButtons.Left) && (e.Clicks == 2))
-				{	
-					//do we hit something under the cursor?
-					HitHover(p);
-
-					if ((Hover != null) && (typeof(Entity).IsInstanceOfType(Hover)))
-					{					
-						this.RaiseShowProperties(((Entity) Hover).Properties);
-						Update();
-
-                        #region FIX2016020901
-                        (Hover as Entity).RaiseMouseDown(e);
-                        #endregion
-
-                        return;
-					}
-				}
-				#endregion
-
-				#region SINGLE click right
-				if (e.Button == MouseButtons.Right)
-				{
-					if (Hover != null)
-					{
-						if (!Hover.IsSelected)
-						{
-							//Select s = new Select();
-							Deselect();
-							//s.Add(Hover, true);
-							//extract.History.Do(s);
-							Hover.IsSelected=true;
-							Update();
-						}
-					}
-
-					if(this.mEnableContextMenu )
-					{
-						if(OnContextMenu !=null) OnContextMenu(this, e);
-
-						this.ContextMenu=new ContextMenu();
-
-						ResetToBaseMenu();
-					
-						if(Hover is Shape)
-						{
-							//MenuItem[] tmp = new MenuItem[mContextMenu.MenuItems.Count];
-							//mContextMenu.MenuItems.CopyTo(tmp,0);	
-						
-							MenuItem[] additionals = (Hover as Shape).ShapeMenu();
-							if(additionals != null)	
-							{
-								this.ContextMenu.MenuItems.Add("-");
-								this.ContextMenu.MenuItems.AddRange(additionals);
-							}
-						
-						}
-						else if(typeof(Connection).IsInstanceOfType(Hover))
-						{
-							if((Hover as Connection).LinePath== "Rectangular") return;
-							this.insertionPoint = p;
-							this.ContextMenu.MenuItems.Add("-");
-							MenuItem[] subconnection = new MenuItem[2]{
-																		  new MenuItem("Add point",new EventHandler(AddConnectionPoint)),
-																		  new MenuItem("Delete point",new EventHandler(RemoveConnectionPoint))
-																	  };
-							this.ContextMenu.MenuItems.Add(new MenuItem("Connection",subconnection));
-
-						
-					
-						}
-					}
-				
-				}
-				#endregion
-
-				#region SINGLE click left
-
-				if ((e.Button == MouseButtons.Left) && (e.Clicks == 1))
-				{
-					// Alt+Click allows fast creation of elements
-					if ((shapeObject == null) && (ModifierKeys == Keys.Alt))
-					{
-						if(!this.mLocked)
-							shapeObject = this.GetShapeInstance(lastAddedShapeKey);
-
-					}
-					if (shapeObject != null)
-					{
-						shapeObject.Invalidate();
-						RectangleF r = shapeObject.Rectangle;
-						shapeObject.Rectangle = new RectangleF(p.X, p.Y, r.Width, r.Height);
-						shapeObject.Invalidate();					
-						extract.Insert(shapeObject);
-						shapeObject = null;
-						return;
-					}
-					//reset the selector marquee
-					selector = null;
-					//see if something under the cursor
-					HitHover(p); 
-					
-					if (Hover != null)//the click resulted in an object; shape or connection
-					{
-						if (Hover is Connector)  
-						{
-							//more than one connection allowed?
-							if(!((Connector) Hover).AllowMultipleConnections && ((Connector) Hover).Connections.Count>0) return;
-							//allowed new connections from the connector?
-							if(!((Connector) Hover).AllowNewConnectionsFrom) return;
-							//allow connections on the control level?
-							if(!mAllowAddConnection) return;
-
-                            #region FIX2016021301
-						    if (((Connector) Hover).BelongsTo is IConnectable)
-						    {
-						        connection = ((IConnectable) ((Connector) Hover).BelongsTo).CreateConnection((Connector) Hover);
-						    }
-						    else
-						    {
-                                connection = new Connection(this);
-						    }
-                            //FIX2016021301 DEL //connection = new Connection(this);
-                            #endregion
-
-                            connection.Site=this;
-							connection.From = (Connector) Hover;
-							connection.ToPoint = p; //we use the mouse as To as long as we haven't a real connector, which will occur in the OnMouseUp
-							Hover.Invalidate();
-							Capture = true;
-							Update();
-							return;
-						}
-
-						// select object or add to the list of selected objects
-						if (!Hover.IsSelected)
-						{
-							if (ModifierKeys != Keys.Shift) Deselect(); //s is empty only if shift is pushed
-							//shift-click adds only ONE item while a normal click can change a set of shapes to
-							//another state.
-							Hover.IsSelected=true;
-							Update();
-						}
-						//fix the node if the layout is manipulating the position
-						//					if (typeof(Shape).IsInstanceOfType(Hover))
-						//					{
-						//						foreach(Shape sho in extract.Shapes) sho.IsFixed=false;
-						//						((Shape) Hover).IsFixed=true;
-						//					}
-
-						// search tracking handle
-						Point h = new Point(0, 0);
-						if (extract.Shapes.Contains(Hover))
-						{
-							Shape o = (Shape) Hover;
-							h = o.Tracker.Hit(p);
-						}
-
-						foreach (Shape j in extract.Shapes)
-						{
-							if (j.Tracker != null) //will only be one tracker per hit
-							{
-								j.Tracker.Start(p, h);
-								foreach(Connector c in j.Connectors)
-								{
-									foreach(Connection cn in c.Connections)
-										if( cn.Tracker != null )
-											cn.Tracker.Start(p,Point.Empty);
-								}
-									
-							}
-
-						}
-
-					
-						// Search tracker handle of connection and start tracking
-						if( Hover is Connection )
-						{
-							connection = Hover as Connection;
-							h = connection.Tracker.Hit(p);
-							connection.Tracker.Start(p,h);
-						}
-
-						mDoTrack = true;
-                        Capture = true;
-
-						if ((Hover != null) && (Hover is Entity))
-						{
-							(Hover as Entity).RaiseMouseDown(e);
-						}
-
-						SetCursor(p);
-						return;
-					}
-
-					//p=new PointF(e.X,e.Y);
-					selector = new Selector(p, this);
-			
-				
-				
-				
-				}
-				#endregion
-			}
-			else //allow the adornments only
-			{
-                #region FIX2016020901
-                //				if ((e.Button == MouseButtons.Left) && (e.Clicks == 1)) //FIX2016020901 DEL
-                if ((e.Button == MouseButtons.Left)) //FIX2016020901 ADD
                 #endregion
-                {
 
-                    if (Hover != null)//the click resulted in an object; shape or connection
-					{
-						if (Hover is Entity)
-						{
-							(Hover as Entity).RaiseMouseDown(e);
-						}
 
-						SetCursor(p);
-						return;
-					}
-
-                    //p=new PointF(e.X,e.Y);
-                    #region FIX2016020903
-                    //selector = new Selector(p, this); //FIX2016020903 DEL: 
-                    #endregion
-                }
             }
-
-
-			
-	
-
 			
 		}
 
-		/// <summary>
-		/// Adds a connection point to a connection
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AddConnectionPoint(object sender, EventArgs e)
+        private Entity TestHover(PointF p)
+        {
+            return HitEntity(p);;
+
+        }
+
+        /// <summary>
+        /// Adds a connection point to a connection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddConnectionPoint(object sender, EventArgs e)
 		{
 
 			//freeArrows.Add(new FreeArrow(new PointF(0,0),insertionPoint, "(" + insertionPoint.X + "," + insertionPoint.Y + ")"));			
@@ -1835,21 +1768,18 @@ namespace Netron.GraphLib.UI
             }
             #endregion
 
-
-            #region FIX2016021201
             if (mLocked)
-		    {
-		        return;
-		    }
-            #endregion
+            {
+                return;
+            }
 
-			// Get current mouse point adjusted by the current scroll position and zoom factor
-			PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
+            // Get current mouse point adjusted by the current scroll position and zoom factor
+            PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
 			p = UnzoomPoint(Point.Round(p));
-			
-			#region MouseUp to the diagram: pass the event to the entity
-			HitHover(p);
-			if (Hover is Entity)
+
+            #region MouseUp to the diagram: pass the event to the entity
+            HitHover(p);
+            if (Hover is Entity)
 			{
 				(Hover as Entity).RaiseMouseUp(e);
 			}
@@ -4520,6 +4450,10 @@ namespace Netron.GraphLib.UI
 				case "Locked" : e.Value = this.mLocked; break;
 				case "EnableTooltip" : e.Value = this.EnableToolTip; break;
 				case "ShowAutomataController": e.Value = this.ShowAutomataController; break;
+                case "Layers": e.Value = this.Abstract.Layers; break;
+                case "CurrentLayer": e.Value = this.Abstract.CurrentLayer; break;
+                case "Zoom": e.Value = this.Zoom; break;
+                default:
 					break;
 			}
 		}
@@ -4613,8 +4547,16 @@ namespace Netron.GraphLib.UI
 				case "ShowAutomataController":
 					this.ShowAutomataController = (bool) e.Value;
 					break;
-			}
-		}
+                case "Zoom":
+                    this.Zoom = (float)e.Value;
+                    break;
+
+                    //case "CurrentLayer":
+                    //    this.Abstract.CurrentLayer = (bool)e.Value;
+                    //    break;
+
+            }
+        }
 
 		
 		/// <summary>
@@ -4649,13 +4591,16 @@ namespace Netron.GraphLib.UI
 				bag.Properties.Add(new PropertySpec("Locked",typeof(bool),"Graph","Gets or sets whether the diagram is locked.",false));
 				bag.Properties.Add(new PropertySpec("EnableTooltip",typeof(bool),"Appearance","Gets or sets whether the tooltip is active.",true));
 				bag.Properties.Add(new PropertySpec("ShowAutomataController",typeof(bool),"Appearance","Gets or sets whether the automata controller widget is visible.",false));
-				//					PropertySpec spec=new PropertySpec("MDI children",typeof(string[]));
-				//					spec.Attributes=new Attribute[]{new System.ComponentModel.ReadOnlyAttribute(true)};
-				//					bag.Properties.Add(spec);
-							
-					
-			}
-			catch(Exception exc)
+                bag.Properties.Add(new PropertySpec("Layers", typeof(GraphLayerCollection), "Graph", "The layers of the GraphControl"));
+                bag.Properties.Add(new PropertySpec("CurrentLayer", typeof(GraphLayer), "Graph", "The current active layers of the GraphControl"));
+                bag.Properties.Add(new PropertySpec("Zoom", typeof(float), "Graph", "The zoom factor of GraphControl"));
+                //					PropertySpec spec=new PropertySpec("MDI children",typeof(string[]));
+                //					spec.Attributes=new Attribute[]{new System.ComponentModel.ReadOnlyAttribute(true)};
+                //					bag.Properties.Add(spec);
+
+
+            }
+            catch (Exception exc)
 			{
 				Trace.WriteLine(exc.Message,"GraphControl.AddProperties");
 			}

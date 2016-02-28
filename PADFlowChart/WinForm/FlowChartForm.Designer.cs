@@ -56,6 +56,8 @@
             this.flowchart_toolbar_paste = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_back_to_upperLayer = new System.Windows.Forms.ToolStripButton();
             this.graphControl = new Netron.GraphLib.UI.GraphControl();
+            this.flowchart_toolbar_zoomout = new System.Windows.Forms.ToolStripButton();
+            this.flowchart_toolbar_zoomin = new System.Windows.Forms.ToolStripButton();
             this.flowchart_menu.SuspendLayout();
             this.flowchart_toolbar_left.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -275,7 +277,9 @@
             this.flowchart_toolbar_top.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flowchart_toolbar_copy,
             this.flowchart_toolbar_paste,
-            this.flowchart_toolbar_back_to_upperLayer});
+            this.flowchart_toolbar_back_to_upperLayer,
+            this.flowchart_toolbar_zoomout,
+            this.flowchart_toolbar_zoomin});
             this.flowchart_toolbar_top.Location = new System.Drawing.Point(37, 0);
             this.flowchart_toolbar_top.Name = "flowchart_toolbar_top";
             this.flowchart_toolbar_top.Size = new System.Drawing.Size(465, 25);
@@ -354,6 +358,26 @@
             this.graphControl.OnDirtyChanged += new Netron.GraphLib.DirtyChanged(this.graphControl_OnDirtyChanged);
             this.graphControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graphControl_MouseDown);
             // 
+            // flowchart_toolbar_zoomout
+            // 
+            this.flowchart_toolbar_zoomout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.flowchart_toolbar_zoomout.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_zoomout.Image")));
+            this.flowchart_toolbar_zoomout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.flowchart_toolbar_zoomout.Name = "flowchart_toolbar_zoomout";
+            this.flowchart_toolbar_zoomout.Size = new System.Drawing.Size(23, 22);
+            this.flowchart_toolbar_zoomout.Text = "放大";
+            this.flowchart_toolbar_zoomout.Click += new System.EventHandler(this.flowchart_toolbar_zoomout_Click);
+            // 
+            // flowchart_toolbar_zoomin
+            // 
+            this.flowchart_toolbar_zoomin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.flowchart_toolbar_zoomin.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_zoomin.Image")));
+            this.flowchart_toolbar_zoomin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.flowchart_toolbar_zoomin.Name = "flowchart_toolbar_zoomin";
+            this.flowchart_toolbar_zoomin.Size = new System.Drawing.Size(23, 22);
+            this.flowchart_toolbar_zoomin.Text = "缩小";
+            this.flowchart_toolbar_zoomin.Click += new System.EventHandler(this.flowchart_toolbar_zoomin_Click);
+            // 
             // FlowChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -410,5 +434,7 @@
         private System.Windows.Forms.ToolStripButton flowchart_toolbar_back_to_upperLayer;
         private System.Windows.Forms.ToolStripMenuItem flowchart_menu_layer;
         private System.Windows.Forms.ToolStripMenuItem flowchart_menu_layer_go_upper;
+        private System.Windows.Forms.ToolStripButton flowchart_toolbar_zoomout;
+        private System.Windows.Forms.ToolStripButton flowchart_toolbar_zoomin;
     }
 }

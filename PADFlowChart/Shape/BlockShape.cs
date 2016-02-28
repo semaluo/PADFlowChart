@@ -75,7 +75,9 @@ namespace PADFlowChart
 
         private void BlockShape_OnMouseUp(object sender, MouseEventArgs e)
         {
-            if (LinkRectangle.Contains(e.Location))
+            PointF p = new PointF(e.X - Site.AutoScrollPosition.X, e.Y - Site.AutoScrollPosition.Y);
+
+            if (LinkRectangle.Contains(p))
             {
                 if (m_linkedLayer != null)
                 {

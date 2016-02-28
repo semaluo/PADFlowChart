@@ -210,7 +210,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADo
-        CwAAAk1TRnQBSQFMAgEBBQEAATgBAAE4AQABIAEAASABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBQEAAUABAAFAAQABIAEAASABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABgAMAAUADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -307,6 +307,36 @@
         KD1wJmLdo/+hax7+B7GhwsQDyextZ1w2vvzvuP7lfxAbKkw8EExcc0Zv65f/2pu//AexocLEA56opWek
         dv79L77j738QGypMPGAPmntGbNf//8I7//8HsaHCRAFZIDZmtCpexuQ74wwIg9ggMSBWA2JmIMYL+IFY
         CgcWBmImIKYWYGAAAJw4nLiYVpqXAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="flowchart_toolbar_zoomout.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIWSURBVDhPY8AH4ltfa6S0vZ6b3Pr6PhD/AtEgPkgcqgQ3
+        iKi6Hxhd8/B+0/ynJ7acfLvrzrPPJ45c+Xigd9nLUyBxkDxUKSZwyzmj4Z178f7UjQ92HL7++tCLD99v
+        ffz26/nrTz9vP3rz7ez8bY93+QDlQeqgWlCBVcz+uXm9F0/svvjiwJVHH06ANFvFHPgPoh+/+Xbu2pNP
+        J0r6L54CqYNqQQXavpvuz912d/vpu28v3Hn5+cG7Lz8/6Pht+g+iQXyQ+NI99/aA1EG1oAJlt9W/dpx/
+        fgCkWMVt9X90/OHbr2eHrr46BlIH1YIKlJzX3J+/7d5ukE0gxT9+/fms5LL2P4gGh8WHn7dW7ntwCKQO
+        qgUVqHlun5vVdu7svquvDt9/8eU0SJO65w54GAAD8lxx14VLIHVQLajA0jHTyjD40Iu5m++fvfn002lQ
+        6INtBtLP3n+7uH7fy1PGwSfv6wQdxYwFS0tLeWtr6+KOyXv+W0ZeeNUw/dmlE1c+n37+7vv1U1c+n2mf
+        +/Kadeyt+6YR1zDTgY2NjZarq3vNjh17/ouKijarWjbbOSQ/m+uY/Oy+Y9KzXyAaxLePf4ppM9BWi8DA
+        4LYjR878V1BQ6mFjY1OFShEGtra23vHxyRMuXrz7X1dXfxorK6sxVIo4YGZmVnLr1qv/dnbO85iZmV2g
+        wsQDAwMDLWFh4RagzTFQIXoBBgYA00lQoGq4drQAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="flowchart_toolbar_zoomin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHuSURBVDhPY8AH4ltfa6S0vZ6b3Pr6PhD/AtEgPkgcqgQ3
+        iKi6Hxhd8/B+0/ynJ7acfLvrzrPPJ45c+Xigd9nLUyBxkDxUKSZwyzmj4Z178f7UjQ92HL7++tCjN9/O
+        Pn7z7RwIg9jztz3e5QOUB6mDakEFVjH75+b1Xjyx++KLA1cefTgB0wzD1558OlHSf/EUSB1UCyrQ9t10
+        f+62u9tP33174c7Lzw/QMUh86Z57e0DqoFpQgbLb6l87zj8/AFKs4rb6Pzr+8O3Xs0NXXx0DqYNqQQVK
+        zmvuz992bzfIJpDij99+PUfGrz/8vLVy34NDIHVQLahAzXP73Ky2c2f3XX11+P6LL6fRwwAYkOeKuy5c
+        AqmDakEFlo6ZVobBh17M3Xz/7M2nn1AMePb+28X1+16eMg4+eV8n6ChmLFhaWspbW1sXd0ze898y8sKr
+        hunPLp248vn083ffr5+68vlM+9yX16xjb903jbiGmQ5sbGy0XF3da3bs2PNfVFS0WdWy2c4h+dlcx+Rn
+        9x2Tnv0C0SC+ffxTTJuBtloEBga3HTly5r+CglIPGxubKlSKMLC1tfWOj0+ecPHi3f+6uvrTWFlZjaFS
+        xAEzM7OSW7de/bezc57HzMzsAhUmHhgYGGgJCwu3AG2OgQrRCzAwAADmrFQlN3QvawAAAABJRU5ErkJg
+        gg==
 </value>
   </data>
 </root>
