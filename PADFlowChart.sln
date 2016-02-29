@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PADFlowChart", "PADFlowChar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetronGraphLib", "NetronGraphLibrary\NetronGraphLib.csproj", "{95C388C8-DD59-4993-BCC3-14A0862A24D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Automata|Any CPU = Automata|Any CPU
@@ -36,6 +38,16 @@ Global
 		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Main items|Any CPU.Build.0 = Main items|Any CPU
 		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Automata|Any CPU.ActiveCfg = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Automata|Any CPU.Build.0 = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.LogoSyntax|Any CPU.ActiveCfg = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.LogoSyntax|Any CPU.Build.0 = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Main items|Any CPU.ActiveCfg = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Main items|Any CPU.Build.0 = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -189,7 +189,6 @@
             dockPaneStripToolWindowGradient7.InactiveTabGradient = tabGradient49;
             dockPaneStripSkin7.ToolWindowGradient = dockPaneStripToolWindowGradient7;
             dockPanelSkin7.DockPaneStripSkin = dockPaneStripSkin7;
-            this.dockPanel.Skin = dockPanelSkin7;
             this.dockPanel.TabIndex = 2;
             // 
             // toolbar_new
