@@ -1925,6 +1925,7 @@ namespace Netron.GraphLib.UI
                     }
                     RaiseShowProperties(shapes);
                 }
+                Invalidate();
                 return;
             }
             #endregion
