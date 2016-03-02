@@ -211,9 +211,8 @@ namespace PADFlowChart
         {
             base.PostDeserialization();
 
-            //OnMouseDown += FlowChartConnection_OnMouseDown;
-            //OnMouseMove += FlowChartConnection_OnMouseMove;
-            //OnMouseUp += FlowChartConnection_OnMouseUp;
+            ShowLabel = true;
+
 
         }
 

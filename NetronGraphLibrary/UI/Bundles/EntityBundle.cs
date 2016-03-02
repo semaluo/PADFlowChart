@@ -274,12 +274,30 @@ namespace Netron.GraphLib
 				
 			}
 		}
-		/// <summary>
-		/// ISerializable implementation
-		/// </summary>
-		/// <param name="info">the serialization info</param>
-		/// <param name="context">the streaming context</param>		
-		public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+
+        /// <summary>
+        /// Move the bundle
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void MoveTo(int x, int y)
+        {
+            if (Shapes.Count == 0)
+            {
+                return;
+            }
+
+            int offsetX = x - (int)Shapes[0].X;
+            int offsetY = y - (int)Shapes[0].Y;
+            Offset(offsetX, offsetY);
+        }
+
+        /// <summary>
+        /// ISerializable implementation
+        /// </summary>
+        /// <param name="info">the serialization info</param>
+        /// <param name="context">the streaming context</param>		
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("mShapes",this.mShapes);			
 			info.AddValue("mConnections",this.mConnections);			

@@ -402,6 +402,7 @@ namespace Netron.GraphLib
 			catch
 			{
 				//font is set by default in the member definition
+			    mFont = new Font("Tahoma", 10);
 			}
 
 		    Tag =  info.GetString("mLayer");
@@ -668,6 +669,9 @@ namespace Netron.GraphLib
                 SetLayer((string)Tag);
                 Tag = null; //be nice to the host/user
             }
+
+            Font = new Font("Tahoma", 10);
+
 
         }
 

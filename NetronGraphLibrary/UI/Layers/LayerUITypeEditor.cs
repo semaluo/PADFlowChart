@@ -56,16 +56,21 @@ namespace Netron.GraphLib
 			
 			Rectangle r = args.Bounds;
 
-			
-			try 
-			{
-				GraphicsState s = args.Graphics.Save();
-				args.Graphics.RenderingOrigin = new Point(r.X, r.Y);				
-				//fetching the color of the layer requires a long deep access...
-				args.Graphics.FillRectangle(new SolidBrush(((Shape)((PropertyBag) args.Context.Instance).Owner).Layer.LayerColor), r);			
-				args.Graphics.Restore(s);
 
-			} 
+		    try
+		    {
+		        GraphicsState s = args.Graphics.Save();
+		        args.Graphics.RenderingOrigin = new Point(r.X, r.Y);
+		        //fetching the color of the layer requires a long deep access...
+		        args.Graphics.FillRectangle(
+		            new SolidBrush(((Shape) ((PropertyBag) args.Context.Instance).Owner).Layer.LayerColor), r);
+		        args.Graphics.Restore(s);
+
+		    }
+		    catch
+		    {
+		        
+		    }
 			finally 
 			{
 				

@@ -111,6 +111,12 @@ namespace PADFlowChart
             }
         }
 
+        public override void PostDeserialization()
+        {
+            base.PostDeserialization();
+            ShowLabel = true;
+        }
+
 
     }
 }

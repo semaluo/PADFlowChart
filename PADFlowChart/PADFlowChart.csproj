@@ -67,6 +67,7 @@
     <Compile Include="Shape\LoopShape.cs" />
     <Compile Include="Shape\SequenceShape.cs" />
     <Compile Include="Shape\StartShape.cs" />
+    <Compile Include="Shape\LabelShape.cs" />
     <Compile Include="Tool\ShapeDrawTool.cs" />
     <Compile Include="Tool\TextEditor.cs">
       <SubType>Component</SubType>
@@ -129,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resource\btn_block.bmp" />
+    <Content Include="Resource\btn_Label.bmp" />
     <Content Include="Resource\copy.png" />
     <Content Include="Resource\ArrowDown.png" />
     <Content Include="Resource\ArrowUp.png" />

@@ -172,17 +172,20 @@ namespace PADFlowChart
                     }
                     else  //left connector has been connected
                     {
-                        //check if need to remove connection
-                        if ( (Site as GraphControl).SelectedShapes.Count > 1 )
+                        //check if need to remove connection for multiple shapes moving
+                        if ((Site as GraphControl).SelectedShapes.Count > 1)
                         {
                             DetachConnectionsFromUnselectedShape();
                             return;
                         }
+
                         Connection t_vertical = GetLeftSideVerticalConnection();
                         if (t_vertical == null) return; //no vertical connection, freely move shape
 
                         if (IsLeavingFromConnection(t_vertical))
                         {
+
+
                             int t_dx = (int) (e.Location.X - m_startPoint.X);
                             int t_dy = (int) (e.Location.Y - m_startPoint.Y);
                             if ((int) Math.Abs(t_dx) < m_autoShiftX)
@@ -254,6 +257,9 @@ namespace PADFlowChart
             foreach (Connection connection in LeftConnector.Connections)
             {
                 if (connection.IsSelected) continue;
+
+                if(connection.From.BelongsTo.IsSelected && connection.To.BelongsTo.IsSelected)
+                    continue;
 
                 if (IsVerticalConnection(connection))
                 {
@@ -550,6 +556,8 @@ namespace PADFlowChart
         {
             base.PostDeserialization();
             Pen = new Pen(Color.FromArgb(167, 58, 95));
+            Font = new Font("宋体", 10);
+
 
         }
         #endregion

@@ -28,29 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin7 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
-            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin7 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient19 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient43 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin7 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient7 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient44 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient20 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient45 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient7 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient46 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient47 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient21 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient48 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient49 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip_main = new System.Windows.Forms.MenuStrip();
             this.menu_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file_new = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file_open = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file_close = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_file_saveAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_file_save = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file_saveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_file_saveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_edit = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_window = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
@@ -59,7 +45,6 @@
             this.toolbar_save = new System.Windows.Forms.ToolStripButton();
             this.toolbar_saveAll = new System.Windows.Forms.ToolStripButton();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.menu_file_save = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip_main.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -92,36 +77,43 @@
             // menu_file_new
             // 
             this.menu_file_new.Name = "menu_file_new";
-            this.menu_file_new.Size = new System.Drawing.Size(152, 22);
+            this.menu_file_new.Size = new System.Drawing.Size(124, 22);
             this.menu_file_new.Text = "新建";
             this.menu_file_new.Click += new System.EventHandler(this.menu_file_new_Click);
             // 
             // menu_file_open
             // 
             this.menu_file_open.Name = "menu_file_open";
-            this.menu_file_open.Size = new System.Drawing.Size(152, 22);
+            this.menu_file_open.Size = new System.Drawing.Size(124, 22);
             this.menu_file_open.Text = "打开";
             this.menu_file_open.Click += new System.EventHandler(this.menu_file_open_Click);
             // 
             // menu_file_close
             // 
             this.menu_file_close.Name = "menu_file_close";
-            this.menu_file_close.Size = new System.Drawing.Size(152, 22);
+            this.menu_file_close.Size = new System.Drawing.Size(124, 22);
             this.menu_file_close.Text = "关闭";
             // 
-            // menu_file_saveAll
+            // menu_file_save
             // 
-            this.menu_file_saveAll.Name = "menu_file_saveAll";
-            this.menu_file_saveAll.Size = new System.Drawing.Size(152, 22);
-            this.menu_file_saveAll.Text = "全部保存";
-            this.menu_file_saveAll.Click += new System.EventHandler(this.menu_file_saveAll_Click);
+            this.menu_file_save.Name = "menu_file_save";
+            this.menu_file_save.Size = new System.Drawing.Size(124, 22);
+            this.menu_file_save.Text = "保存";
+            this.menu_file_save.Click += new System.EventHandler(this.menu_file_save_Click);
             // 
             // menu_file_saveAs
             // 
             this.menu_file_saveAs.Name = "menu_file_saveAs";
-            this.menu_file_saveAs.Size = new System.Drawing.Size(152, 22);
+            this.menu_file_saveAs.Size = new System.Drawing.Size(124, 22);
             this.menu_file_saveAs.Text = "另存为";
             this.menu_file_saveAs.Click += new System.EventHandler(this.menu_file_saveAs_Click);
+            // 
+            // menu_file_saveAll
+            // 
+            this.menu_file_saveAll.Name = "menu_file_saveAll";
+            this.menu_file_saveAll.Size = new System.Drawing.Size(124, 22);
+            this.menu_file_saveAll.Text = "全部保存";
+            this.menu_file_saveAll.Click += new System.EventHandler(this.menu_file_saveAll_Click);
             // 
             // menu_edit
             // 
@@ -143,52 +135,8 @@
             this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel.Location = new System.Drawing.Point(0, 51);
             this.dockPanel.Name = "dockPanel";
+            this.dockPanel.ShowDocumentIcon = true;
             this.dockPanel.Size = new System.Drawing.Size(584, 363);
-            dockPanelGradient19.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient19.StartColor = System.Drawing.SystemColors.ControlLight;
-            autoHideStripSkin7.DockStripGradient = dockPanelGradient19;
-            tabGradient43.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient43.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient43.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            autoHideStripSkin7.TabGradient = tabGradient43;
-            autoHideStripSkin7.TextFont = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            dockPanelSkin7.AutoHideStripSkin = autoHideStripSkin7;
-            tabGradient44.EndColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient44.StartColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient44.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient7.ActiveTabGradient = tabGradient44;
-            dockPanelGradient20.EndColor = System.Drawing.SystemColors.Control;
-            dockPanelGradient20.StartColor = System.Drawing.SystemColors.Control;
-            dockPaneStripGradient7.DockStripGradient = dockPanelGradient20;
-            tabGradient45.EndColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient45.StartColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient45.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient7.InactiveTabGradient = tabGradient45;
-            dockPaneStripSkin7.DocumentGradient = dockPaneStripGradient7;
-            dockPaneStripSkin7.TextFont = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            tabGradient46.EndColor = System.Drawing.SystemColors.ActiveCaption;
-            tabGradient46.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient46.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
-            tabGradient46.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dockPaneStripToolWindowGradient7.ActiveCaptionGradient = tabGradient46;
-            tabGradient47.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient47.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient47.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripToolWindowGradient7.ActiveTabGradient = tabGradient47;
-            dockPanelGradient21.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient21.StartColor = System.Drawing.SystemColors.ControlLight;
-            dockPaneStripToolWindowGradient7.DockStripGradient = dockPanelGradient21;
-            tabGradient48.EndColor = System.Drawing.SystemColors.InactiveCaption;
-            tabGradient48.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient48.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            tabGradient48.TextColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dockPaneStripToolWindowGradient7.InactiveCaptionGradient = tabGradient48;
-            tabGradient49.EndColor = System.Drawing.Color.Transparent;
-            tabGradient49.StartColor = System.Drawing.Color.Transparent;
-            tabGradient49.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            dockPaneStripToolWindowGradient7.InactiveTabGradient = tabGradient49;
-            dockPaneStripSkin7.ToolWindowGradient = dockPaneStripToolWindowGradient7;
-            dockPanelSkin7.DockPaneStripSkin = dockPaneStripSkin7;
             this.dockPanel.TabIndex = 2;
             // 
             // toolbar_new
@@ -244,13 +192,6 @@
             this.toolStrip.Size = new System.Drawing.Size(584, 26);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
-            // 
-            // menu_file_save
-            // 
-            this.menu_file_save.Name = "menu_file_save";
-            this.menu_file_save.Size = new System.Drawing.Size(152, 22);
-            this.menu_file_save.Text = "保存";
-            this.menu_file_save.Click += new System.EventHandler(this.menu_file_save_Click);
             // 
             // MainForm
             // 

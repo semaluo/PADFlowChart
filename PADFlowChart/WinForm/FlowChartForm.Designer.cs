@@ -47,21 +47,25 @@
             this.flowchart_toolbar_switch_shape = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_block_shape = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_end_shape = new System.Windows.Forms.ToolStripButton();
+            this.flowchart_toolbar_labe_shape = new System.Windows.Forms.ToolStripButton();
             this.toolbar_imageList = new System.Windows.Forms.ImageList(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.status_panel = new System.Windows.Forms.Panel();
             this.flowchart_status_info = new System.Windows.Forms.Label();
             this.flowchart_status_coordinate = new System.Windows.Forms.Label();
             this.flowchart_toolbar_top = new System.Windows.Forms.ToolStrip();
             this.flowchart_toolbar_copy = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_paste = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_back_to_upperLayer = new System.Windows.Forms.ToolStripButton();
-            this.graphControl = new Netron.GraphLib.UI.GraphControl();
             this.flowchart_toolbar_zoomout = new System.Windows.Forms.ToolStripButton();
             this.flowchart_toolbar_zoomin = new System.Windows.Forms.ToolStripButton();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenu_go_upper_layer = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphControl = new Netron.GraphLib.UI.GraphControl();
             this.flowchart_menu.SuspendLayout();
             this.flowchart_toolbar_left.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.status_panel.SuspendLayout();
             this.flowchart_toolbar_top.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowchart_menu
@@ -144,10 +148,11 @@
             this.flowchart_toolbar_if_shape,
             this.flowchart_toolbar_switch_shape,
             this.flowchart_toolbar_block_shape,
-            this.flowchart_toolbar_end_shape});
+            this.flowchart_toolbar_end_shape,
+            this.flowchart_toolbar_labe_shape});
             this.flowchart_toolbar_left.Location = new System.Drawing.Point(0, 0);
             this.flowchart_toolbar_left.Name = "flowchart_toolbar_left";
-            this.flowchart_toolbar_left.Size = new System.Drawing.Size(37, 352);
+            this.flowchart_toolbar_left.Size = new System.Drawing.Size(37, 378);
             this.flowchart_toolbar_left.TabIndex = 1;
             this.flowchart_toolbar_left.Text = "toolbar";
             // 
@@ -232,6 +237,16 @@
             this.flowchart_toolbar_end_shape.Text = "结束结构";
             this.flowchart_toolbar_end_shape.Click += new System.EventHandler(this.flowchart_toolbar_end_shape_Click);
             // 
+            // flowchart_toolbar_labe_shape
+            // 
+            this.flowchart_toolbar_labe_shape.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.flowchart_toolbar_labe_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_labe_shape.Image")));
+            this.flowchart_toolbar_labe_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.flowchart_toolbar_labe_shape.Name = "flowchart_toolbar_labe_shape";
+            this.flowchart_toolbar_labe_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_labe_shape.Text = "标签结构";
+            this.flowchart_toolbar_labe_shape.Click += new System.EventHandler(this.flowchart_toolbar_labe_shape_Click);
+            // 
             // toolbar_imageList
             // 
             this.toolbar_imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("toolbar_imageList.ImageStream")));
@@ -242,15 +257,15 @@
             this.toolbar_imageList.Images.SetKeyName(3, "btn_if.bmp");
             this.toolbar_imageList.Images.SetKeyName(4, "btn_switch.bmp");
             // 
-            // panel1
+            // status_panel
             // 
-            this.panel1.Controls.Add(this.flowchart_status_info);
-            this.panel1.Controls.Add(this.flowchart_status_coordinate);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(37, 322);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(465, 30);
-            this.panel1.TabIndex = 2;
+            this.status_panel.Controls.Add(this.flowchart_status_info);
+            this.status_panel.Controls.Add(this.flowchart_status_coordinate);
+            this.status_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.status_panel.Location = new System.Drawing.Point(37, 348);
+            this.status_panel.Name = "status_panel";
+            this.status_panel.Size = new System.Drawing.Size(465, 30);
+            this.status_panel.TabIndex = 2;
             // 
             // flowchart_status_info
             // 
@@ -317,47 +332,6 @@
             this.flowchart_toolbar_back_to_upperLayer.Text = "回到上一图层";
             this.flowchart_toolbar_back_to_upperLayer.Click += new System.EventHandler(this.flowchart_menu_layer_go_upper_Click);
             // 
-            // graphControl
-            // 
-            this.graphControl.AllowAddConnection = true;
-            this.graphControl.AllowAddShape = true;
-            this.graphControl.AllowDeleteShape = true;
-            this.graphControl.AllowDrop = true;
-            this.graphControl.AllowMoveShape = true;
-            this.graphControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.graphControl.AutomataPulse = 10;
-            this.graphControl.AutoScroll = true;
-            this.graphControl.BackgroundColor = System.Drawing.Color.White;
-            this.graphControl.BackgroundImagePath = null;
-            this.graphControl.BackgroundType = Netron.GraphLib.CanvasBackgroundType.FlatColor;
-            this.graphControl.DefaultConnectionEnd = Netron.GraphLib.ConnectionEnd.NoEnds;
-            this.graphControl.DefaultConnectionPath = "Default";
-            this.graphControl.DoTrack = false;
-            this.graphControl.EnableContextMenu = true;
-            this.graphControl.EnableLayout = false;
-            this.graphControl.EnableToolTip = true;
-            this.graphControl.FileName = null;
-            this.graphControl.GradientBottom = System.Drawing.Color.White;
-            this.graphControl.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            this.graphControl.GradientTop = System.Drawing.Color.LightSteelBlue;
-            this.graphControl.GraphLayoutAlgorithm = Netron.GraphLib.GraphLayoutAlgorithms.SpringEmbedder;
-            this.graphControl.GridSize = 20;
-            this.graphControl.IsDirty = false;
-            this.graphControl.Location = new System.Drawing.Point(37, 0);
-            this.graphControl.Name = "graphControl";
-            this.graphControl.RestrictToCanvas = false;
-            this.graphControl.ShowAutomataController = false;
-            this.graphControl.ShowGrid = false;
-            this.graphControl.Size = new System.Drawing.Size(465, 319);
-            this.graphControl.Snap = false;
-            this.graphControl.TabIndex = 3;
-            this.graphControl.Text = "graphControl1";
-            this.graphControl.Zoom = 1F;
-            this.graphControl.OnDirtyChanged += new Netron.GraphLib.DirtyChanged(this.graphControl_OnDirtyChanged);
-            this.graphControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graphControl_MouseDown);
-            // 
             // flowchart_toolbar_zoomout
             // 
             this.flowchart_toolbar_zoomout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -378,14 +352,70 @@
             this.flowchart_toolbar_zoomin.Text = "缩小";
             this.flowchart_toolbar_zoomin.Click += new System.EventHandler(this.flowchart_toolbar_zoomin_Click);
             // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenu_go_upper_layer});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(161, 26);
+            // 
+            // contextMenu_go_upper_layer
+            // 
+            this.contextMenu_go_upper_layer.Name = "contextMenu_go_upper_layer";
+            this.contextMenu_go_upper_layer.Size = new System.Drawing.Size(160, 22);
+            this.contextMenu_go_upper_layer.Text = "返回上一层图层";
+            this.contextMenu_go_upper_layer.Click += new System.EventHandler(this.flowchart_menu_layer_go_upper_Click);
+            // 
+            // graphControl
+            // 
+            this.graphControl.AllowAddConnection = true;
+            this.graphControl.AllowAddShape = true;
+            this.graphControl.AllowDeleteShape = true;
+            this.graphControl.AllowDrop = true;
+            this.graphControl.AllowMoveShape = true;
+            this.graphControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.graphControl.AutomataPulse = 10;
+            this.graphControl.AutoScroll = true;
+            this.graphControl.BackgroundColor = System.Drawing.Color.White;
+            this.graphControl.BackgroundImagePath = null;
+            this.graphControl.BackgroundType = Netron.GraphLib.CanvasBackgroundType.FlatColor;
+            this.graphControl.ContextMenuStrip = this.contextMenu;
+            this.graphControl.DefaultConnectionEnd = Netron.GraphLib.ConnectionEnd.NoEnds;
+            this.graphControl.DefaultConnectionPath = "Default";
+            this.graphControl.DoTrack = false;
+            this.graphControl.EnableContextMenu = true;
+            this.graphControl.EnableLayout = false;
+            this.graphControl.EnableToolTip = false;
+            this.graphControl.FileName = null;
+            this.graphControl.GradientBottom = System.Drawing.Color.White;
+            this.graphControl.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            this.graphControl.GradientTop = System.Drawing.Color.LightSteelBlue;
+            this.graphControl.GraphLayoutAlgorithm = Netron.GraphLib.GraphLayoutAlgorithms.SpringEmbedder;
+            this.graphControl.GridSize = 20;
+            this.graphControl.IsDirty = false;
+            this.graphControl.Location = new System.Drawing.Point(37, 0);
+            this.graphControl.Name = "graphControl";
+            this.graphControl.RestrictToCanvas = false;
+            this.graphControl.ShowAutomataController = false;
+            this.graphControl.ShowGrid = false;
+            this.graphControl.Size = new System.Drawing.Size(465, 345);
+            this.graphControl.Snap = false;
+            this.graphControl.TabIndex = 3;
+            this.graphControl.Text = "graphControl";
+            this.graphControl.Zoom = 1F;
+            this.graphControl.OnDirtyChanged += new Netron.GraphLib.DirtyChanged(this.graphControl_OnDirtyChanged);
+            this.graphControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graphControl_MouseDown);
+            // 
             // FlowChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 352);
+            this.ClientSize = new System.Drawing.Size(502, 378);
             this.Controls.Add(this.flowchart_toolbar_top);
             this.Controls.Add(this.graphControl);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.status_panel);
             this.Controls.Add(this.flowchart_toolbar_left);
             this.Controls.Add(this.flowchart_menu);
             this.DoubleBuffered = true;
@@ -394,13 +424,15 @@
             this.Name = "FlowChartForm";
             this.Text = "FlowChart";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlowChartForm_FormClosing);
+            this.Load += new System.EventHandler(this.FlowChartForm_Load);
             this.flowchart_menu.ResumeLayout(false);
             this.flowchart_menu.PerformLayout();
             this.flowchart_toolbar_left.ResumeLayout(false);
             this.flowchart_toolbar_left.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.status_panel.ResumeLayout(false);
             this.flowchart_toolbar_top.ResumeLayout(false);
             this.flowchart_toolbar_top.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,7 +455,7 @@
         private System.Windows.Forms.ImageList toolbar_imageList;
         private System.Windows.Forms.ToolStripButton flowchart_toolbar_switch_shape;
         private System.Windows.Forms.ToolStripButton flowchart_toolbar_end_shape;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel status_panel;
         private System.Windows.Forms.Label flowchart_status_info;
         private System.Windows.Forms.Label flowchart_status_coordinate;
         private Netron.GraphLib.UI.GraphControl graphControl;
@@ -436,5 +468,8 @@
         private System.Windows.Forms.ToolStripMenuItem flowchart_menu_layer_go_upper;
         private System.Windows.Forms.ToolStripButton flowchart_toolbar_zoomout;
         private System.Windows.Forms.ToolStripButton flowchart_toolbar_zoomin;
+        private System.Windows.Forms.ToolStripButton flowchart_toolbar_labe_shape;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem contextMenu_go_upper_layer;
     }
 }

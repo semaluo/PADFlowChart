@@ -16,6 +16,11 @@ namespace PADFlowChart
         private Connector m_leftConnector;
         private ConnectorCollection m_switchConnectors = new ConnectorCollection();
 
+        public SwitchShape() : base()
+        {
+            m_switchCount = 3;
+            Init();
+        }
 
         public SwitchShape(int switchCount):base()
         {
