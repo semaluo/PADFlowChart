@@ -384,6 +384,8 @@
             this.graphControl.ContextMenuStrip = this.contextMenu;
             this.graphControl.DefaultConnectionEnd = Netron.GraphLib.ConnectionEnd.NoEnds;
             this.graphControl.DefaultConnectionPath = "Default";
+            this.graphControl.DefaultShapeHeight = 50F;
+            this.graphControl.DefaultShapeWidth = 150F;
             this.graphControl.DoTrack = false;
             this.graphControl.EnableContextMenu = true;
             this.graphControl.EnableLayout = false;
@@ -395,6 +397,7 @@
             this.graphControl.GraphLayoutAlgorithm = Netron.GraphLib.GraphLayoutAlgorithms.SpringEmbedder;
             this.graphControl.GridSize = 20;
             this.graphControl.IsDirty = false;
+            this.graphControl.LastShape = null;
             this.graphControl.Location = new System.Drawing.Point(37, 0);
             this.graphControl.Name = "graphControl";
             this.graphControl.RestrictToCanvas = false;
@@ -406,7 +409,6 @@
             this.graphControl.Text = "graphControl";
             this.graphControl.Zoom = 1F;
             this.graphControl.OnDirtyChanged += new Netron.GraphLib.DirtyChanged(this.graphControl_OnDirtyChanged);
-            this.graphControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graphControl_MouseDown);
             // 
             // FlowChartForm
             // 

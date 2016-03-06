@@ -273,11 +273,15 @@ namespace Netron.GraphLib.UI
         /// Only Alt Key pressed
         /// </summary>
         protected bool AltKey = false;
-	
-		/// <summary>
-		/// the default path style of the new connections
-		/// </summary>
-		protected string connectionPath = "Default";
+
+        /// <summary>
+        /// The point when mouse down
+        /// </summary>
+        private PointF mMouseDownPoint;
+        /// <summary>
+        /// the default path style of the new connections
+        /// </summary>
+        protected string connectionPath = "Default";
 
 		/// <summary>
 		/// the default connection end
@@ -393,12 +397,14 @@ namespace Netron.GraphLib.UI
 		/// <summary>
 		/// volatile object not connected to extract structure, used for the current added or selected shape
 		/// </summary>
-		protected Shape shapeObject = null;               
-		
-		/// <summary>
-		/// volatile connection, used to manipulate the current connection
-		/// </summary>
-		protected Connection mConnection = null;         
+		protected Shape mshapeObject = null;
+
+        private float mDefaultShapeWidth = 150;
+        private static float mDefaultShapeHeight = 50;
+        /// <summary>
+        /// volatile connection, used to manipulate the current connection
+        /// </summary>
+        protected Connection mConnection = null;         
 		
 		/// <summary>
 		/// Entity with current mouse focus. Is automatically set by the HitHover and HitEntity handlers
@@ -841,6 +847,24 @@ namespace Netron.GraphLib.UI
 					if(so.IsSelected) so.ShapeColor=value;
 			}
 		}
+
+        /// <summary>
+        /// The default width when draw shape with mouse 
+        /// </summary>
+        public float DefaultShapeWidth
+        {
+            get { return mDefaultShapeWidth; }
+            set { mDefaultShapeWidth = value; }
+        }
+
+        /// <summary>
+        /// The default height when draw shape with mouse
+        /// </summary>
+        public float DefaultShapeHeight
+        {
+            get { return mDefaultShapeHeight; }
+            set { mDefaultShapeHeight = value; }
+        }
 		/// <summary>
 		/// Sets the font to be used when drawing shape-text
 		/// </summary>
@@ -1427,6 +1451,7 @@ namespace Netron.GraphLib.UI
 
         #region FIX2016021401
 
+
         /// <summary>
         /// Make the Entity obj capture the mouse event
         /// OnMouseDown, OnMouseMove, OnMouseUp function will check mCaptureObj
@@ -1611,6 +1636,22 @@ namespace Netron.GraphLib.UI
 
             p = UnzoomPoint(Point.Round(p));
 
+            if (mshapeObject != null)
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    EndDrawShapeWithMouse();
+                    ContextMenu = null;
+                    ContextMenuStrip = null;
+                    return;
+                }
+
+                DrawShapeMouseDown(p);
+                return;
+            }
+        
+
+
             //            HitHover(p);
             if (mHover != null)
             {
@@ -1691,6 +1732,7 @@ namespace Netron.GraphLib.UI
         }
 
 
+
         /// <summary>
         /// overrides the Mouse move event handler
         /// <br>if the mousemove is a dragging action on a tracker grip it will enlarge the tracker</br>
@@ -1715,6 +1757,13 @@ namespace Netron.GraphLib.UI
             if (mShowAutomataController && automataController.Hit(new Rectangle(e.X, e.Y, 2, 2)))
                 automataController.OnMouseMove(p);
             p = UnzoomPoint(Point.Round(p));
+
+            if (mshapeObject != null)
+            {
+                if(e.Button == MouseButtons.Left) DrawShapeMouseMove(p);
+
+                return;
+            }
 
             SetCursor(p);
 
@@ -1755,12 +1804,12 @@ namespace Netron.GraphLib.UI
                 return; //all the rest doesnt matter
             }
 
-            if (shapeObject != null)
+            if (mshapeObject != null)
             {
-                shapeObject.Invalidate();            // invalidate previous rendering.
-                RectangleF r = shapeObject.Rectangle;
-                shapeObject.Rectangle = new RectangleF(p.X, p.Y, r.Width, r.Height);
-                shapeObject.Invalidate();            // invalidate next rendering.
+                mshapeObject.Invalidate();            // invalidate previous rendering.
+                RectangleF r = mshapeObject.Rectangle;
+                mshapeObject.Rectangle = new RectangleF(p.X, p.Y, r.Width, r.Height);
+                mshapeObject.Invalidate();            // invalidate next rendering.
                 return;
             }
 
@@ -1797,6 +1846,7 @@ namespace Netron.GraphLib.UI
 
 
         }
+
 
         private void DrawNewConnection(PointF p)
         {
@@ -1881,6 +1931,12 @@ namespace Netron.GraphLib.UI
             PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
             p = UnzoomPoint(Point.Round(p));
 
+            if (mshapeObject != null)
+            {
+                DrawShapeMouseUp(p);
+                return;
+            }
+
             if (mHover != null) mHover.IsHovered = false;
             mHover = TestHover(p);
             if (mHover != null) mHover.IsHovered = true;
@@ -1951,6 +2007,81 @@ namespace Netron.GraphLib.UI
             SetCursor(p);
 
         }
+
+        #region DrawShapeWithMouse
+        /// <summary>
+        /// start draw shape when mouse down, complete drawing when mouse up
+        /// </summary>
+        /// <param name="shape"></param>
+        public void StartDrawShapeWithMouse(Shape shape)
+        {
+            if (shape == null)
+            {
+                return;
+            }
+
+            Cursor = MouseCursors.Cross;
+            Locked = true;
+            mshapeObject = shape;
+        }
+
+
+
+        private void DrawShapeMouseDown(PointF p)
+        {
+            mMouseDownPoint = p;
+            mshapeObject.Rectangle = new RectangleF(p, new Size(0, 0));
+            mshapeObject.IsVisible = true;
+            AddShape(mshapeObject);
+        }
+
+        private void DrawShapeMouseMove(PointF p)
+        {
+            Invalidate();
+
+            float t_left = (mMouseDownPoint.X < p.X ? mMouseDownPoint.X : p.X);
+            float t_right = (mMouseDownPoint.X >= p.X ? mMouseDownPoint.X : p.X);
+            float t_top = (mMouseDownPoint.Y < p.Y ? mMouseDownPoint.Y : p.Y);
+            float t_bottom = (mMouseDownPoint.Y >= p.Y ? mMouseDownPoint.Y : p.Y);
+            mshapeObject.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
+
+            Invalidate();
+        }
+
+        private void DrawShapeMouseUp(PointF p)
+        {
+            Cursor = System.Windows.Forms.Cursors.Default;
+
+
+            float t_left = (mMouseDownPoint.X < p.X ? mMouseDownPoint.X : p.X);
+            float t_right = (mMouseDownPoint.X >= p.X ? mMouseDownPoint.X : p.X);
+            float t_top = (mMouseDownPoint.Y < p.Y ? mMouseDownPoint.Y : p.Y);
+            float t_bottom = (mMouseDownPoint.Y >= p.Y ? mMouseDownPoint.Y : p.Y);
+
+            if (t_right - t_left < 10)
+            {
+                t_right = t_left + mDefaultShapeWidth;
+            }
+
+            if (t_bottom - t_top < 10)
+            {
+                t_bottom = t_top + mDefaultShapeHeight;
+            }
+            mshapeObject.Rectangle = RectangleF.FromLTRB(t_left, t_top, t_right, t_bottom);
+
+            Invalidate();
+
+            EndDrawShapeWithMouse();
+        }
+
+
+        public void EndDrawShapeWithMouse()
+        {
+            mshapeObject = null;
+            Locked = false;
+        }
+
+        #endregion
 
         private void SelectShapesWithinSelector()
         {
@@ -2115,7 +2246,6 @@ namespace Netron.GraphLib.UI
 			Graphics g =e.Graphics;
 			Rectangle b = ZoomRectangle(Rectangle.Round(extract.Rectangle));
 
-            //TODO: Calculate size for MSWord A4 
 		    if (!RestrictToCanvas)
 		    {
                 AutoScrollMinSize = ExpandWithMSWordPageSize(b.Size, g);
@@ -2146,7 +2276,7 @@ namespace Netron.GraphLib.UI
 				g.FillRectangle(selectionBrush,selector.Rectangle);
 				g.DrawRectangle(Pens.DimGray,Rectangle.Round(selector.Rectangle));
 			}
-			if (shapeObject != null) shapeObject.Paint(g);
+			if (mshapeObject != null) mshapeObject.Paint(g);
 			if (mConnection != null) mConnection.PaintTrack(g);
 			
 			//Widgets are a feature for next version, this one e.g. is useful when automata are used

@@ -68,7 +68,6 @@
     <Compile Include="Shape\SequenceShape.cs" />
     <Compile Include="Shape\StartShape.cs" />
     <Compile Include="Shape\LabelShape.cs" />
-    <Compile Include="Tool\ShapeDrawTool.cs" />
     <Compile Include="Tool\TextEditor.cs">
       <SubType>Component</SubType>
     </Compile>
