@@ -71,17 +71,17 @@
     <Compile Include="Tool\TextEditor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WinForm\FlowChartForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForm\FlowChartForm.Designer.cs">
-      <DependentUpon>FlowChartForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialog\InputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialog\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\FlowChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\FlowChartForm.Designer.cs">
+      <DependentUpon>FlowChartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForm\PropertyForm.cs">
       <SubType>Form</SubType>
@@ -105,11 +105,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resource\BitmapResources.resx" />
-    <EmbeddedResource Include="WinForm\FlowChartForm.resx">
-      <DependentUpon>FlowChartForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialog\InputDialog.resx">
       <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\FlowChartForm.resx">
+      <DependentUpon>FlowChartForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
