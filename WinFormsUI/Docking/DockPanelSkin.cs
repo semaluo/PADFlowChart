@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Design;
-using System.Windows.Forms.Design;
-using System.ComponentModel;
+using System.Linq;
+using System.IO;
+using System.Xml.Linq;
 
 namespace WeifenLuo.WinFormsUI.Docking
 {
@@ -78,7 +77,6 @@ namespace WeifenLuo.WinFormsUI.Docking
             get { return m_DockStripBackground; }
             set { m_DockStripBackground = value; }
         }
-
 
         /// <summary>
         /// Font used in AutoHideStrip elements.

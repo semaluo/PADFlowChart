@@ -159,7 +159,7 @@ namespace Netron.GraphLib
             // for each shape in mShapes of the abstract
             foreach (Shape shape in mShapes)
 			{
-			    if (!shape.IsVisible || !shape.Layer.Visible)
+			    if (!shape.IsVisible || shape.Layer == null || !shape.Layer.Visible)
 			    {
                     continue;
 			    }
@@ -268,18 +268,31 @@ namespace Netron.GraphLib
 			this.mLayers = info.GetValue("mLayers", typeof(GraphLayerCollection)) as GraphLayerCollection;
 
             if (mLayers != null)
-		    {
+            {
                 GraphLayer layer = mLayers["Default"];
                 if (layer == null)
                 {
                     layer = new GraphLayer("Default", Color.WhiteSmoke, 100);
                     layer.UseColor = false; //use colors only for upper layers
+                    layer.Visible = false;
                     mLayers.Add(layer);
                 }
 
-                mCurrentLayer = DefaultLayer;
+                //    foreach (GraphLayer tLayer in mLayers)
+                //    {
+                //        if (tLayer != null && tLayer.Visible)
+                //        {
+                //            mCurrentLayer = tLayer;
+                //                  break;
+                //        }
+                //    }
 
-                if (mCurrentLayer != null) mCurrentLayer.Visible = true;
+                //    if (mCurrentLayer == null)
+                //    {
+                //              mCurrentLayer = DefaultLayer;
+                //    }
+
+                //     if (mCurrentLayer != null) mCurrentLayer.Visible = true;
                 mLayers.ClearComplete += new EventHandler(Layers_ClearComplete);
             }
 
@@ -379,8 +392,15 @@ namespace Netron.GraphLib
 		public void Layers_ClearComplete(object sender, EventArgs e)
 		{
 			foreach(Shape sh in Shapes)
-				sh.SetLayer( "Default");
-		}
+            {
+                if (sh.Abstract == null)
+                {
+                    return;
+                }
+
+                sh.SetLayer("Default");
+            }
+        }
 		/// <summary>
 		/// Paint overrides the base method and paints all elements of the array,
 		/// i.e. the boxes and connectors. The paint method of the elements is called to draw themselves.
@@ -413,7 +433,7 @@ namespace Netron.GraphLib
 			for(int k=0; k<paintables.Count; k++)
 			{
 
-                if (paintables[k] == null || !paintables[k].Layer.Visible) continue;
+                if (paintables[k] == null || paintables[k].Layer == null || !paintables[k].Layer.Visible) continue;
 
                 #region FIX2016021101
                 if ( paintables[k] is Shape)
@@ -441,7 +461,7 @@ namespace Netron.GraphLib
 			    }
                 #endregion
 
-                if (!o.Layer.Visible) continue; //otherwise the connectors will float on the canvas
+                if (o.Layer == null || !o.Layer.Visible) continue; //otherwise the connectors will float on the canvas
 				foreach (Connector c in o.Connectors)
 					if ((o.IsHovered) || (c.IsHovered))
 						c.Paint(g);
@@ -484,7 +504,7 @@ namespace Netron.GraphLib
 	    {
 	        GraphLayer layer = mLayers[layerName];
 
-	        if (layer != null)
+	        if (layer != null && layer != CurrentLayer)
 	        {
 	            foreach (GraphLayer l in mLayers)
 	            {
@@ -493,7 +513,10 @@ namespace Netron.GraphLib
 
                 mCurrentLayer = layer;
                 layer.Visible = true;
-	            Site.Invalidate();
+	            if (Site != null)
+	            {
+                    Site.Invalidate();
+                }
                 return true;
 	        }
 
@@ -753,11 +776,6 @@ namespace Netron.GraphLib
 		public void OnDeserialization(object sender)
 		{
 			BindEntityCollectionEvents();
-
-            //This is added because a weird problem occurred when read file
-            //CurrentLayer.Name == "Default" but CurrentLayer != Layers["Default"]
-            //So we have to assign DefaultLayer to CurrentLayer to keep it same
-            mCurrentLayer = DefaultLayer;
 		}
 
 		#endregion

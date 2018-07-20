@@ -41,19 +41,35 @@ namespace Netron.GraphLib
 		/// whether the layer is visible
 		/// </summary>
 		private bool mVisible = true;
-		#endregion
 
-		#region Properties
+        /// <summary>
+        /// shapes belongs to this layer
+        /// </summary>
+        private ShapeCollection mShapes = new ShapeCollection();
 
-		/// <summary>
-		/// Gets or sets whether the layer is visible
-		/// </summary>
-		public bool Visible
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets whether the layer is visible
+        /// </summary>
+        public bool Visible
 		{
 			get{return mVisible;}
-			set{mVisible = value;}
+            set
+            {
+                if (mVisible == value) return;
 
-		}
+                foreach (Shape mShape in mShapes)
+                {
+                    mShape.IsVisible = value;
+                }
+                mVisible = value;
+
+            }
+
+        }
 
 		/// <summary>
 		/// Gets the number of the layer in the collection
@@ -106,6 +122,21 @@ namespace Netron.GraphLib
 			get{return mLocked;}
 			set{mLocked = value;}
 		}
+
+        /// <summary>
+        /// Shapes belong to this layer
+        /// </summary>
+        public ShapeCollection Shapes
+	    {
+            get { return mShapes; }
+	        set
+	        {
+	            if (value != null)
+	            {
+	                mShapes = value;
+	            }
+	        }
+	    }
 		#endregion
 
 		#region Constructors

@@ -1,4 +1,3 @@
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -12,30 +11,7 @@ namespace WeifenLuo.WinFormsUI.Docking
         public VS2005Theme()
         {
             Skin = CreateVisualStudio2005();
-        }
-
-        /// <summary>
-        /// Applies the specified theme to the dock panel.
-        /// </summary>
-        /// <param name="dockPanel">The dock panel.</param>
-        public override void Apply(DockPanel dockPanel)
-        {
-            if (dockPanel == null)
-            {
-                throw new NullReferenceException("dockPanel");
-            }
-
             Measures.SplitterSize = 4;
-            dockPanel.Extender.DockPaneCaptionFactory = null;
-            dockPanel.Extender.AutoHideStripFactory = null;
-            dockPanel.Extender.AutoHideWindowFactory = null;
-            dockPanel.Extender.DockPaneStripFactory = null;
-            dockPanel.Extender.DockPaneSplitterControlFactory = null;
-            dockPanel.Extender.DockWindowSplitterControlFactory = null;
-            dockPanel.Extender.DockWindowFactory = null;
-            dockPanel.Extender.PaneIndicatorFactory = null;
-            dockPanel.Extender.PanelIndicatorFactory = null;
-            dockPanel.Extender.DockOutlineFactory = null;
         }
 
         internal static DockPanelSkin CreateVisualStudio2005()

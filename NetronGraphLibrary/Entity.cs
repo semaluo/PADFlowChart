@@ -349,7 +349,10 @@ namespace Netron.GraphLib
 		{
 			get
 			{
-				
+			    if (Site == null)
+			    {
+			        return null;
+			    }
 				return this.Site.GetSummary(this);
 			}
 		}

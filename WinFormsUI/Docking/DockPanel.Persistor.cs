@@ -13,7 +13,7 @@ namespace WeifenLuo.WinFormsUI.Docking
         private static class Persistor
         {
             private const string ConfigFileVersion = "1.0";
-            private static string[] CompatibleConfigFileVersions = new string[] { };
+            private static string[] CompatibleConfigFileVersions = { };
 
             private class DummyContent : DockContent
             {
@@ -232,134 +232,134 @@ namespace WeifenLuo.WinFormsUI.Docking
 
             public static void SaveAsXml(DockPanel dockPanel, Stream stream, Encoding encoding, bool upstream)
             {
-				XmlWriter xmlOut = XmlWriter.Create(stream, new XmlWriterSettings() { Encoding = encoding, Indent = true });
+                XmlWriter xmlOut = XmlWriter.Create(stream, new XmlWriterSettings() { Encoding = encoding, Indent = true });
 
-                    if (!upstream)
-                        xmlOut.WriteStartDocument();
+                if (!upstream)
+                    xmlOut.WriteStartDocument();
 
-                    // Always begin file with identification and warning
-                    xmlOut.WriteComment(Strings.DockPanel_Persistor_XmlFileComment1);
-                    xmlOut.WriteComment(Strings.DockPanel_Persistor_XmlFileComment2);
+                // Always begin file with identification and warning
+                xmlOut.WriteComment(Strings.DockPanel_Persistor_XmlFileComment1);
+                xmlOut.WriteComment(Strings.DockPanel_Persistor_XmlFileComment2);
 
-                    // Associate a version number with the root element so that future version of the code
-                    // will be able to be backwards compatible or at least recognise out of date versions
-                    xmlOut.WriteStartElement("DockPanel");
-                    xmlOut.WriteAttributeString("FormatVersion", ConfigFileVersion);
-                    xmlOut.WriteAttributeString("DockLeftPortion", dockPanel.DockLeftPortion.ToString(CultureInfo.InvariantCulture));
-                    xmlOut.WriteAttributeString("DockRightPortion", dockPanel.DockRightPortion.ToString(CultureInfo.InvariantCulture));
-                    xmlOut.WriteAttributeString("DockTopPortion", dockPanel.DockTopPortion.ToString(CultureInfo.InvariantCulture));
-                    xmlOut.WriteAttributeString("DockBottomPortion", dockPanel.DockBottomPortion.ToString(CultureInfo.InvariantCulture));
+                // Associate a version number with the root element so that future version of the code
+                // will be able to be backwards compatible or at least recognise out of date versions
+                xmlOut.WriteStartElement("DockPanel");
+                xmlOut.WriteAttributeString("FormatVersion", ConfigFileVersion);
+                xmlOut.WriteAttributeString("DockLeftPortion", dockPanel.DockLeftPortion.ToString(CultureInfo.InvariantCulture));
+                xmlOut.WriteAttributeString("DockRightPortion", dockPanel.DockRightPortion.ToString(CultureInfo.InvariantCulture));
+                xmlOut.WriteAttributeString("DockTopPortion", dockPanel.DockTopPortion.ToString(CultureInfo.InvariantCulture));
+                xmlOut.WriteAttributeString("DockBottomPortion", dockPanel.DockBottomPortion.ToString(CultureInfo.InvariantCulture));
 
-                    if (!Win32Helper.IsRunningOnMono)
-                    {
-                        xmlOut.WriteAttributeString("ActiveDocumentPane", dockPanel.Panes.IndexOf(dockPanel.ActiveDocumentPane).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("ActivePane", dockPanel.Panes.IndexOf(dockPanel.ActivePane).ToString(CultureInfo.InvariantCulture));
-                    }                
+                if (!Win32Helper.IsRunningOnMono)
+                {
+                    xmlOut.WriteAttributeString("ActiveDocumentPane", dockPanel.Panes.IndexOf(dockPanel.ActiveDocumentPane).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("ActivePane", dockPanel.Panes.IndexOf(dockPanel.ActivePane).ToString(CultureInfo.InvariantCulture));
+                }
 
-                    // Contents
+                // Contents
+                xmlOut.WriteStartElement("Contents");
+                xmlOut.WriteAttributeString("Count", dockPanel.Contents.Count.ToString(CultureInfo.InvariantCulture));
+                foreach (IDockContent content in dockPanel.Contents)
+                {
+                    xmlOut.WriteStartElement("Content");
+                    xmlOut.WriteAttributeString("ID", dockPanel.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("PersistString", content.DockHandler.PersistString);
+                    xmlOut.WriteAttributeString("AutoHidePortion", content.DockHandler.AutoHidePortion.ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("IsHidden", content.DockHandler.IsHidden.ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("IsFloat", content.DockHandler.IsFloat.ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteEndElement();
+                }
+                xmlOut.WriteEndElement();
+
+                // Panes
+                xmlOut.WriteStartElement("Panes");
+                xmlOut.WriteAttributeString("Count", dockPanel.Panes.Count.ToString(CultureInfo.InvariantCulture));
+                foreach (DockPane pane in dockPanel.Panes)
+                {
+                    xmlOut.WriteStartElement("Pane");
+                    xmlOut.WriteAttributeString("ID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("DockState", pane.DockState.ToString());
+                    xmlOut.WriteAttributeString("ActiveContent", dockPanel.Contents.IndexOf(pane.ActiveContent).ToString(CultureInfo.InvariantCulture));
                     xmlOut.WriteStartElement("Contents");
-                    xmlOut.WriteAttributeString("Count", dockPanel.Contents.Count.ToString(CultureInfo.InvariantCulture));
-                    foreach (IDockContent content in dockPanel.Contents)
+                    xmlOut.WriteAttributeString("Count", pane.Contents.Count.ToString(CultureInfo.InvariantCulture));
+                    foreach (IDockContent content in pane.Contents)
                     {
                         xmlOut.WriteStartElement("Content");
-                        xmlOut.WriteAttributeString("ID", dockPanel.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("PersistString", content.DockHandler.PersistString);
-                        xmlOut.WriteAttributeString("AutoHidePortion", content.DockHandler.AutoHidePortion.ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("IsHidden", content.DockHandler.IsHidden.ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("IsFloat", content.DockHandler.IsFloat.ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("ID", pane.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("RefID", dockPanel.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
                         xmlOut.WriteEndElement();
                     }
                     xmlOut.WriteEndElement();
+                    xmlOut.WriteEndElement();
+                }
+                xmlOut.WriteEndElement();
 
-                    // Panes
-                    xmlOut.WriteStartElement("Panes");
-                    xmlOut.WriteAttributeString("Count", dockPanel.Panes.Count.ToString(CultureInfo.InvariantCulture));
-                    foreach (DockPane pane in dockPanel.Panes)
+                // DockWindows
+                xmlOut.WriteStartElement("DockWindows");
+                int dockWindowId = 0;
+                foreach (DockWindow dw in dockPanel.DockWindows)
+                {
+                    xmlOut.WriteStartElement("DockWindow");
+                    xmlOut.WriteAttributeString("ID", dockWindowId.ToString(CultureInfo.InvariantCulture));
+                    dockWindowId++;
+                    xmlOut.WriteAttributeString("DockState", dw.DockState.ToString());
+                    xmlOut.WriteAttributeString("ZOrderIndex", dockPanel.Controls.IndexOf(dw).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteStartElement("NestedPanes");
+                    xmlOut.WriteAttributeString("Count", dw.NestedPanes.Count.ToString(CultureInfo.InvariantCulture));
+                    foreach (DockPane pane in dw.NestedPanes)
                     {
                         xmlOut.WriteStartElement("Pane");
-                        xmlOut.WriteAttributeString("ID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("DockState", pane.DockState.ToString());
-                        xmlOut.WriteAttributeString("ActiveContent", dockPanel.Contents.IndexOf(pane.ActiveContent).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteStartElement("Contents");
-                        xmlOut.WriteAttributeString("Count", pane.Contents.Count.ToString(CultureInfo.InvariantCulture));
-                        foreach (IDockContent content in pane.Contents)
-                        {
-                            xmlOut.WriteStartElement("Content");
-                            xmlOut.WriteAttributeString("ID", pane.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteAttributeString("RefID", dockPanel.Contents.IndexOf(content).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteEndElement();
-                        }
-                        xmlOut.WriteEndElement();
+                        xmlOut.WriteAttributeString("ID", dw.NestedPanes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("RefID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
+                        NestedDockingStatus status = pane.NestedDockingStatus;
+                        xmlOut.WriteAttributeString("PrevPane", dockPanel.Panes.IndexOf(status.PreviousPane).ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("Alignment", status.Alignment.ToString());
+                        xmlOut.WriteAttributeString("Proportion", status.Proportion.ToString(CultureInfo.InvariantCulture));
                         xmlOut.WriteEndElement();
                     }
                     xmlOut.WriteEndElement();
+                    xmlOut.WriteEndElement();
+                }
+                xmlOut.WriteEndElement();
 
-                    // DockWindows
-                    xmlOut.WriteStartElement("DockWindows");
-                    int dockWindowId = 0;
-                    foreach (DockWindow dw in dockPanel.DockWindows)
+                // FloatWindows
+                RectangleConverter rectConverter = new RectangleConverter();
+                xmlOut.WriteStartElement("FloatWindows");
+                xmlOut.WriteAttributeString("Count", dockPanel.FloatWindows.Count.ToString(CultureInfo.InvariantCulture));
+                foreach (FloatWindow fw in dockPanel.FloatWindows)
+                {
+                    xmlOut.WriteStartElement("FloatWindow");
+                    xmlOut.WriteAttributeString("ID", dockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteAttributeString("Bounds", rectConverter.ConvertToInvariantString(fw.Bounds));
+                    xmlOut.WriteAttributeString("ZOrderIndex", fw.DockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
+                    xmlOut.WriteStartElement("NestedPanes");
+                    xmlOut.WriteAttributeString("Count", fw.NestedPanes.Count.ToString(CultureInfo.InvariantCulture));
+                    foreach (DockPane pane in fw.NestedPanes)
                     {
-                        xmlOut.WriteStartElement("DockWindow");
-                        xmlOut.WriteAttributeString("ID", dockWindowId.ToString(CultureInfo.InvariantCulture));
-                        dockWindowId++;
-                        xmlOut.WriteAttributeString("DockState", dw.DockState.ToString());
-                        xmlOut.WriteAttributeString("ZOrderIndex", dockPanel.Controls.IndexOf(dw).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteStartElement("NestedPanes");
-                        xmlOut.WriteAttributeString("Count", dw.NestedPanes.Count.ToString(CultureInfo.InvariantCulture));
-                        foreach (DockPane pane in dw.NestedPanes)
-                        {
-                            xmlOut.WriteStartElement("Pane");
-                            xmlOut.WriteAttributeString("ID", dw.NestedPanes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteAttributeString("RefID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
-                            NestedDockingStatus status = pane.NestedDockingStatus;
-                            xmlOut.WriteAttributeString("PrevPane", dockPanel.Panes.IndexOf(status.PreviousPane).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteAttributeString("Alignment", status.Alignment.ToString());
-                            xmlOut.WriteAttributeString("Proportion", status.Proportion.ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteEndElement();
-                        }
-                        xmlOut.WriteEndElement();
+                        xmlOut.WriteStartElement("Pane");
+                        xmlOut.WriteAttributeString("ID", fw.NestedPanes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("RefID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
+                        NestedDockingStatus status = pane.NestedDockingStatus;
+                        xmlOut.WriteAttributeString("PrevPane", dockPanel.Panes.IndexOf(status.PreviousPane).ToString(CultureInfo.InvariantCulture));
+                        xmlOut.WriteAttributeString("Alignment", status.Alignment.ToString());
+                        xmlOut.WriteAttributeString("Proportion", status.Proportion.ToString(CultureInfo.InvariantCulture));
                         xmlOut.WriteEndElement();
                     }
                     xmlOut.WriteEndElement();
-
-                    // FloatWindows
-                    RectangleConverter rectConverter = new RectangleConverter();
-                    xmlOut.WriteStartElement("FloatWindows");
-                    xmlOut.WriteAttributeString("Count", dockPanel.FloatWindows.Count.ToString(CultureInfo.InvariantCulture));
-                    foreach (FloatWindow fw in dockPanel.FloatWindows)
-                    {
-                        xmlOut.WriteStartElement("FloatWindow");
-                        xmlOut.WriteAttributeString("ID", dockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteAttributeString("Bounds", rectConverter.ConvertToInvariantString(fw.Bounds));
-                        xmlOut.WriteAttributeString("ZOrderIndex", fw.DockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
-                        xmlOut.WriteStartElement("NestedPanes");
-                        xmlOut.WriteAttributeString("Count", fw.NestedPanes.Count.ToString(CultureInfo.InvariantCulture));
-                        foreach (DockPane pane in fw.NestedPanes)
-                        {
-                            xmlOut.WriteStartElement("Pane");
-                            xmlOut.WriteAttributeString("ID", fw.NestedPanes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteAttributeString("RefID", dockPanel.Panes.IndexOf(pane).ToString(CultureInfo.InvariantCulture));
-                            NestedDockingStatus status = pane.NestedDockingStatus;
-                            xmlOut.WriteAttributeString("PrevPane", dockPanel.Panes.IndexOf(status.PreviousPane).ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteAttributeString("Alignment", status.Alignment.ToString());
-                            xmlOut.WriteAttributeString("Proportion", status.Proportion.ToString(CultureInfo.InvariantCulture));
-                            xmlOut.WriteEndElement();
-                        }
-                        xmlOut.WriteEndElement();
-                        xmlOut.WriteEndElement();
-                    }
-                    xmlOut.WriteEndElement();	//	</FloatWindows>
-
                     xmlOut.WriteEndElement();
+                }
+                xmlOut.WriteEndElement();   //	</FloatWindows>
 
-                    if (!upstream)
-                    {
-                        xmlOut.WriteEndDocument();
-                        xmlOut.Close();
-                    }
-                    else
-                        xmlOut.Flush();
-                }            
+                xmlOut.WriteEndElement();
+
+                if (!upstream)
+                {
+                    xmlOut.WriteEndDocument();
+                    xmlOut.Close();
+                }
+                else
+                    xmlOut.Flush();
+            }
 
             public static void LoadFromXml(DockPanel dockPanel, string fileName, DeserializeDockContent deserializeContent)
             {
@@ -367,18 +367,13 @@ namespace WeifenLuo.WinFormsUI.Docking
                 {
                     try
                     {
-                        LoadFromXml(dockPanel, fs, deserializeContent);
+                        LoadFromXml(dockPanel, fs, deserializeContent, true);
                     }
                     finally
                     {
                         fs.Close();
                     }
                 }
-            }
-
-            public static void LoadFromXml(DockPanel dockPanel, Stream stream, DeserializeDockContent deserializeContent)
-            {
-                LoadFromXml(dockPanel, stream, deserializeContent, true);
             }
 
             private static ContentStruct[] LoadContents(XmlTextReader xmlIn)
@@ -615,7 +610,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                     {
                         IDockContent content = dockPanel.Contents[panes[i].IndexContents[j]];
                         if (j == 0)
-                            pane = dockPanel.DockPaneFactory.CreateDockPane(content, panes[i].DockState, false);
+                            pane = dockPanel.Theme.Extender.DockPaneFactory.CreateDockPane(content, panes[i].DockState, false);
                         else if (panes[i].DockState == DockState.Float)
                             content.DockHandler.FloatPane = pane;
                         else
@@ -650,7 +645,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                         int indexPane = floatWindows[i].NestedPanes[j].IndexPane;
                         DockPane pane = dockPanel.Panes[indexPane];
                         if (j == 0)
-                            fw = dockPanel.FloatWindowFactory.CreateFloatWindow(dockPanel, pane, floatWindows[i].Bounds);
+                            fw = dockPanel.Theme.Extender.FloatWindowFactory.CreateFloatWindow(dockPanel, pane, floatWindows[i].Bounds);
                         else
                         {
                             int indexPrevPane = floatWindows[i].NestedPanes[j].IndexPrevPane;
@@ -697,7 +692,11 @@ namespace WeifenLuo.WinFormsUI.Docking
                 {
                     IDockContent content = dockPanel.Contents[sortedContents[i]];
                     if (content.DockHandler.Pane != null && content.DockHandler.Pane.DockState != DockState.Document)
+                    {
+                        content.DockHandler.SuspendAutoHidePortionUpdates = true;
                         content.DockHandler.IsHidden = contents[sortedContents[i]].IsHidden;
+                        content.DockHandler.SuspendAutoHidePortionUpdates = false;
+                    }
                 }
 
                 // after all non-document IDockContent, show document IDockContent
@@ -705,16 +704,20 @@ namespace WeifenLuo.WinFormsUI.Docking
                 {
                     IDockContent content = dockPanel.Contents[sortedContents[i]];
                     if (content.DockHandler.Pane != null && content.DockHandler.Pane.DockState == DockState.Document)
+                    {
+                        content.DockHandler.SuspendAutoHidePortionUpdates = true;
                         content.DockHandler.IsHidden = contents[sortedContents[i]].IsHidden;
+                        content.DockHandler.SuspendAutoHidePortionUpdates = false;
+                    }
                 }
 
                 for (int i = 0; i < panes.Length; i++)
                     dockPanel.Panes[i].ActiveContent = panes[i].IndexActiveContent == -1 ? null : dockPanel.Contents[panes[i].IndexActiveContent];
 
-                if (dockPanelStruct.IndexActiveDocumentPane != -1)
+                if (dockPanelStruct.IndexActiveDocumentPane >= 0 && dockPanel.Panes.Count > dockPanelStruct.IndexActiveDocumentPane)
                     dockPanel.Panes[dockPanelStruct.IndexActiveDocumentPane].Activate();
 
-                if (dockPanelStruct.IndexActivePane != -1)
+                if (dockPanelStruct.IndexActivePane >= 0 && dockPanel.Panes.Count > dockPanelStruct.IndexActivePane)
                     dockPanel.Panes[dockPanelStruct.IndexActivePane].Activate();
 
                 for (int i = dockPanel.Contents.Count - 1; i >= 0; i--)
@@ -771,16 +774,38 @@ namespace WeifenLuo.WinFormsUI.Docking
             Persistor.SaveAsXml(this, stream, encoding, upstream);
         }
 
+        /// <summary>
+        /// Loads layout from XML file.
+        /// </summary>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="deserializeContent">Deserialization handler.</param>
+        /// <exception cref="Exception">Deserialization might throw exceptions.</exception>
         public void LoadFromXml(string fileName, DeserializeDockContent deserializeContent)
         {
             Persistor.LoadFromXml(this, fileName, deserializeContent);
         }
 
+        /// <summary>
+        /// Loads layout from a stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="deserializeContent">Deserialization handler.</param>
+        /// <exception cref="Exception">Deserialization might throw exceptions.</exception>
+        /// <remarks>
+        /// The stream is closed after deserialization.
+        /// </remarks>
         public void LoadFromXml(Stream stream, DeserializeDockContent deserializeContent)
         {
-            Persistor.LoadFromXml(this, stream, deserializeContent);
+            Persistor.LoadFromXml(this, stream, deserializeContent, true);
         }
 
+        /// <summary>
+        /// Loads layout from a stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="deserializeContent">Deserialization handler.</param>
+        /// <param name="closeStream">The flag to close the stream after deserialization.</param>
+        /// <exception cref="Exception">Deserialization might throw exceptions.</exception>
         public void LoadFromXml(Stream stream, DeserializeDockContent deserializeContent, bool closeStream)
         {
             Persistor.LoadFromXml(this, stream, deserializeContent, closeStream);

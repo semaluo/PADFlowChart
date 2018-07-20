@@ -134,6 +134,10 @@ namespace Netron.GraphLib
 		public int Add(Shape shape)
 		{
 			if(shape==null) return -1;
+		    if (Contains(shape))
+		    {
+		        return -1;
+		    }
 			RaiseOnShapeAdded(shape);
 			return this.InnerList.Add(shape);
 		}

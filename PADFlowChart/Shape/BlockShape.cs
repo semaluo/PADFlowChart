@@ -77,6 +77,7 @@ namespace PADFlowChart
         {
             PointF p = new PointF(e.X - Site.AutoScrollPosition.X, e.Y - Site.AutoScrollPosition.Y);
 
+            //check if the click in link jump area. If yes, jump to the linked layer
             if (LinkRectangle.Contains(p))
             {
                 if (m_linkedLayer != null)

@@ -74,7 +74,25 @@ namespace Netron.GraphLib.IO.Binary
 				this.mBinaryAmbiance = info.GetValue("mBinaryAmbience", typeof(BinaryAmbiance)) as BinaryAmbiance;
 			}
 			this.mGraphAbstract = info.GetValue("mGraphAbstract", typeof(GraphAbstract)) as GraphAbstract;
-			this.mThumbnail = info.GetValue("mThumbnail", typeof(Image)) as Image;
+
+            if (mGraphAbstract != null && mGraphAbstract.Layers != null)
+            {
+                foreach (GraphLayer tLayer in mGraphAbstract.Layers)
+                {
+                    if (tLayer.Name != "Default" && tLayer.Visible)
+                    {
+                        mGraphAbstract.ActiveLayer(tLayer.Name);
+                        break;
+                    }
+                }
+
+                if (mGraphAbstract.CurrentLayer == null)
+                {
+                    mGraphAbstract.ActiveLayer("Default");
+                }
+            }
+
+            this.mThumbnail = info.GetValue("mThumbnail", typeof(Image)) as Image;
 		}
 		/// <summary>
 		/// Constructor

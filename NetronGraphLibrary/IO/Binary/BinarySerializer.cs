@@ -231,6 +231,20 @@ namespace Netron.GraphLib.IO.Binary
 				
 				GraphAbstract tmp = capsule.Abstract;
 
+                foreach (GraphLayer tLayer in tmp.Layers)
+                {
+                    if (tLayer.Visible && tLayer.Name != "Default")
+                    {
+                        tmp.ActiveLayer(tLayer.Name);
+                        break;
+                    }
+                }
+
+                if (tmp.CurrentLayer == null)
+                {
+                    tmp.ActiveLayer("Default");
+                }
+
 				SetControlAmbiance(site, capsule.Ambiance);
 
 				tmp.Site=site;

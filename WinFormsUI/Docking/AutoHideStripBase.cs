@@ -188,12 +188,12 @@ namespace WeifenLuo.WinFormsUI.Docking
 
                 public AutoHideStateCollection()
                 {
-                    m_states = new AutoHideState[]	{	
-                                                new AutoHideState(DockState.DockTopAutoHide),
-                                                new AutoHideState(DockState.DockBottomAutoHide),
-                                                new AutoHideState(DockState.DockLeftAutoHide),
-                                                new AutoHideState(DockState.DockRightAutoHide)
-                                            };
+                    m_states = new[]{
+                                        new AutoHideState(DockState.DockTopAutoHide),
+                                        new AutoHideState(DockState.DockBottomAutoHide),
+                                        new AutoHideState(DockState.DockLeftAutoHide),
+                                        new AutoHideState(DockState.DockRightAutoHide)
+                                    };
                 }
 
                 public AutoHideState this[DockState dockState]
@@ -326,45 +326,22 @@ namespace WeifenLuo.WinFormsUI.Docking
 
         protected AutoHideStripBase(DockPanel panel)
         {
-            m_dockPanel = panel;
-            m_panesTop = new PaneCollection(panel, DockState.DockTopAutoHide);
-            m_panesBottom = new PaneCollection(panel, DockState.DockBottomAutoHide);
-            m_panesLeft = new PaneCollection(panel, DockState.DockLeftAutoHide);
-            m_panesRight = new PaneCollection(panel, DockState.DockRightAutoHide);
+            DockPanel = panel;
+            PanesTop = new PaneCollection(panel, DockState.DockTopAutoHide);
+            PanesBottom = new PaneCollection(panel, DockState.DockBottomAutoHide);
+            PanesLeft = new PaneCollection(panel, DockState.DockLeftAutoHide);
+            PanesRight = new PaneCollection(panel, DockState.DockRightAutoHide);
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.Selectable, false);
         }
 
-        private DockPanel m_dockPanel;
-        protected DockPanel DockPanel
-        {
-            get { return m_dockPanel; }
-        }
+        protected DockPanel DockPanel { get; private set; }
 
-        private PaneCollection m_panesTop;
-        protected PaneCollection PanesTop
-        {
-            get { return m_panesTop; }
-        }
-
-        private PaneCollection m_panesBottom;
-        protected PaneCollection PanesBottom
-        {
-            get { return m_panesBottom; }
-        }
-
-        private PaneCollection m_panesLeft;
-        protected PaneCollection PanesLeft
-        {
-            get { return m_panesLeft; }
-        }
-
-        private PaneCollection m_panesRight;
-        protected PaneCollection PanesRight
-        {
-            get { return m_panesRight; }
-        }
+        protected PaneCollection PanesTop { get; private set; }
+        protected PaneCollection PanesBottom { get; private set; }
+        protected PaneCollection PanesLeft { get; private set; }
+        protected PaneCollection PanesRight { get; private set; }
 
         protected PaneCollection GetPanes(DockState dockState)
         {
@@ -385,58 +362,94 @@ namespace WeifenLuo.WinFormsUI.Docking
             return GetPanes(dockState).Count;
         }
 
+        /// <summary>
+        /// The top left rectangle in auto hide strip area.
+        /// </summary>
         protected Rectangle RectangleTopLeft
         {
             get
-            {	
-                int height = MeasureHeight();
-                return PanesTop.Count > 0 && PanesLeft.Count > 0 ? new Rectangle(0, 0, height, height) : Rectangle.Empty;
+            {
+                int standard = MeasureHeight();
+                var padding = DockPanel.Theme.Measures.DockPadding;
+                var width = PanesLeft.Count > 0 ? standard : padding;
+                var height = PanesTop.Count > 0 ? standard : padding;
+                return new Rectangle(0, 0, width, height);
             }
         }
 
+        /// <summary>
+        /// The top right rectangle in auto hide strip area.
+        /// </summary>
         protected Rectangle RectangleTopRight
         {
             get
             {
-                int height = MeasureHeight();
-                return PanesTop.Count > 0 && PanesRight.Count > 0 ? new Rectangle(Width - height, 0, height, height) : Rectangle.Empty;
+                int standard = MeasureHeight();
+                var padding = DockPanel.Theme.Measures.DockPadding;
+                var width = PanesRight.Count > 0 ? standard : padding;
+                var height = PanesTop.Count > 0 ? standard : padding;
+                return new Rectangle(Width - width, 0, width, height);
             }
         }
 
+        /// <summary>
+        /// The bottom left rectangle in auto hide strip area.
+        /// </summary>
         protected Rectangle RectangleBottomLeft
         {
             get
             {
-                int height = MeasureHeight();
-                return PanesBottom.Count > 0 && PanesLeft.Count > 0 ? new Rectangle(0, Height - height, height, height) : Rectangle.Empty;
+                int standard = MeasureHeight();
+                var padding = DockPanel.Theme.Measures.DockPadding;
+                var width = PanesLeft.Count > 0 ? standard : padding;
+                var height = PanesBottom.Count > 0 ? standard : padding;
+                return new Rectangle(0, Height - height, width, height);
             }
         }
 
+        /// <summary>
+        /// The bottom right rectangle in auto hide strip area.
+        /// </summary>
         protected Rectangle RectangleBottomRight
         {
             get
             {
-                int height = MeasureHeight();
-                return PanesBottom.Count > 0 && PanesRight.Count > 0 ? new Rectangle(Width - height, Height - height, height, height) : Rectangle.Empty;
+                int standard = MeasureHeight();
+                var padding = DockPanel.Theme.Measures.DockPadding;
+                var width = PanesRight.Count > 0 ? standard : padding;
+                var height = PanesBottom.Count > 0 ? standard : padding;
+                return new Rectangle(Width - width, Height - height, width, height);
             }
         }
 
+        /// <summary>
+        /// Gets one of the four auto hide strip rectangles.
+        /// </summary>
+        /// <param name="dockState">Dock state.</param>
+        /// <returns>The desired rectangle.</returns>
+        /// <remarks>
+        /// As the corners are represented by <see cref="RectangleTopLeft"/>, <see cref="RectangleTopRight"/>, <see cref="RectangleBottomLeft"/>, and <see cref="RectangleBottomRight"/>,
+        /// the four strips can be easily calculated out as the borders.
+        /// </remarks>
         protected internal Rectangle GetTabStripRectangle(DockState dockState)
         {
-            int height = MeasureHeight();
-            if (dockState == DockState.DockTopAutoHide && PanesTop.Count > 0)
-                return new Rectangle(RectangleTopLeft.Width, 0, Width - RectangleTopLeft.Width - RectangleTopRight.Width, height);
-            else if (dockState == DockState.DockBottomAutoHide && PanesBottom.Count > 0)
-                return new Rectangle(RectangleBottomLeft.Width, Height - height, Width - RectangleBottomLeft.Width - RectangleBottomRight.Width, height);
-            else if (dockState == DockState.DockLeftAutoHide && PanesLeft.Count > 0)
-                return new Rectangle(0, RectangleTopLeft.Width, height, Height - RectangleTopLeft.Height - RectangleBottomLeft.Height);
-            else if (dockState == DockState.DockRightAutoHide && PanesRight.Count > 0)
-                return new Rectangle(Width - height, RectangleTopRight.Width, height, Height - RectangleTopRight.Height - RectangleBottomRight.Height);
-            else
-                return Rectangle.Empty;
+            if (dockState == DockState.DockTopAutoHide)
+                return new Rectangle(RectangleTopLeft.Width, 0, Width - RectangleTopLeft.Width - RectangleTopRight.Width, RectangleTopLeft.Height);
+
+            if (dockState == DockState.DockBottomAutoHide)
+                return new Rectangle(RectangleBottomLeft.Width, Height - RectangleBottomLeft.Height, Width - RectangleBottomLeft.Width - RectangleBottomRight.Width, RectangleBottomLeft.Height);
+
+            if (dockState == DockState.DockLeftAutoHide)
+                return new Rectangle(0, RectangleTopLeft.Height, RectangleTopLeft.Width, Height - RectangleTopLeft.Height - RectangleBottomLeft.Height);
+
+            if (dockState == DockState.DockRightAutoHide)
+                return new Rectangle(Width - RectangleTopRight.Width, RectangleTopRight.Height, RectangleTopRight.Width, Height - RectangleTopRight.Height - RectangleBottomRight.Height);
+
+            return Rectangle.Empty;
         }
 
-        private GraphicsPath m_displayingArea = null;
+        private GraphicsPath m_displayingArea;
+
         private GraphicsPath DisplayingArea
         {
             get
@@ -485,6 +498,7 @@ namespace WeifenLuo.WinFormsUI.Docking
             if (!DockPanel.ShowAutoHideContentOnHover)
                 return;
 
+            // IMPORTANT: VS2003/2005 themes only.
             IDockContent content = HitTest();
             SetActiveAutoHideContent(content);
 
@@ -494,8 +508,11 @@ namespace WeifenLuo.WinFormsUI.Docking
 
         private void SetActiveAutoHideContent(IDockContent content)
         {
-            if (content != null && DockPanel.ActiveAutoHideContent != content)
-                DockPanel.ActiveAutoHideContent = content;
+            if (content != null)
+                if (DockPanel.ActiveAutoHideContent != content)
+                    DockPanel.ActiveAutoHideContent = content;
+                else if (!DockPanel.ShowAutoHideContentOnHover)
+                    DockPanel.ActiveAutoHideContent = null; // IMPORTANT: Not needed for VS2003/2005 themes.
         }
 
         protected override void OnLayout(LayoutEventArgs levent)

@@ -338,11 +338,11 @@ namespace Netron.GraphLib.UI
 		/// is the layout active?
 		/// </summary>
 		protected bool mEnableLayout = false;
-		
-		/// <summary>
-		/// The thread pointer which will run on the layout thread.
-		/// </summary>
-		protected ThreadStart ts=null;
+
+        /// <summary>
+        /// The thread pointer which will run on the layout thread.
+        /// </summary>
+        protected ThreadStart ts=null;
 		
 		/// <summary>
 		/// The thread for laying out the graph.
@@ -419,12 +419,17 @@ namespace Netron.GraphLib.UI
 		/// <summary>
 		/// indicates track mode, i.e. moving a shape around
 		/// </summary>
-		protected bool mDoTrack = false;      
-		
-		/// <summary>
-		/// the timer controlling the refresh rate of the graph
-		/// </summary>
-		protected System.Windows.Forms.Timer transmissionTimer = new System.Windows.Forms.Timer();
+		protected bool mDoTrack = false;
+
+        /// <summary>
+        /// indicates previous mouse point during mouse down and up
+        /// </summary>
+        protected PointF mPrevPoint = PointF.Empty;
+
+        /// <summary>
+        /// the timer controlling the refresh rate of the graph
+        /// </summary>
+        protected System.Windows.Forms.Timer transmissionTimer = new System.Windows.Forms.Timer();
 
 		
 		/// <summary>
@@ -1347,7 +1352,7 @@ namespace Netron.GraphLib.UI
 
 			foreach (Shape o in extract.Shapes)
 			{
-				if(!o.Layer.Visible || !o.IsVisible) continue;
+				if(!o.IsVisible || o.Layer == null || !o.Layer.Visible  ) continue;
 			    foreach (Connector c in o.Connectors)
 			    {
                     if (c.Hit(r))
@@ -1363,7 +1368,8 @@ namespace Netron.GraphLib.UI
 
 			for(int k=ec.Count-1; k>-1; k--)//paintables are order from deep Z-order to high Z-order
 			{
-				if(!ec[k].Layer.Visible) continue;
+               
+				if(ec[k].Layer == null || !ec[k].Layer.Visible) continue;
 				if(ec[k].Hit(r)) return ec[k];
 			}
 
@@ -1616,6 +1622,7 @@ namespace Netron.GraphLib.UI
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+
             base.OnMouseDown(e);
 
             //make sure the canvas has the focus			
@@ -1628,6 +1635,7 @@ namespace Netron.GraphLib.UI
             }
 
             PointF p = new PointF(e.X - this.AutoScrollPosition.X, e.Y - this.AutoScrollPosition.Y);
+            mPrevPoint = p;
 
             // Get a point adjusted by the current scroll position and zoom factor
             //give priority to the widgets, if visible
@@ -1761,7 +1769,7 @@ namespace Netron.GraphLib.UI
             if (mshapeObject != null)
             {
                 if(e.Button == MouseButtons.Left) DrawShapeMouseMove(p);
-
+                mPrevPoint = p;
                 return;
             }
 
@@ -1778,7 +1786,7 @@ namespace Netron.GraphLib.UI
                     //pass mouse event to entity
                     mHover.RaiseMouseMove(e);
                 }
-
+                mPrevPoint = p;
                 return;
             }
 
@@ -1792,6 +1800,7 @@ namespace Netron.GraphLib.UI
                     DoDragDrop(bundle, DragDropEffects.Copy);
                     //GraphControl.OnDragEnter, GraphControl.OnDragDrop will get the bundle object
                     //when you release your DragDrop.
+                    mPrevPoint = p;
                     return;
                 }
             }
@@ -1801,6 +1810,7 @@ namespace Netron.GraphLib.UI
                 //selector.Update(new PointF(e.X,e.Y));
                 selector.Update(p);
                 Invalidate();
+                mPrevPoint = p;
                 return; //all the rest doesnt matter
             }
 
@@ -1810,6 +1820,7 @@ namespace Netron.GraphLib.UI
                 RectangleF r = mshapeObject.Rectangle;
                 mshapeObject.Rectangle = new RectangleF(p.X, p.Y, r.Width, r.Height);
                 mshapeObject.Invalidate();            // invalidate next rendering.
+                mPrevPoint = p;
                 return;
             }
 
@@ -1828,12 +1839,14 @@ namespace Netron.GraphLib.UI
 
                 this.Invalidate(true);
                 if (this.mEnableLayout) this.StartLayout();
+                mPrevPoint = p;
                 return;
             }
 
             if (mConnectionCreating && mConnection != null)
             {
                 DrawNewConnection(p);
+                mPrevPoint = p;
                 return;
             }
 
@@ -1841,6 +1854,7 @@ namespace Netron.GraphLib.UI
             {
                 //pass mouse event to entity
                 mHover.RaiseMouseMove(e);
+                mPrevPoint = p;
                 return;
             }
 
@@ -1905,7 +1919,8 @@ namespace Netron.GraphLib.UI
                         }
                     }
 
-                    IsDirty = true;
+                    if(p != mPrevPoint)
+                        IsDirty = true;
 
                 }
             }
@@ -1934,6 +1949,7 @@ namespace Netron.GraphLib.UI
             if (mshapeObject != null)
             {
                 DrawShapeMouseUp(p);
+                mPrevPoint = PointF.Empty;
                 return;
             }
 
@@ -1948,6 +1964,7 @@ namespace Netron.GraphLib.UI
 
             if (mLocked)
             {
+                mPrevPoint = PointF.Empty;
                 return;
             }
 
@@ -1961,6 +1978,7 @@ namespace Netron.GraphLib.UI
 
                 mConnectionCreating = false;
                 Capture = false;
+                mPrevPoint = PointF.Empty;
                 return;
             }
 
@@ -1982,6 +2000,7 @@ namespace Netron.GraphLib.UI
                     RaiseShowProperties(shapes);
                 }
                 Invalidate();
+                mPrevPoint = PointF.Empty;
                 return;
             }
             #endregion
@@ -1998,6 +2017,7 @@ namespace Netron.GraphLib.UI
                     }
                 mDoTrack = false;
                 Capture = false;
+                mPrevPoint = PointF.Empty;
                 return;
             }
             #endregion
@@ -2005,6 +2025,7 @@ namespace Netron.GraphLib.UI
             this.Invalidate(true);
             Update();
             SetCursor(p);
+            mPrevPoint = PointF.Empty;
 
         }
 
@@ -2092,7 +2113,7 @@ namespace Netron.GraphLib.UI
             {
                 foreach (Shape o in extract.Shapes)
                 {
-                    if (!o.IsVisible || !o.Layer.Visible)
+                    if (!o.IsVisible || o.Layer == null || !o.Layer.Visible)
                     {
                         continue;
                     }
@@ -3976,7 +3997,6 @@ namespace Netron.GraphLib.UI
 				RectangleF r = sob.Rectangle;
 				
 				sob.Rectangle = new RectangleF(position.X, position.Y, r.Width, r.Height);
-
 				sob.Invalidate();
 
 				extract.Insert(sob);

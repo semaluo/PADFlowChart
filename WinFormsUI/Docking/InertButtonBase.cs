@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -15,10 +13,11 @@ namespace WeifenLuo.WinFormsUI.Docking
             BackColor = Color.Transparent;
         }
 
-        public abstract Bitmap Image
-        {
-            get;
-        }
+        public abstract Bitmap HoverImage { get; }
+
+        public abstract Bitmap PressImage { get; }
+
+        public abstract Bitmap Image { get; }
 
         private bool m_isMouseOver = false;
         protected bool IsMouseOver
@@ -30,6 +29,20 @@ namespace WeifenLuo.WinFormsUI.Docking
                     return;
 
                 m_isMouseOver = value;
+                Invalidate();
+            }
+        }
+
+        private bool m_isMouseDown = false;
+        protected bool IsMouseDown
+        {
+            get { return m_isMouseDown; }
+            private set
+            {
+                if (m_isMouseDown == value)
+                    return;
+
+                m_isMouseDown = value;
                 Invalidate();
             }
         }
@@ -61,8 +74,45 @@ namespace WeifenLuo.WinFormsUI.Docking
                 IsMouseOver = false;
         }
 
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (!IsMouseDown)
+                IsMouseDown = true;
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (IsMouseDown)
+                IsMouseDown = false;
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (HoverImage != null)
+            {
+                if (IsMouseOver && Enabled)
+                {
+                    e.Graphics.DrawImage(
+                       IsMouseDown ? PressImage : HoverImage,
+                       PatchController.EnableHighDpi == true
+                           ? ClientRectangle
+                           : new Rectangle(0, 0, Image.Width, Image.Height));
+                }
+                else
+                {
+                    e.Graphics.DrawImage(
+                       Image,
+                       PatchController.EnableHighDpi == true
+                           ? ClientRectangle
+                           : new Rectangle(0, 0, Image.Width, Image.Height));
+                }
+
+                base.OnPaint(e);
+                return;
+            }
+
             if (IsMouseOver && Enabled)
             {
                 using (Pen pen = new Pen(ForeColor))

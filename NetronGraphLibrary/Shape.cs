@@ -215,7 +215,14 @@ namespace Netron.GraphLib
 		/// </summary>
 		public GraphAbstract Abstract
 		{
-			get{return this.Site.Abstract;}
+		    get
+		    {
+		        if (Site == null)
+		        {
+		            return null;
+		        }
+		        return this.Site.Abstract;
+		    }
 		}
 
 		/// <summary>
@@ -297,7 +304,23 @@ namespace Netron.GraphLib
 		protected override void SetLayer(GraphLayer layer)
 		{
 			if(layer==null) return;
+		    if (Layer != null )
+		    {
+		        if (Layer.Name == layer.Name)
+		        {
+                    return;
+                }
+		        else
+		        {
+                    Layer.Shapes.Remove(this);
+                }
+
+            }
+
+
 			base.SetLayer (layer);
+		    layer.Shapes.Add(this);
+
 			if(layer == Site.Abstract.DefaultLayer)
 			{
 				mShapeColor = Color.FromArgb(255,ShapeColor);
@@ -329,6 +352,8 @@ namespace Netron.GraphLib
                 }
                 TextColor =  Color.FromArgb(alpha,TextColor);
 			}
+
+		    IsVisible = Layer.Visible;
 		}
 
 		/// <summary>

@@ -46,7 +46,7 @@ namespace WeifenLuo.WinFormsUI.Docking
         #region Customizable Properties
         public Font TextFont
         {
-            get { return DockPanel.Skin.AutoHideStripSkin.TextFont; }
+            get { return DockPanel.Theme.Skin.AutoHideStripSkin.TextFont; }
         }
 
         private static StringFormat _stringFormatTabHorizontal;
@@ -202,15 +202,13 @@ namespace WeifenLuo.WinFormsUI.Docking
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
             Graphics g = e.Graphics;
 
-            Color startColor = DockPanel.Skin.AutoHideStripSkin.DockStripGradient.StartColor;
-            Color endColor = DockPanel.Skin.AutoHideStripSkin.DockStripGradient.EndColor;
-            LinearGradientMode gradientMode = DockPanel.Skin.AutoHideStripSkin.DockStripGradient.LinearGradientMode;
-            using (LinearGradientBrush brush = new LinearGradientBrush(ClientRectangle, startColor, endColor, gradientMode))
-            {
-                g.FillRectangle(brush, ClientRectangle);
-            }
+            Color startColor = DockPanel.Theme.Skin.AutoHideStripSkin.DockStripGradient.StartColor;
+            Color endColor = DockPanel.Theme.Skin.AutoHideStripSkin.DockStripGradient.EndColor;
+            LinearGradientMode gradientMode = DockPanel.Theme.Skin.AutoHideStripSkin.DockStripGradient.LinearGradientMode;
+            ClientRectangle.SafelyDrawLinearGradient(startColor, endColor, gradientMode, g);
 
             DrawTabStrip(g);
         }
@@ -320,10 +318,14 @@ namespace WeifenLuo.WinFormsUI.Docking
             IDockContent content = tab.Content;
 
             GraphicsPath path = GetTabOutline(tab, false, true);
-            Color startColor = DockPanel.Skin.AutoHideStripSkin.TabGradient.StartColor;
-            Color endColor = DockPanel.Skin.AutoHideStripSkin.TabGradient.EndColor;
-            LinearGradientMode gradientMode = DockPanel.Skin.AutoHideStripSkin.TabGradient.LinearGradientMode;
-            g.FillPath(new LinearGradientBrush(rectTabOrigin, startColor, endColor, gradientMode), path);
+            Color startColor = DockPanel.Theme.Skin.AutoHideStripSkin.TabGradient.StartColor;
+            Color endColor = DockPanel.Theme.Skin.AutoHideStripSkin.TabGradient.EndColor;
+            LinearGradientMode gradientMode = DockPanel.Theme.Skin.AutoHideStripSkin.TabGradient.LinearGradientMode;
+            using (LinearGradientBrush brushPath = new LinearGradientBrush(rectTabOrigin, startColor, endColor, gradientMode))
+            {
+                g.FillPath(brushPath, path);
+            }
+
             g.DrawPath(PenTabBorder, path);
 
             // Set no rotate for drawing icon and text
@@ -371,7 +373,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                 rectText.Width -= ImageGapLeft + imageWidth + ImageGapRight + TextGapLeft;
                 rectText = RtlTransform(GetTransformedRectangle(dockState, rectText), dockState);
 
-                Color textColor = DockPanel.Skin.AutoHideStripSkin.TabGradient.TextColor;
+                Color textColor = DockPanel.Theme.Skin.AutoHideStripSkin.TabGradient.TextColor;
 
                 if (dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide)
                     g.DrawString(content.DockHandler.TabText, TextFont, new SolidBrush(textColor), rectText, StringFormatTabVertical);
