@@ -128,6 +128,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Issue_report.txt" />
     <Content Include="Resource\btn_block.bmp" />
     <Content Include="Resource\btn_Label.bmp" />
     <Content Include="Resource\copy.png" />

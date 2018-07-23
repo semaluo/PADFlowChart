@@ -1152,6 +1152,7 @@ namespace Netron.GraphLib.UI
 
 			
 			this.KeyDown+=new KeyEventHandler(OnKeyDown);
+            this.KeyUp +=new KeyEventHandler(OnKeyUp);
 			this.KeyPress+=new KeyPressEventHandler(OnKeyPress);
 
             //AddBaseMenu();
@@ -1198,10 +1199,15 @@ namespace Netron.GraphLib.UI
 			
 		}
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
+        private void @new(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
 		{
 			if( disposing )
 			{
@@ -3790,10 +3796,10 @@ namespace Netron.GraphLib.UI
             }
 
             //Alt
-            if (!e.Control && !e.Shift && e.Alt)
-            {
-                AltKey = true;
-            }
+            //if (!e.Control && !e.Shift && e.Alt)
+            //{
+            //    AltKey = true;
+            //}
 
 
             //CTRL-SHIFT
@@ -3914,9 +3920,10 @@ namespace Netron.GraphLib.UI
 			//SetCursor(p);
 		}
 
-        protected override void OnKeyUp(KeyEventArgs e)
+        //        protected override void OnKeyUp(KeyEventArgs e)
+        private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            base.OnKeyUp(e);
+//            base.OnKeyUp(e);
 
             if (!e.Control)
             {

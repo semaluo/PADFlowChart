@@ -1,0 +1,2 @@
+﻿1.Copy a BlockShape: needs to copy the linkedLayer together
+2.For layer navigating, should provide options: up/down/forword/back

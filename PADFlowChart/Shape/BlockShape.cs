@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
@@ -150,8 +151,10 @@ namespace PADFlowChart
 
             try
             {
-                this.URL = string.Empty;
-                this.URL = info.GetString("m_linkedLayer");
+                //this.URL = string.Empty;
+                //this.URL = info.GetString("m_linkedLayer");
+                m_linkedLayer = (GraphLayer)info.GetValue("m_linkedLayer", typeof(GraphLayer));
+
             }
             catch (Exception)
             {
@@ -167,19 +170,58 @@ namespace PADFlowChart
             info.AddValue("m_leftConnector", m_leftConnector);
             if (m_linkedLayer != null)
             {
-                info.AddValue("m_linkedLayer", m_linkedLayer.Name);
+                //info.AddValue("m_linkedLayer", m_linkedLayer.Name);
+                info.AddValue("m_linkedLayer", m_linkedLayer);
             }
         }
 
         public override void PostDeserialization()
         {
             base.PostDeserialization();
-            if (!string.IsNullOrEmpty(URL))
+            //if (!string.IsNullOrEmpty(URL))
+            //{
+            //    m_linkedLayer = Abstract.Layers[URL.Trim()];
+            //    URL = string.Empty;
+            //}
+        }
+        #endregion
+
+        #region properties
+
+        public override void AddProperties()
+        {
+            base.AddProperties();
+            PropertySpec spec = new PropertySpec("LinkedLayer", typeof(string), "Appearance", "Gets or sets the linked layer.", "Default", typeof(LayerUITypeEditor), typeof(TypeConverter));
+            spec.Attributes = Site.GetLayerAttributes();
+            Bag.Properties.Add(spec);
+        }
+
+        protected override void SetPropertyBagValue(object sender, PropertySpecEventArgs e)
+        {
+            base.SetPropertyBagValue(sender, e);
+            switch (e.Property.Name)
             {
-                m_linkedLayer = Abstract.Layers[URL.Trim()];
-                URL = string.Empty;
+                case "LinkedLayer":
+                    this.LinkedLayer = (e.Value as GraphLayer);
+                    //this.Invalidate();
+                    break;
             }
         }
+
+        protected override void GetPropertyBagValue(object sender, PropertySpecEventArgs e)
+        {
+            base.GetPropertyBagValue(sender, e);
+            switch (e.Property.Name)
+            {
+                case "LinkedLayer":
+                    if (LinkedLayer == null)
+                        e.Value = Site.Abstract.DefaultLayer;
+                    else
+                        e.Value = this.LinkedLayer;
+                    break;
+            }
+        }
+
         #endregion
 
     }
