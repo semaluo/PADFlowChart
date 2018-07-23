@@ -142,7 +142,7 @@ namespace PADFlowChart
             using (InputDialog idlg = new InputDialog())
             {
                 idlg.Value = 3.ToString();
-                idlg.Message = "请输入分支结构的分支数：";
+                idlg.Message = "Please input branch NO# for switch shape：";
                 if (idlg.ShowDialog() == DialogResult.OK)
                 {
                     int n;
@@ -306,8 +306,8 @@ namespace PADFlowChart
                     t_fileName = t_fileName.Substring(0, t_fileName.Length - 1);
                 }
 
-                string t_msg = string.Format("文件 {0} 未保存，是否保存？", t_fileName);
-                DialogResult dr = MessageBox.Show(t_msg, "保存文件", MessageBoxButtons.YesNoCancel);
+                string t_msg = string.Format("File {0} not save yet. Save it？", t_fileName);
+                DialogResult dr = MessageBox.Show(t_msg, "Save File", MessageBoxButtons.YesNoCancel);
 
                 switch (dr)
                 {

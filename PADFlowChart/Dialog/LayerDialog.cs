@@ -68,7 +68,7 @@ namespace PADFlowChart
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Manager.Location = new System.Drawing.Point(0, 0);
             this.Manager.Name = "Manager";
-            this.Manager.Size = new System.Drawing.Size(512, 378);
+            this.Manager.Size = new System.Drawing.Size(512, 356);
             this.Manager.TabIndex = 0;
             // 
             // Cancel
@@ -76,9 +76,9 @@ namespace PADFlowChart
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Cancel.Location = new System.Drawing.Point(311, 382);
+            this.Cancel.Location = new System.Drawing.Point(177, 362);
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(90, 24);
+            this.Cancel.Size = new System.Drawing.Size(150, 36);
             this.Cancel.TabIndex = 1;
             this.Cancel.Text = "Cancel";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
@@ -88,9 +88,9 @@ namespace PADFlowChart
             this.OK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.OK.Location = new System.Drawing.Point(407, 382);
+            this.OK.Location = new System.Drawing.Point(337, 362);
             this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(90, 24);
+            this.OK.Size = new System.Drawing.Size(150, 36);
             this.OK.TabIndex = 2;
             this.OK.Text = "OK";
             this.OK.Click += new System.EventHandler(this.OK_Click);
@@ -99,9 +99,9 @@ namespace PADFlowChart
             // 
             this.Apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Apply.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Apply.Location = new System.Drawing.Point(196, 382);
+            this.Apply.Location = new System.Drawing.Point(-14, 362);
             this.Apply.Name = "Apply";
-            this.Apply.Size = new System.Drawing.Size(90, 24);
+            this.Apply.Size = new System.Drawing.Size(150, 36);
             this.Apply.TabIndex = 3;
             this.Apply.Text = "Apply";
             this.Apply.Click += new System.EventHandler(this.Apply_Click);
@@ -109,7 +109,7 @@ namespace PADFlowChart
             // LayersDialog
             // 
             this.AcceptButton = this.OK;
-            this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
+            this.AutoScaleBaseSize = new System.Drawing.Size(10, 21);
             this.CancelButton = this.Cancel;
             this.ClientSize = new System.Drawing.Size(512, 422);
             this.Controls.Add(this.Apply);

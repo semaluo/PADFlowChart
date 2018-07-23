@@ -70,12 +70,14 @@
             // 
             // flowchart_menu
             // 
+            this.flowchart_menu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.flowchart_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flowchart_menu_edit,
             this.flowchart_menu_layer});
             this.flowchart_menu.Location = new System.Drawing.Point(0, 0);
             this.flowchart_menu.Name = "flowchart_menu";
-            this.flowchart_menu.Size = new System.Drawing.Size(502, 25);
+            this.flowchart_menu.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.flowchart_menu.Size = new System.Drawing.Size(753, 34);
             this.flowchart_menu.TabIndex = 0;
             this.flowchart_menu.Text = "menuStrip1";
             this.flowchart_menu.Visible = false;
@@ -90,35 +92,39 @@
             this.flowchart_menu_edit.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.flowchart_menu_edit.MergeIndex = 2;
             this.flowchart_menu_edit.Name = "flowchart_menu_edit";
-            this.flowchart_menu_edit.Size = new System.Drawing.Size(44, 21);
-            this.flowchart_menu_edit.Text = "编辑";
+            this.flowchart_menu_edit.Size = new System.Drawing.Size(56, 28);
+            this.flowchart_menu_edit.Text = "Edit";
             // 
             // flowchart_menu_edit_copy
             // 
             this.flowchart_menu_edit_copy.Name = "flowchart_menu_edit_copy";
-            this.flowchart_menu_edit_copy.Size = new System.Drawing.Size(100, 22);
-            this.flowchart_menu_edit_copy.Text = "复制";
+            this.flowchart_menu_edit_copy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.flowchart_menu_edit_copy.Size = new System.Drawing.Size(233, 30);
+            this.flowchart_menu_edit_copy.Text = "Copy";
             this.flowchart_menu_edit_copy.Click += new System.EventHandler(this.flowchart_menu_edit_copy_Click);
             // 
             // flowchart_menu_edit_paste
             // 
             this.flowchart_menu_edit_paste.Name = "flowchart_menu_edit_paste";
-            this.flowchart_menu_edit_paste.Size = new System.Drawing.Size(100, 22);
-            this.flowchart_menu_edit_paste.Text = "粘贴";
+            this.flowchart_menu_edit_paste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.flowchart_menu_edit_paste.Size = new System.Drawing.Size(233, 30);
+            this.flowchart_menu_edit_paste.Text = "Paste";
             this.flowchart_menu_edit_paste.Click += new System.EventHandler(this.flowchart_menu_edit_paste_Click);
             // 
             // flowchart_menu_edit_delete
             // 
             this.flowchart_menu_edit_delete.Name = "flowchart_menu_edit_delete";
-            this.flowchart_menu_edit_delete.Size = new System.Drawing.Size(100, 22);
-            this.flowchart_menu_edit_delete.Text = "删除";
+            this.flowchart_menu_edit_delete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.flowchart_menu_edit_delete.Size = new System.Drawing.Size(233, 30);
+            this.flowchart_menu_edit_delete.Text = "Delete";
             this.flowchart_menu_edit_delete.Click += new System.EventHandler(this.flowchart_menu_edit_delete_Click);
             // 
             // flowchart_menu_edit_selectAll
             // 
             this.flowchart_menu_edit_selectAll.Name = "flowchart_menu_edit_selectAll";
-            this.flowchart_menu_edit_selectAll.Size = new System.Drawing.Size(100, 22);
-            this.flowchart_menu_edit_selectAll.Text = "全选";
+            this.flowchart_menu_edit_selectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.flowchart_menu_edit_selectAll.Size = new System.Drawing.Size(233, 30);
+            this.flowchart_menu_edit_selectAll.Text = "SelectAll";
             this.flowchart_menu_edit_selectAll.Click += new System.EventHandler(this.flowchart_menu_edit_selectAll_Click);
             // 
             // flowchart_menu_layer
@@ -126,14 +132,14 @@
             this.flowchart_menu_layer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flowchart_menu_layer_go_upper});
             this.flowchart_menu_layer.Name = "flowchart_menu_layer";
-            this.flowchart_menu_layer.Size = new System.Drawing.Size(44, 21);
-            this.flowchart_menu_layer.Text = "图层";
+            this.flowchart_menu_layer.Size = new System.Drawing.Size(68, 28);
+            this.flowchart_menu_layer.Text = "Layer";
             // 
             // flowchart_menu_layer_go_upper
             // 
             this.flowchart_menu_layer_go_upper.Name = "flowchart_menu_layer_go_upper";
-            this.flowchart_menu_layer_go_upper.Size = new System.Drawing.Size(148, 22);
-            this.flowchart_menu_layer_go_upper.Text = "回到上一图层";
+            this.flowchart_menu_layer_go_upper.Size = new System.Drawing.Size(210, 30);
+            this.flowchart_menu_layer_go_upper.Text = "Upper Layer";
             this.flowchart_menu_layer_go_upper.Click += new System.EventHandler(this.flowchart_menu_layer_go_upper_Click);
             // 
             // flowchart_toolbar_left
@@ -150,9 +156,10 @@
             this.flowchart_toolbar_block_shape,
             this.flowchart_toolbar_end_shape,
             this.flowchart_toolbar_labe_shape});
-            this.flowchart_toolbar_left.Location = new System.Drawing.Point(0, 0);
+            this.flowchart_toolbar_left.Location = new System.Drawing.Point(0, 34);
             this.flowchart_toolbar_left.Name = "flowchart_toolbar_left";
-            this.flowchart_toolbar_left.Size = new System.Drawing.Size(37, 378);
+            this.flowchart_toolbar_left.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.flowchart_toolbar_left.Size = new System.Drawing.Size(38, 533);
             this.flowchart_toolbar_left.TabIndex = 1;
             this.flowchart_toolbar_left.Text = "toolbar";
             // 
@@ -162,7 +169,7 @@
             this.flowchart_toolbar_arrow.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_arrow.Image")));
             this.flowchart_toolbar_arrow.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_arrow.Name = "flowchart_toolbar_arrow";
-            this.flowchart_toolbar_arrow.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_arrow.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_arrow.Text = "arrow";
             this.flowchart_toolbar_arrow.Click += new System.EventHandler(this.flowchart_toolbar_arrow_Click);
             // 
@@ -172,7 +179,7 @@
             this.flowchart_toolbar_start_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_start_shape.Image")));
             this.flowchart_toolbar_start_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_start_shape.Name = "flowchart_toolbar_start_shape";
-            this.flowchart_toolbar_start_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_start_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_start_shape.Text = "开始结构";
             this.flowchart_toolbar_start_shape.ToolTipText = "开始结构";
             this.flowchart_toolbar_start_shape.Click += new System.EventHandler(this.flowchart_toolbar_start_shape_Click);
@@ -183,7 +190,7 @@
             this.flowchart_toolbar_sequence_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_sequence_shape.Image")));
             this.flowchart_toolbar_sequence_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_sequence_shape.Name = "flowchart_toolbar_sequence_shape";
-            this.flowchart_toolbar_sequence_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_sequence_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_sequence_shape.Text = "顺序结构";
             this.flowchart_toolbar_sequence_shape.Click += new System.EventHandler(this.flowchart_toolbar_sequence_shape_Click);
             // 
@@ -193,7 +200,7 @@
             this.flowchart_toolbar_loop_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_loop_shape.Image")));
             this.flowchart_toolbar_loop_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_loop_shape.Name = "flowchart_toolbar_loop_shape";
-            this.flowchart_toolbar_loop_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_loop_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_loop_shape.Text = "循环结构";
             this.flowchart_toolbar_loop_shape.Click += new System.EventHandler(this.flowchart_toolbar_loop_shape_Click);
             // 
@@ -203,7 +210,7 @@
             this.flowchart_toolbar_if_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_if_shape.Image")));
             this.flowchart_toolbar_if_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_if_shape.Name = "flowchart_toolbar_if_shape";
-            this.flowchart_toolbar_if_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_if_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_if_shape.Text = "分支结构";
             this.flowchart_toolbar_if_shape.Click += new System.EventHandler(this.flowchart_toolbar_if_shape_Click);
             // 
@@ -213,7 +220,7 @@
             this.flowchart_toolbar_switch_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_switch_shape.Image")));
             this.flowchart_toolbar_switch_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_switch_shape.Name = "flowchart_toolbar_switch_shape";
-            this.flowchart_toolbar_switch_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_switch_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_switch_shape.Text = "多分支结构";
             this.flowchart_toolbar_switch_shape.Click += new System.EventHandler(this.flowchart_toolbar_switch_shape_Click);
             // 
@@ -223,7 +230,7 @@
             this.flowchart_toolbar_block_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_block_shape.Image")));
             this.flowchart_toolbar_block_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_block_shape.Name = "flowchart_toolbar_block_shape";
-            this.flowchart_toolbar_block_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_block_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_block_shape.Text = "块结构";
             this.flowchart_toolbar_block_shape.Click += new System.EventHandler(this.flowchart_toolbar_block_shape_Click);
             // 
@@ -233,7 +240,7 @@
             this.flowchart_toolbar_end_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_end_shape.Image")));
             this.flowchart_toolbar_end_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_end_shape.Name = "flowchart_toolbar_end_shape";
-            this.flowchart_toolbar_end_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_end_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_end_shape.Text = "结束结构";
             this.flowchart_toolbar_end_shape.Click += new System.EventHandler(this.flowchart_toolbar_end_shape_Click);
             // 
@@ -243,7 +250,7 @@
             this.flowchart_toolbar_labe_shape.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_labe_shape.Image")));
             this.flowchart_toolbar_labe_shape.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_labe_shape.Name = "flowchart_toolbar_labe_shape";
-            this.flowchart_toolbar_labe_shape.Size = new System.Drawing.Size(34, 36);
+            this.flowchart_toolbar_labe_shape.Size = new System.Drawing.Size(33, 36);
             this.flowchart_toolbar_labe_shape.Text = "标签结构";
             this.flowchart_toolbar_labe_shape.Click += new System.EventHandler(this.flowchart_toolbar_labe_shape_Click);
             // 
@@ -262,17 +269,19 @@
             this.status_panel.Controls.Add(this.flowchart_status_info);
             this.status_panel.Controls.Add(this.flowchart_status_coordinate);
             this.status_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.status_panel.Location = new System.Drawing.Point(37, 348);
+            this.status_panel.Location = new System.Drawing.Point(38, 522);
+            this.status_panel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.status_panel.Name = "status_panel";
-            this.status_panel.Size = new System.Drawing.Size(465, 30);
+            this.status_panel.Size = new System.Drawing.Size(715, 45);
             this.status_panel.TabIndex = 2;
             // 
             // flowchart_status_info
             // 
             this.flowchart_status_info.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowchart_status_info.Location = new System.Drawing.Point(0, 0);
+            this.flowchart_status_info.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.flowchart_status_info.Name = "flowchart_status_info";
-            this.flowchart_status_info.Size = new System.Drawing.Size(327, 30);
+            this.flowchart_status_info.Size = new System.Drawing.Size(508, 45);
             this.flowchart_status_info.TabIndex = 1;
             this.flowchart_status_info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -280,24 +289,27 @@
             // 
             this.flowchart_status_coordinate.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowchart_status_coordinate.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.flowchart_status_coordinate.Location = new System.Drawing.Point(327, 0);
+            this.flowchart_status_coordinate.Location = new System.Drawing.Point(508, 0);
+            this.flowchart_status_coordinate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.flowchart_status_coordinate.Name = "flowchart_status_coordinate";
-            this.flowchart_status_coordinate.Size = new System.Drawing.Size(138, 30);
+            this.flowchart_status_coordinate.Size = new System.Drawing.Size(207, 45);
             this.flowchart_status_coordinate.TabIndex = 0;
             this.flowchart_status_coordinate.Text = "X : 1000  Y : 1000";
             this.flowchart_status_coordinate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowchart_toolbar_top
             // 
+            this.flowchart_toolbar_top.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.flowchart_toolbar_top.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flowchart_toolbar_copy,
             this.flowchart_toolbar_paste,
             this.flowchart_toolbar_back_to_upperLayer,
             this.flowchart_toolbar_zoomout,
             this.flowchart_toolbar_zoomin});
-            this.flowchart_toolbar_top.Location = new System.Drawing.Point(37, 0);
+            this.flowchart_toolbar_top.Location = new System.Drawing.Point(38, 0);
             this.flowchart_toolbar_top.Name = "flowchart_toolbar_top";
-            this.flowchart_toolbar_top.Size = new System.Drawing.Size(465, 25);
+            this.flowchart_toolbar_top.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.flowchart_toolbar_top.Size = new System.Drawing.Size(715, 31);
             this.flowchart_toolbar_top.TabIndex = 4;
             this.flowchart_toolbar_top.Text = "toolStrip1";
             this.flowchart_toolbar_top.Visible = false;
@@ -308,8 +320,8 @@
             this.flowchart_toolbar_copy.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_copy.Image")));
             this.flowchart_toolbar_copy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.flowchart_toolbar_copy.Name = "flowchart_toolbar_copy";
-            this.flowchart_toolbar_copy.Size = new System.Drawing.Size(23, 22);
-            this.flowchart_toolbar_copy.Text = "复制";
+            this.flowchart_toolbar_copy.Size = new System.Drawing.Size(28, 28);
+            this.flowchart_toolbar_copy.Text = "Copy";
             this.flowchart_toolbar_copy.Click += new System.EventHandler(this.flowchart_menu_edit_copy_Click);
             // 
             // flowchart_toolbar_paste
@@ -318,8 +330,8 @@
             this.flowchart_toolbar_paste.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_paste.Image")));
             this.flowchart_toolbar_paste.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.flowchart_toolbar_paste.Name = "flowchart_toolbar_paste";
-            this.flowchart_toolbar_paste.Size = new System.Drawing.Size(23, 22);
-            this.flowchart_toolbar_paste.Text = "粘贴";
+            this.flowchart_toolbar_paste.Size = new System.Drawing.Size(28, 28);
+            this.flowchart_toolbar_paste.Text = "Paste";
             this.flowchart_toolbar_paste.Click += new System.EventHandler(this.flowchart_menu_edit_paste_Click);
             // 
             // flowchart_toolbar_back_to_upperLayer
@@ -328,8 +340,8 @@
             this.flowchart_toolbar_back_to_upperLayer.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_back_to_upperLayer.Image")));
             this.flowchart_toolbar_back_to_upperLayer.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.flowchart_toolbar_back_to_upperLayer.Name = "flowchart_toolbar_back_to_upperLayer";
-            this.flowchart_toolbar_back_to_upperLayer.Size = new System.Drawing.Size(23, 22);
-            this.flowchart_toolbar_back_to_upperLayer.Text = "回到上一图层";
+            this.flowchart_toolbar_back_to_upperLayer.Size = new System.Drawing.Size(28, 28);
+            this.flowchart_toolbar_back_to_upperLayer.Text = "Upper Layer";
             this.flowchart_toolbar_back_to_upperLayer.Click += new System.EventHandler(this.flowchart_menu_layer_go_upper_Click);
             // 
             // flowchart_toolbar_zoomout
@@ -338,8 +350,8 @@
             this.flowchart_toolbar_zoomout.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_zoomout.Image")));
             this.flowchart_toolbar_zoomout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.flowchart_toolbar_zoomout.Name = "flowchart_toolbar_zoomout";
-            this.flowchart_toolbar_zoomout.Size = new System.Drawing.Size(23, 22);
-            this.flowchart_toolbar_zoomout.Text = "放大";
+            this.flowchart_toolbar_zoomout.Size = new System.Drawing.Size(28, 28);
+            this.flowchart_toolbar_zoomout.Text = "ZoomOut";
             this.flowchart_toolbar_zoomout.Click += new System.EventHandler(this.flowchart_toolbar_zoomout_Click);
             // 
             // flowchart_toolbar_zoomin
@@ -348,22 +360,24 @@
             this.flowchart_toolbar_zoomin.Image = ((System.Drawing.Image)(resources.GetObject("flowchart_toolbar_zoomin.Image")));
             this.flowchart_toolbar_zoomin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.flowchart_toolbar_zoomin.Name = "flowchart_toolbar_zoomin";
-            this.flowchart_toolbar_zoomin.Size = new System.Drawing.Size(23, 22);
-            this.flowchart_toolbar_zoomin.Text = "缩小";
+            this.flowchart_toolbar_zoomin.Size = new System.Drawing.Size(28, 28);
+            this.flowchart_toolbar_zoomin.Text = "ZoomIn";
             this.flowchart_toolbar_zoomin.Click += new System.EventHandler(this.flowchart_toolbar_zoomin_Click);
             // 
             // contextMenu
             // 
+            this.contextMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contextMenu_go_upper_layer});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(161, 26);
+            this.contextMenu.Size = new System.Drawing.Size(186, 32);
+            this.contextMenu.Text = "Layer";
             // 
             // contextMenu_go_upper_layer
             // 
             this.contextMenu_go_upper_layer.Name = "contextMenu_go_upper_layer";
-            this.contextMenu_go_upper_layer.Size = new System.Drawing.Size(160, 22);
-            this.contextMenu_go_upper_layer.Text = "返回上一层图层";
+            this.contextMenu_go_upper_layer.Size = new System.Drawing.Size(198, 28);
+            this.contextMenu_go_upper_layer.Text = "Upper Layer";
             this.contextMenu_go_upper_layer.Click += new System.EventHandler(this.flowchart_menu_layer_go_upper_Click);
             // 
             // graphControl
@@ -398,12 +412,13 @@
             this.graphControl.GridSize = 20;
             this.graphControl.IsDirty = false;
             this.graphControl.LastShape = null;
-            this.graphControl.Location = new System.Drawing.Point(37, 0);
+            this.graphControl.Location = new System.Drawing.Point(56, 0);
+            this.graphControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.graphControl.Name = "graphControl";
             this.graphControl.RestrictToCanvas = false;
             this.graphControl.ShowAutomataController = false;
             this.graphControl.ShowGrid = false;
-            this.graphControl.Size = new System.Drawing.Size(465, 345);
+            this.graphControl.Size = new System.Drawing.Size(698, 518);
             this.graphControl.Snap = false;
             this.graphControl.TabIndex = 3;
             this.graphControl.Text = "graphControl";
@@ -412,9 +427,9 @@
             // 
             // FlowChartForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 378);
+            this.ClientSize = new System.Drawing.Size(753, 567);
             this.Controls.Add(this.flowchart_toolbar_top);
             this.Controls.Add(this.graphControl);
             this.Controls.Add(this.status_panel);
@@ -423,6 +438,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainMenuStrip = this.flowchart_menu;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FlowChartForm";
             this.Text = "FlowChart";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlowChartForm_FormClosing);

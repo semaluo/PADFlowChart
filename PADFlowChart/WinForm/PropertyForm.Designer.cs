@@ -35,21 +35,24 @@
             // 
             this.propertyGrid.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid.LineColor = System.Drawing.SystemColors.ControlDark;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(284, 353);
+            this.propertyGrid.Size = new System.Drawing.Size(426, 530);
             this.propertyGrid.TabIndex = 0;
             // 
             // PropertyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 353);
+            this.ClientSize = new System.Drawing.Size(426, 530);
             this.Controls.Add(this.propertyGrid);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.HideOnClose = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PropertyForm";
-            this.Text = "属性";
+            this.Text = "Property";
             this.ResumeLayout(false);
 
         }
